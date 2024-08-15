@@ -29,8 +29,11 @@ class TestCase:
         world = BiotWorld()
         biot = Biot()
         info = world.add(biot)
+        biot.update(info)
         point = info["location"]
-        world.move(biot, 10, 0)
+        assert biot.id == 101
+        new_info = world.move(biot.id, 10, 0)
+        biot.update(new_info)
         new_point = biot.location
         assert new_point == Point(point.x+10, point.y)
 
