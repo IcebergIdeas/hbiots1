@@ -1,7 +1,7 @@
 from point import Point
 
 
-class Biot:
+class ClientBiot:
     def __init__(self):
         self.id = None
         self.location = Point(0, 0)
