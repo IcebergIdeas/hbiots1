@@ -3,4 +3,5 @@ class Entities:
         self.contents = {}
 
     def place(self, biot, location):
-        self.contents[location] = biot
+        biot.location = location
+        self.contents[biot] = biot

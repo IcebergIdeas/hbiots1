@@ -24,3 +24,13 @@ class TestCase:
         point = info["location"]
         biot.update(info)
         assert biot.location == point
+
+    def test_move(self):
+        world = BiotWorld()
+        biot = Biot()
+        info = world.add(biot)
+        point = info["location"]
+        world.move(biot, 10, 0)
+        new_point = biot.location
+        assert new_point == Point(point.x+10, point.y)
+
