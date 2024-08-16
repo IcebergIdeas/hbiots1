@@ -20,19 +20,16 @@ class TestCase:
     def test_biot_in_world(self):
         biot = Biot()
         world = World()
-        info = world.add(biot)
-        point = info["location"]
-        biot.update(info)
+        world.add(biot)
+        point = Point(10, 10)
         assert biot.location == point
 
     def test_move(self):
         world = World()
         biot = Biot()
         info = world.add(biot)
-        biot.update(info)
-        point = info["location"]
+        point = biot.location
         assert biot.id == 101
-        new_info = world.move(biot.id, 10, 0)
-        biot.update(new_info)
+        world.move(biot.id, 10, 0)
         new_point = biot.location
-        assert new_point == Point(point.x+10, point.y)
+        assert new_point == Point(point.x + 10, point.y)

@@ -1,3 +1,4 @@
+from biot import Biot
 from entities import Entities
 from point import Point
 
@@ -15,9 +16,9 @@ class World:
     def add(self, biot):
         id = 101
         location = Point(10, 10)
-        world_biot = WorldBiot(id, location)
-        self.biots.place(id, world_biot)
-        return {"ID": id, "location": world_biot.location}
+        biot.id = id
+        biot.location = location
+        self.biots.place(id, biot)
 
     def move(self, biot_id, dx, dy):
         world_biot = self.biots.contents[biot_id]
