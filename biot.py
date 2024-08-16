@@ -6,6 +6,3 @@ class Biot:
         self.id = None
         self.location = Point(0, 0)
 
-    def update(self, info):
-        self.id = info["ID"]
-        self.location = info["location"]
