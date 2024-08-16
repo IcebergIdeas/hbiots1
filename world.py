@@ -8,7 +8,7 @@ class WorldBiot:
         self.location = location
 
 
-class BiotWorld:
+class World:
     def __init__(self):
         self.biots = Entities()
 
@@ -24,4 +24,3 @@ class BiotWorld:
         location = world_biot.location
         world_biot.location = Point(location.x + dx, location.y + dy)
         return {"ID": biot_id, "location": world_biot.location}
-

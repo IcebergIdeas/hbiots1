@@ -1,7 +1,7 @@
 import pytest
 
-from clientbiot import ClientBiot
-from biot_world import BiotWorld
+from biot import Biot
+from world import World
 from point import Point
 
 
@@ -10,24 +10,24 @@ class TestCase:
         assert True is True
 
     def test_create_biot(self):
-        biot = ClientBiot()
-        assert isinstance(biot, ClientBiot)
+        biot = Biot()
+        assert isinstance(biot, Biot)
 
     def test_starting_location(self):
-        biot = ClientBiot()
+        biot = Biot()
         assert biot.location == Point(0, 0)
 
     def test_biot_in_world(self):
-        biot = ClientBiot()
-        world = BiotWorld()
+        biot = Biot()
+        world = World()
         info = world.add(biot)
         point = info["location"]
         biot.update(info)
         assert biot.location == point
 
     def test_move(self):
-        world = BiotWorld()
-        biot = ClientBiot()
+        world = World()
+        biot = Biot()
         info = world.add(biot)
         biot.update(info)
         point = info["location"]
@@ -36,4 +36,3 @@ class TestCase:
         biot.update(new_info)
         new_point = biot.location
         assert new_point == Point(point.x+10, point.y)
-
