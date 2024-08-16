@@ -30,6 +30,6 @@ class TestCase:
         biot = Biot()
         world.add(biot)
         point = biot.location
-        world.move(biot.id, 10, 0)
+        world.move(biot, 10, 0)
         new_point = biot.location
         assert new_point == Point(point.x + 10, point.y)
