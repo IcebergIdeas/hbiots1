@@ -13,7 +13,6 @@ class World:
         self.biots.place(biot)
 
     def move(self, biot_id, dx, dy):
-        world_biot = self.biots.contents[biot_id]
-        location = world_biot.location
-        world_biot.location = Point(location.x + dx, location.y + dy)
-        return {"ID": biot_id, "location": world_biot.location}
+        biot = self.biots.contents[biot_id]
+        location = biot.location
+        biot.location = Point(location.x + dx, location.y + dy)
