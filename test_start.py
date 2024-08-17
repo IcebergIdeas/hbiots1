@@ -1,6 +1,6 @@
 import pytest
 
-from biot import Biot
+from biot import Biot, Block
 from world import World
 from point import Point
 
@@ -85,7 +85,7 @@ class TestCase:
         biot = Biot()
         world.add(biot)
         world.move(biot, -5, -5)
-        block = Biot('B')
+        block = Block()
         world.add(block)
         world.move(block, -2, -5)
         drawing = world.draw()
