@@ -9,7 +9,7 @@ class Biot:
 
 
 class Block:
-    def __init__(self):
+    def __init__(self, x, y):
         self.id = None
         self.name = 'B'
-        self.location = Point(0, 0)
+        self.location = Point(x, y)

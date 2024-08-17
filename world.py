@@ -6,19 +6,23 @@ class World:
     next_id = 100
 
     def __init__(self):
-        self.biots = Entities()
+        self.entities = Entities()
 
-    def add(self, biot):
-        location = Point(10, 10)
+    def add(self, entity):
         World.next_id += 1
-        biot.id = World.next_id
-        biot.location = location
-        self.biots.place(biot)
+        entity.id = World.next_id
+        entity.location = self.find_good_location(entity)
+        self.entities.place(entity)
 
-    def move(self, biot, dx, dy):
-        biot = self.biots.contents[biot.id]
-        location = biot.location
-        biot.location = Point(location.x + dx, location.y + dy)
+    def find_good_location(self, entity):
+        if entity.location == Point(0, 0):
+            return Point(10, 10)
+        return entity.location
+
+    def move(self, entity, dx, dy):
+        entity = self.entities.contents[entity.id]
+        location = entity.location
+        entity.location = Point(location.x + dx, location.y + dy)
 
     def draw(self):
         result = ''
@@ -29,7 +33,7 @@ class World:
         return result
 
     def location_code(self, x, y):
-        entity = self.biots.entity_at(x, y)
+        entity = self.entities.entity_at(x, y)
         if entity:
             return entity.name
         return '_'

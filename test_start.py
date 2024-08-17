@@ -85,8 +85,7 @@ class TestCase:
         biot = Biot()
         world.add(biot)
         world.move(biot, -5, -5)
-        block = Block()
+        block = Block(8, 5)
         world.add(block)
-        world.move(block, -2, -5)
         drawing = world.draw()
         assert drawing == expected
