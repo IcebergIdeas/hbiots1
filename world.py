@@ -15,9 +15,9 @@ class World:
         self.entities.place(entity)
 
     def find_good_location(self, entity):
-        if entity.location == Point(0, 0):
-            return Point(10, 10)
-        return entity.location
+        if entity.location:
+            return entity.location
+        return Point(10, 10)
 
     def move(self, entity, dx, dy):
         entity = self.entities.contents[entity.id]

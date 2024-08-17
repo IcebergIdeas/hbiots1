@@ -1,6 +1,7 @@
 import pytest
 
-from biot import Biot, Block
+from biot import Biot
+from block import Block
 from world import World
 from point import Point
 
@@ -15,7 +16,7 @@ class TestCase:
 
     def test_starting_location(self):
         biot = Biot()
-        assert biot.location == Point(0, 0)
+        assert biot.location is None
 
     def test_biot_in_world(self):
         biot = Biot()
