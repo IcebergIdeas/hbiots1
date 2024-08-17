@@ -22,14 +22,14 @@ class World:
 
     def draw(self):
         result = ''
-        for row in range(10):
-            for column in range(10):
-                result += self.location_code(column, row)
+        for y in range(10):
+            for x in range(10):
+                result += self.location_code(x, y)
             result += '\n'
         return result
 
-    def location_code(self, column, row):
-        entity = self.biots.entity_at(column, row)
+    def location_code(self, x, y):
+        entity = self.biots.entity_at(x, y)
         if entity:
             return entity.name
         return '_'

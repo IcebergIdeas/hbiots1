@@ -90,5 +90,3 @@ class TestCase:
         world.move(block, -2, -5)
         drawing = world.draw()
         assert drawing == expected
-        print()
-        print(drawing)
