@@ -33,3 +33,65 @@ class TestCase:
         world.move(biot, 10, 0)
         new_point = biot.location
         assert new_point == Point(point.x + 10, point.y)
+
+    @pytest.mark.skip("TBD")
+    def test_draw_empty_world(self):
+        expected = \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n'
+        world = World()
+        drawing = world.draw()
+        assert drawing == expected
+
+    @pytest.mark.skip("TBD")
+    def test_draw_world_with_biot(self):
+        expected = \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '_____R____\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n'
+        world = World()
+        biot = Biot()
+        world.add(biot)
+        world.move(biot, -5, -5)
+        drawing = world.draw()
+        assert drawing == expected
+
+    @pytest.mark.skip("TBD")
+    def test_draw_world_with_second_entity(self):
+        expected = \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '_____R__B_\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n' \
+            '__________\n'
+        world = World()
+        biot = Biot()
+        world.add(biot)
+        world.move(biot, -5, -5)
+        block = Biot('B')
+        world.add(block)
+        world.move(block, -2, -5)
+        drawing = world.draw()
+        assert drawing == expected
+        print()
+        print(drawing)
