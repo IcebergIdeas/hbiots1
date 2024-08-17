@@ -3,12 +3,15 @@ from point import Point
 
 
 class World:
+    next_id = 100
+
     def __init__(self):
         self.biots = Entities()
 
     def add(self, biot):
         location = Point(10, 10)
-        biot.id = 101
+        World.next_id += 1
+        biot.id = World.next_id
         biot.location = location
         self.biots.place(biot)
 
@@ -16,3 +19,17 @@ class World:
         biot = self.biots.contents[biot.id]
         location = biot.location
         biot.location = Point(location.x + dx, location.y + dy)
+
+    def draw(self):
+        result = ''
+        for row in range(10):
+            for column in range(10):
+                result += self.location_code(column, row)
+            result += '\n'
+        return result
+
+    def location_code(self, column, row):
+        entity = self.biots.entity_at(column, row)
+        if entity:
+            return entity.name
+        return '_'

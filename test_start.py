@@ -34,7 +34,6 @@ class TestCase:
         new_point = biot.location
         assert new_point == Point(point.x + 10, point.y)
 
-    @pytest.mark.skip("TBD")
     def test_draw_empty_world(self):
         expected = \
             '__________\n' \
@@ -51,7 +50,6 @@ class TestCase:
         drawing = world.draw()
         assert drawing == expected
 
-    @pytest.mark.skip("TBD")
     def test_draw_world_with_biot(self):
         expected = \
             '__________\n' \
@@ -71,7 +69,6 @@ class TestCase:
         drawing = world.draw()
         assert drawing == expected
 
-    @pytest.mark.skip("TBD")
     def test_draw_world_with_second_entity(self):
         expected = \
             '__________\n' \
