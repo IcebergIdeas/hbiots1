@@ -44,6 +44,24 @@ class TestCase:
         new_point = biot.location
         assert new_point == Point(point.x + 1, point.y)
 
+    def test_move_south(self):
+        world = World()
+        biot = Biot()
+        world.add(biot)
+        point = biot.location
+        world.move_south(biot)
+        new_point = biot.location
+        assert new_point == Point(point.x, point.y - 1)
+
+    def test_move_west(self):
+        world = World()
+        biot = Biot()
+        world.add(biot)
+        point = biot.location
+        world.move_west(biot)
+        new_point = biot.location
+        assert new_point == Point(point.x - 1, point.y)
+
     def test_draw_empty_world(self):
         expected = \
             '__________\n' \
@@ -75,7 +93,7 @@ class TestCase:
         world = World()
         biot = Biot()
         world.add(biot)
-        world.move(biot, -5, -5)
+        world._move(biot, -5, -5)
         drawing = world.draw()
         assert drawing == expected
 
@@ -94,7 +112,7 @@ class TestCase:
         world = World()
         biot = Biot()
         world.add(biot)
-        world.move(biot, -5, -5)
+        world._move(biot, -5, -5)
         block = Block(8, 5)
         world.add(block)
         drawing = world.draw()

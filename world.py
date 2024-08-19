@@ -19,16 +19,22 @@ class World:
             return entity.location
         return Point(10, 10)
 
-    def move(self, entity, dx, dy):
+    def _move(self, entity, dx, dy):
         entity = self.entities.contents[entity.id]
         location = entity.location
         entity.location = Point(location.x + dx, location.y + dy)
 
     def move_north(self, entity):
-        self.move(entity, 0, 1)
+        self._move(entity, 0, 1)
 
     def move_east(self, entity):
-        self.move(entity, 1, 0)
+        self._move(entity, 1, 0)
+
+    def move_south(self, entity):
+        self._move(entity, 0, -1)
+
+    def move_west(self, entity):
+        self._move(entity, -1, 0)
 
     def draw(self):
         result = ''
