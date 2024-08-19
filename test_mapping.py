@@ -10,6 +10,14 @@ class FakeMap:
         return self.contents
 
 
+class MapEntry:
+    def __init__(self, x, y, name):
+        self.x = x
+        self.y = y
+        self.name = name
+
+
+
 class TestMapping:
     def test_hookup(self):
         assert 4 == 2 + 2
@@ -24,7 +32,7 @@ class TestMapping:
         block = Block(3, 4)
         world_map.place(block)
         other_map = FakeMap()
-        map_entry = {'x': 3, 'y': 4, 'name': 'B'}
+        map_entry = MapEntry(3, 4, 'B')
         other_map.contents.append(map_entry)
         assert world_map == other_map
         # assert world.map_is_OK(other_map)
