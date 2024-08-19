@@ -20,8 +20,8 @@ class TestMapping:
         assert map == other_map
 
     def test_map_with_block(self):
-        map = Entities()
+        world_map = Entities()
         block = Block(3, 4)
-        map.place(block)
+        world_map.place(block)
         other_map = FakeMap()
         other_map.contents.append({'x': 3, 'y': 4, 'name': 'B'})
