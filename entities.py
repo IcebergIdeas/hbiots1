@@ -1,3 +1,4 @@
+from map_entry import MapEntry
 from point import Point
 
 
@@ -15,7 +16,7 @@ class Entities:
                 return entity
         return None
 
-    def map_is_OK(self, other):
+    def map_is_OK(self, other: [MapEntry]):
         his_contents = other.get_entities()
         if not self.check_all_his_things_are_valid(his_contents):
             return False

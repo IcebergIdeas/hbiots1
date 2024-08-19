@@ -1,5 +1,6 @@
 from block import Block
 from entities import Entities
+from map_entry import MapEntry
 
 
 class FakeMap:
@@ -8,14 +9,6 @@ class FakeMap:
 
     def get_entities(self):
         return self.contents
-
-
-class MapEntry:
-    def __init__(self, x, y, name):
-        self.x = x
-        self.y = y
-        self.name = name
-
 
 
 class TestMapping:
