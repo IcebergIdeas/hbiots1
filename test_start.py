@@ -93,7 +93,9 @@ class TestCase:
         world = World()
         biot = Biot()
         world.add(biot)
-        world._move(biot, -5, -5)
+        for _ in range(5):
+            world.move_south(biot)
+            world.move_west(biot)
         drawing = world.draw()
         assert drawing == expected
 
@@ -112,7 +114,9 @@ class TestCase:
         world = World()
         biot = Biot()
         world.add(biot)
-        world._move(biot, -5, -5)
+        for _ in range(5):
+            world.move_south(biot)
+            world.move_west(biot)
         block = Block(8, 5)
         world.add(block)
         drawing = world.draw()
