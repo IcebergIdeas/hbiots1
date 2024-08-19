@@ -1,6 +1,6 @@
 from block import Block
 from entities import Entities
-from map_entry import MapEntry
+from map_entry import MapEntity
 
 
 class FakeMap:
@@ -25,6 +25,6 @@ class TestMapping:
         block = Block(3, 4)
         world_map.place(block)
         other_map = FakeMap()
-        map_entry = MapEntry(3, 4, 'B')
+        map_entry = MapEntity(3, 4, 'B')
         other_map.contents.append(map_entry)
         assert world_map.map_is_OK(other_map)

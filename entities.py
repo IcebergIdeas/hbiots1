@@ -1,4 +1,4 @@
-from map_entry import MapEntry
+from map_entry import MapEntity
 from point import Point
 
 
@@ -16,20 +16,17 @@ class Entities:
                 return entity
         return None
 
-    def map_is_OK(self, other: [MapEntry]):
-        his_contents = other.get_entities()
-        if not self.check_all_his_things_are_valid(his_contents):
+    def map_is_OK(self, other: [MapEntity]):
+        other_entities = other.get_entities()
+        if not self.check_all_other_entities_are_valid(other_entities):
             return False
-        return len(self.contents) == len(his_contents)
+        return len(self.contents) == len(other_entities)
 
-    def check_all_his_things_are_valid(self, his_contents: [MapEntry]):
-        what_he_has_is_correct = True
-        for map_dict in his_contents:
-            his_x = map_dict.x
-            his_y = map_dict.y
-            his_name = map_dict.name
-            if self.entity_at(his_x, his_y).name != his_name:
-                what_he_has_is_correct = False
-        return what_he_has_is_correct
+    def check_all_other_entities_are_valid(self, other_contents: [MapEntity]):
+        other_entities_are_all_valid = True
+        for map_entity in other_contents:
+            if self.entity_at(map_entity.x, map_entity.y).name != map_entity.name:
+                other_entities_are_all_valid = False
+        return other_entities_are_all_valid
 
 
