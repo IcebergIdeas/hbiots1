@@ -22,7 +22,7 @@ class Entities:
             return False
         return len(self.contents) == len(his_contents)
 
-    def check_all_his_things_are_valid(self, his_contents):
+    def check_all_his_things_are_valid(self, his_contents: [MapEntry]):
         what_he_has_is_correct = True
         for map_dict in his_contents:
             his_x = map_dict.x
