@@ -26,14 +26,23 @@ class TestCase:
         assert biot.id == 101
         assert biot.location == point
 
-    def test_move(self):
+    def test_move_north(self):
         world = World()
         biot = Biot()
         world.add(biot)
         point = biot.location
-        world.move(biot, 10, 0)
+        world.move_north(biot)
         new_point = biot.location
-        assert new_point == Point(point.x + 10, point.y)
+        assert new_point == Point(point.x, point.y + 1)
+
+    def test_move_east(self):
+        world = World()
+        biot = Biot()
+        world.add(biot)
+        point = biot.location
+        world.move_east(biot)
+        new_point = biot.location
+        assert new_point == Point(point.x + 1, point.y)
 
     def test_draw_empty_world(self):
         expected = \

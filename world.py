@@ -24,6 +24,12 @@ class World:
         location = entity.location
         entity.location = Point(location.x + dx, location.y + dy)
 
+    def move_north(self, entity):
+        self.move(entity, 0, 1)
+
+    def move_east(self, entity):
+        self.move(entity, 1, 0)
+
     def draw(self):
         result = ''
         for y in range(10):
