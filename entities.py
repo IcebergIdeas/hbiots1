@@ -26,8 +26,8 @@ class Entities:
         for map_entry in his_contents:
             his_x = map_entry.x
             his_y = map_entry.y
-            his_thing = map_entry.entity
-            if self.entity_at(his_x, his_y).name != his_thing.name:
+            his_name = map_entry.name
+            if self.entity_at(his_x, his_y).name != his_name:
                 what_he_has_is_correct = False
         return what_he_has_is_correct
 

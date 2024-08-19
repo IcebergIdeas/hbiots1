@@ -1,7 +1,11 @@
+from block import Block
 from entities import Entities
 
 
 class FakeMap:
+    def __init__(self):
+        self.contents = list()
+
     def get_entities(self):
         return []
 
@@ -14,3 +18,10 @@ class TestMapping:
         map = Entities()
         other_map = FakeMap()
         assert map == other_map
+
+    def test_map_with_block(self):
+        map = Entities()
+        block = Block(3, 4)
+        map.place(block)
+        other_map = FakeMap()
+        other_map.contents.append({'x': 3, 'y': 4, 'name': 'B'})
