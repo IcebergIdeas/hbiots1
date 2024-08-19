@@ -6,7 +6,7 @@ from world import World
 from point import Point
 
 
-class TestCase:
+class TestLocation:
     def test_something(self):
         assert True is True
 

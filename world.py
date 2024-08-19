@@ -6,13 +6,13 @@ class World:
     next_id = 100
 
     def __init__(self):
-        self.entities = Entities()
+        self.map = Entities()
 
     def add(self, entity):
         World.next_id += 1
         entity.id = World.next_id
         entity.location = self._find_good_location(entity)
-        self.entities.place(entity)
+        self.map.place(entity)
 
     def _find_good_location(self, entity):
         if entity.location:
@@ -20,7 +20,7 @@ class World:
         return Point(10, 10)
 
     def _move(self, entity, dx, dy):
-        entity = self.entities.contents[entity.id]
+        entity = self.map.contents[entity.id]
         location = entity.location
         entity.location = Point(location.x + dx, location.y + dy)
 
@@ -45,7 +45,7 @@ class World:
         return result
 
     def _location_code(self, x, y):
-        entity = self.entities.entity_at(x, y)
+        entity = self.map.entity_at(x, y)
         if entity:
             return entity.name
         return '_'
