@@ -7,7 +7,7 @@ class FakeMap:
         self.contents = list()
 
     def get_entities(self):
-        return []
+        return self.contents
 
 
 class TestMapping:
@@ -24,4 +24,7 @@ class TestMapping:
         block = Block(3, 4)
         world_map.place(block)
         other_map = FakeMap()
-        other_map.contents.append({'x': 3, 'y': 4, 'name': 'B'})
+        map_entry = {'x': 3, 'y': 4, 'name': 'B'}
+        other_map.contents.append(map_entry)
+        assert world_map == other_map
+        # assert world.map_is_OK(other_map)
