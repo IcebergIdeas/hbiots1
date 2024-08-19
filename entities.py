@@ -30,7 +30,6 @@ class Entities:
             his_name = map_dict.name
             if self.entity_at(his_x, his_y).name != his_name:
                 what_he_has_is_correct = False
-        print(f"returning {what_he_has_is_correct}")
         return what_he_has_is_correct
 
 
