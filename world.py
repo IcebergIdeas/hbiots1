@@ -11,10 +11,10 @@ class World:
     def add(self, entity):
         World.next_id += 1
         entity.id = World.next_id
-        entity.location = self.find_good_location(entity)
+        entity.location = self._find_good_location(entity)
         self.entities.place(entity)
 
-    def find_good_location(self, entity):
+    def _find_good_location(self, entity):
         if entity.location:
             return entity.location
         return Point(10, 10)
@@ -40,11 +40,11 @@ class World:
         result = ''
         for y in range(10):
             for x in range(10):
-                result += self.location_code(x, y)
+                result += self._location_code(x, y)
             result += '\n'
         return result
 
-    def location_code(self, x, y):
+    def _location_code(self, x, y):
         entity = self.entities.entity_at(x, y)
         if entity:
             return entity.name
