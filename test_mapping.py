@@ -23,9 +23,9 @@ class TestMapping:
         assert 4 == 2 + 2
 
     def test_map_compare(self):
-        map = Entities()
+        world_map = Entities()
         other_map = FakeMap()
-        assert map == other_map
+        assert world_map.map_is_OK(other_map)
 
     def test_map_with_block(self):
         world_map = Entities()
@@ -34,5 +34,4 @@ class TestMapping:
         other_map = FakeMap()
         map_entry = MapEntry(3, 4, 'B')
         other_map.contents.append(map_entry)
-        assert world_map == other_map
-        # assert world.map_is_OK(other_map)
+        assert world_map.map_is_OK(other_map)
