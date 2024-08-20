@@ -1,4 +1,4 @@
-class Biot:
+class Bot:
     def __init__(self):
         self.id = None
         self.name = 'R'
