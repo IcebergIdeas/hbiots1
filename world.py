@@ -12,13 +12,7 @@ class World:
         entity.world = self
         World.next_id += 1
         entity.id = World.next_id
-        entity.location = self._find_good_location(entity)
         self.map.place(entity)
-
-    def _find_good_location(self, entity):
-        if entity.location:
-            return entity.location
-        return Point(10, 10)
 
     def _move(self, entity, dx, dy):
         entity = self.map.contents[entity.id]
