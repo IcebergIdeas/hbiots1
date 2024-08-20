@@ -6,8 +6,8 @@ class Entities:
     def __init__(self):
         self.contents = {}
 
-    def place(self, biot):
-        self.contents[biot.id] = biot
+    def place(self, entity):
+        self.contents[entity.id] = entity
 
     def entity_at(self, x, y):
         point = Point(x, y)
