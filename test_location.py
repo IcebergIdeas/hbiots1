@@ -6,6 +6,9 @@ from world import World
 from point import Point
 
 
+
+
+
 class TestLocation:
     def test_something(self):
         assert True is True
@@ -139,3 +142,57 @@ class TestLocation:
         result = bot.scan()
         expected_scan = [('R', 5, 5), ('B', 6, 5)]
         assert result == expected_scan
+
+    def test_demo(self):
+        world = World()
+        bot = Bot(5, 5)
+        world.add(bot)
+        block = Block(8, 5)
+        world.add(block)
+        print()
+        self.print_result(bot)
+        world.move_east(bot) # 6, 5
+        world.move_east(bot) # 7, 5
+        self.print_result(bot)
+        world.take_east(bot)
+        world.move_south(bot) # 7, 4
+        world.move_south(bot) # 7, 3
+        world.move_west(bot) # 6, 3
+        world.move_west(bot) # 5, 3
+        self.print_result(bot)
+        world.drop_south(bot) # 5, 2
+        self.print_result(bot)
+        world.move_east(bot) # 6, 3
+        world.move_east(bot) # 7, 3
+        world.move_north(bot) # 7, 4
+        world.move_north(bot) # 7, 5
+        self.print_result(bot)
+        world.take_east(bot)
+        world.move_south(bot) # 7, 4
+        world.move_south(bot) # 7, 3
+        world.move_west(bot) # 6, 3
+        self.print_result(bot)
+        world.drop_west(bot) # 5, 3
+        world.move_east(bot) # 7, 3
+        self.print_result(bot)
+        assert True
+
+    def print_result(self, bot):
+        result = bot.scan()
+        print_map(result)
+
+
+def print_map(result):
+    print()
+    r = ''
+    for y in range(9, -1, - 1):
+        r += f'{y:2d} '
+        for x in range(10):
+            name = '_'
+            for e in result:
+                ename, ex, ey = e
+                if ex == x and ey == y:
+                    name = ename
+            r += name
+        r += '\n'
+    print(r)

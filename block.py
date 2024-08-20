@@ -20,4 +20,4 @@ class Block:
         pe = entity.location
         se = self.location
         d = pe.distance(se)
-        return d < 3
+        return d < 10
