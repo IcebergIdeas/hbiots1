@@ -20,7 +20,4 @@ class Bot:
         return self.world.scan(self)
 
     def is_close_enough(self, entity):
-        pe = entity.location
-        se = self.location
-        d = pe.distance(se)
-        return d < 3
+        return entity.location.distance(self.location) < 3
