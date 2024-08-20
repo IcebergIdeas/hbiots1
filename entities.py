@@ -6,6 +6,9 @@ class Entities:
     def __init__(self):
         self.contents = {}
 
+    def __iter__(self):
+        return iter(self.contents.values())
+
     def place(self, entity):
         self.contents[entity.id] = entity
 
@@ -28,5 +31,3 @@ class Entities:
             if self.entity_at(map_entity.x, map_entity.y).name != map_entity.name:
                 other_entities_are_all_valid = False
         return other_entities_are_all_valid
-
-

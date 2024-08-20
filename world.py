@@ -9,6 +9,7 @@ class World:
         self.map = Entities()
 
     def add(self, entity):
+        entity.world = self
         World.next_id += 1
         entity.id = World.next_id
         entity.location = self._find_good_location(entity)
@@ -49,3 +50,6 @@ class World:
         if entity:
             return entity.name
         return '_'
+
+    def scan(self, bot):
+        return [(e.name, e.x, e.y) for e in self.map if e.is_close_enough(bot)]

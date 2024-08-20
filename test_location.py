@@ -11,15 +11,15 @@ class TestLocation:
         assert True is True
 
     def test_create_bot(self):
-        bot = Bot()
+        bot = Bot(10, 10)
         assert isinstance(bot, Bot)
 
     def test_starting_location(self):
-        bot = Bot()
-        assert bot.location is None
+        bot = Bot(10, 10)
+        assert bot.location == Point(10, 10)
 
     def test_bot_in_world(self):
-        bot = Bot()
+        bot = Bot(10, 10)
         world = World()
         world.add(bot)
         point = Point(10, 10)
@@ -28,7 +28,7 @@ class TestLocation:
 
     def test_move_north(self):
         world = World()
-        bot = Bot()
+        bot = Bot(10, 10)
         world.add(bot)
         point = bot.location
         world.move_north(bot)
@@ -37,7 +37,7 @@ class TestLocation:
 
     def test_move_east(self):
         world = World()
-        bot = Bot()
+        bot = Bot(10, 10)
         world.add(bot)
         point = bot.location
         world.move_east(bot)
@@ -46,7 +46,7 @@ class TestLocation:
 
     def test_move_south(self):
         world = World()
-        bot = Bot()
+        bot = Bot(10, 10)
         world.add(bot)
         point = bot.location
         world.move_south(bot)
@@ -55,7 +55,7 @@ class TestLocation:
 
     def test_move_west(self):
         world = World()
-        bot = Bot()
+        bot = Bot(10, 10)
         world.add(bot)
         point = bot.location
         world.move_west(bot)
@@ -91,7 +91,7 @@ class TestLocation:
             '__________\n' \
             '__________\n'
         world = World()
-        bot = Bot()
+        bot = Bot(10, 10)
         world.add(bot)
         for _ in range(5):
             world.move_south(bot)
@@ -112,7 +112,7 @@ class TestLocation:
             '__________\n' \
             '__________\n'
         world = World()
-        bot = Bot()
+        bot = Bot(10, 10)
         world.add(bot)
         for _ in range(5):
             world.move_south(bot)
@@ -121,3 +121,21 @@ class TestLocation:
         world.add(block)
         drawing = world.draw()
         assert drawing == expected
+
+    def test_scan(self):
+        world = World()
+        bot = Bot(10, 10)
+        world.add(bot)
+        result = bot.scan()
+        expected_scan = [('R', 10, 10)]
+        assert result == expected_scan
+
+    def test_scan_a_block(self):
+        world = World()
+        bot = Bot(5, 5)
+        world.add(bot)
+        block = Block(6, 5)
+        world.add(block)
+        result = bot.scan()
+        expected_scan = [('R', 5, 5), ('B', 6, 5)]
+        assert result == expected_scan
