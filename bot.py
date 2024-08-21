@@ -1,5 +1,6 @@
 import random
 
+from direction import Direction
 from point import Point
 
 
@@ -9,7 +10,7 @@ class Bot:
         self.id = None
         self.name = 'R'
         self.location = Point(x, y)
-        self.direction = 'east'
+        self.direction = Direction.EAST
 
     @property
     def x(self):
@@ -34,15 +35,18 @@ class Bot:
 
     def step_in_direction(self):
         d = self.direction
-        if d == 'east':
-            self.world.move_east(self)
-        elif d == 'north':
+        if d == Direction.NORTH:
             self.world.move_north(self)
-        elif d == 'south':
+        elif d == Direction.EAST:
+            self.world.move_east(self)
+        elif d == Direction.SOUTH:
             self.world.move_south(self)
-        elif d == 'west':
+        elif d == Direction.WEST:
             self.world.move_west(self)
 
     def change_direction(self):
-        self.direction = random.choice(['north', 'south', 'east', 'west'])
+        direction = self.direction
+        while direction == self.direction:
+            direction = random.choice(list(Direction))
+        self.direction = direction
 
