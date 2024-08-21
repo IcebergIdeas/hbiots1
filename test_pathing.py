@@ -56,4 +56,13 @@ class TestPathing:
         loc = bot.location
         assert loc != Point(5, 5)
 
+    def test_changes_direction(self):
+        world = World(10, 10)
+        bot = Bot(9, 5)
+        world.add(bot)
+        bot.do_something()
+        assert bot.location == Point(10, 5)
+        bot.do_something()
+        assert bot.location != Point(10, 5)
+
 
