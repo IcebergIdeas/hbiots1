@@ -59,6 +59,7 @@ class TestPathing:
     def test_changes_direction(self):
         world = World(10, 10)
         bot = Bot(9, 5)
+        bot.direction_change_chance = 0.0
         world.add(bot)
         bot.do_something()
         assert bot.location == Point(10, 5)

@@ -11,6 +11,7 @@ class Bot:
         self.name = 'R'
         self.location = Point(x, y)
         self.direction = Direction.EAST
+        self.direction_change_chance = 0.2
 
     @property
     def x(self):
@@ -27,7 +28,11 @@ class Bot:
         return entity.location.distance(self.location) < 10
 
     def do_something(self):
+        # first real behavior is to randomly wander until you see something
+        # then move to it
         old_location = self.location
+        if random.random() < self.direction_change_chance:
+            self.change_direction()
         self.step_in_direction()
         if self.location == old_location:
             self.change_direction()
