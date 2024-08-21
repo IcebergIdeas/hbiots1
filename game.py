@@ -78,8 +78,6 @@ class Game:
         pygame.quit()
 
 
-
-
 if __name__ == "__main__":
     world = World(40, 40)
     block = Block(20, 20)
