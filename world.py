@@ -31,7 +31,6 @@ class World:
             return limit
         return coord
 
-
     def move_north(self, entity):
         self._move(entity, 0, 1)
 
