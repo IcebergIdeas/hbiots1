@@ -1,4 +1,6 @@
+from bot import Bot
 from point import Point
+from world import World
 
 
 class Queue:
@@ -35,4 +37,23 @@ class TestPathing:
         for step in range(d):
             start = start.step_toward(target)
         assert start == target
+
+    def test_wandering(self):
+        world = World(10, 10)
+        bot = Bot(5, 5)
+        world.add(bot)
+        bot.do_something()
+        loc = bot.location
+        assert loc != Point(5, 5)
+
+    def test_stop_at_edge(self):
+        world = World(10, 10)
+        bot = Bot(8, 5)
+        world.add(bot)
+        world.move_east(bot)
+        world.move_east(bot)
+        assert bot.location == Point(10, 5)
+        world.move_east(bot)
+        assert bot.location == Point(10, 5)
+
 

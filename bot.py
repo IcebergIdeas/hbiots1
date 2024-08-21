@@ -21,3 +21,6 @@ class Bot:
 
     def is_close_enough(self, entity):
         return entity.location.distance(self.location) < 10
+
+    def do_something(self):
+        self.world.move_east(self)

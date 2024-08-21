@@ -6,7 +6,9 @@ from point import Point
 class World:
     next_id = 100
 
-    def __init__(self):
+    def __init__(self, max_x, max_y):
+        self.width = max_x
+        self.height = max_y
         self.map = Entities()
 
     def add(self, entity):
@@ -18,7 +20,17 @@ class World:
     def _move(self, entity, dx, dy):
         entity = self.map.contents[entity.id]
         location = entity.location
-        entity.location = Point(location.x + dx, location.y + dy)
+        new_x = self.clip(location.x + dx, self.width)
+        new_y = self.clip(location.y + dy, self.height)
+        entity.location = Point(new_x, new_y)
+
+    def clip(self, coord, limit):
+        if coord < 0:
+            return 0
+        if coord > limit:
+            return limit
+        return coord
+
 
     def move_north(self, entity):
         self._move(entity, 0, 1)

@@ -20,15 +20,15 @@ class TestLocation:
 
     def test_bot_in_world(self):
         bot = Bot(10, 10)
-        world = World()
+        world = World(10, 10)
         world.add(bot)
         point = Point(10, 10)
         assert bot.id == 101
         assert bot.location == point
 
     def test_move_north(self):
-        world = World()
-        bot = Bot(10, 10)
+        world = World(10, 10)
+        bot = Bot(5, 5)
         world.add(bot)
         point = bot.location
         world.move_north(bot)
@@ -36,8 +36,8 @@ class TestLocation:
         assert new_point == Point(point.x, point.y + 1)
 
     def test_move_east(self):
-        world = World()
-        bot = Bot(10, 10)
+        world = World(10, 10)
+        bot = Bot(5, 5)
         world.add(bot)
         point = bot.location
         world.move_east(bot)
@@ -45,7 +45,7 @@ class TestLocation:
         assert new_point == Point(point.x + 1, point.y)
 
     def test_move_south(self):
-        world = World()
+        world = World(10, 10)
         bot = Bot(10, 10)
         world.add(bot)
         point = bot.location
@@ -54,7 +54,7 @@ class TestLocation:
         assert new_point == Point(point.x, point.y - 1)
 
     def test_move_west(self):
-        world = World()
+        world = World(10, 10)
         bot = Bot(10, 10)
         world.add(bot)
         point = bot.location
@@ -74,7 +74,7 @@ class TestLocation:
             '__________\n' \
             '__________\n' \
             '__________\n'
-        world = World()
+        world = World(10, 10)
         drawing = world.draw()
         assert drawing == expected
 
@@ -90,7 +90,7 @@ class TestLocation:
             '__________\n' \
             '__________\n' \
             '__________\n'
-        world = World()
+        world = World(10, 10)
         bot = Bot(10, 10)
         world.add(bot)
         for _ in range(5):
@@ -111,7 +111,7 @@ class TestLocation:
             '__________\n' \
             '__________\n' \
             '__________\n'
-        world = World()
+        world = World(10, 10)
         bot = Bot(10, 10)
         world.add(bot)
         for _ in range(5):
@@ -123,7 +123,7 @@ class TestLocation:
         assert drawing == expected
 
     def test_scan(self):
-        world = World()
+        world = World(10, 10)
         bot = Bot(10, 10)
         world.add(bot)
         result = bot.scan()
@@ -131,7 +131,7 @@ class TestLocation:
         assert result == expected_scan
 
     def test_scan_a_block(self):
-        world = World()
+        world = World(10, 10)
         bot = Bot(5, 5)
         world.add(bot)
         block = Block(6, 5)
@@ -141,7 +141,7 @@ class TestLocation:
         assert result == expected_scan
 
     def test_demo(self):
-        world = World()
+        world = World(10, 10)
         bot = Bot(5, 5)
         world.add(bot)
         block = Block(8, 5)
