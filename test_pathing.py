@@ -1,3 +1,6 @@
+from point import Point
+
+
 class Queue:
     def __init__(self):
         self._contents = []
@@ -24,3 +27,12 @@ class TestPathing:
         q.put(5)
         assert q.get() == 2
         assert q.get() == 5
+
+    def test_simple_path(self):
+        target = Point(10, 10)
+        start = Point(5, 5)
+        d = start.distance(target)
+        for step in range(d):
+            start = start.step_toward(target)
+        assert start == target
+
