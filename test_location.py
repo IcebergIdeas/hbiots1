@@ -140,6 +140,15 @@ class TestLocation:
         expected_scan = [('R', 5, 5), ('B', 6, 5)]
         assert result == expected_scan
 
+    def test_bot_notices_a_block(self):
+        world = World(10, 10)
+        bot = Bot(5, 5)
+        world.add(bot)
+        block = Block(6, 5)
+        world.add(block)
+        bot.do_something()
+        assert bot.has(block)
+
     def test_take_a_block(self):
         world = World(10, 10)
         bot = Bot(5, 5)

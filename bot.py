@@ -31,12 +31,19 @@ class Bot:
     def receive(self, entity):
         self.inventory.append(entity)
 
+    def pick_up_block(self):
+        result = self.scan()
+        if self.block_to_east(result):
+            self.world.take_east(self)
+
+    def block_to_east(self, result):
+        return True
+
     def is_close_enough(self, entity):
         return entity.location.distance(self.location) < 10
 
     def do_something(self):
-        # first real behavior is to randomly wander until you see something
-        # then move to it
+        self.pick_up_block()
         old_location = self.location
         if random.random() < self.direction_change_chance:
             self.change_direction()
