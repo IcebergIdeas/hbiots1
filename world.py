@@ -1,4 +1,5 @@
 from block import Block
+from bot import Bot
 from entities import Entities
 from point import Point
 
@@ -60,8 +61,12 @@ class World:
     def scan(self, bot):
         return [(e.name, e.x, e.y) for e in self.map if e.is_close_enough(bot)]
 
-    def take_east(self, bot):
-        pass
+    def take_east(self, bot: Bot):
+        location = bot.location + Point(1, 0)
+        entity = self.map.entity_at(location.x, location.y)
+        if entity:
+            self.map.remove(entity.id)
+            bot.receive(entity)
 
     def drop_north(self, bot):
         block = Block(bot.x, bot.y + 1)

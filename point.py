@@ -9,6 +9,9 @@ class Point:
     def __repr__(self):
         return f'Point({self.x}, {self.y})'
 
+    def __add__(self, other):
+        return Point(self.x + other.x, self.y + other.y)
+
     def distance(self, other):
         return abs(self.x - other.x) + abs(self.y - other.y)
 

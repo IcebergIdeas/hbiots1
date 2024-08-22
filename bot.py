@@ -12,6 +12,7 @@ class Bot:
         self.location = Point(x, y)
         self.direction = Direction.EAST
         self.direction_change_chance = 0.2
+        self.inventory = []
 
     @property
     def x(self):
@@ -23,6 +24,12 @@ class Bot:
 
     def scan(self):
         return self.world.scan(self)
+
+    def has(self, entity):
+        return entity in self.inventory
+
+    def receive(self, entity):
+        self.inventory.append(entity)
 
     def is_close_enough(self, entity):
         return entity.location.distance(self.location) < 10
@@ -36,7 +43,6 @@ class Bot:
         self.step_in_direction()
         if self.location == old_location:
             self.change_direction()
-            self.step_in_direction()
 
     def step_in_direction(self):
         d = self.direction
@@ -54,4 +60,3 @@ class Bot:
         while direction == self.direction:
             direction = random.choice(list(Direction))
         self.direction = direction
-

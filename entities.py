@@ -31,3 +31,6 @@ class Entities:
             if self.entity_at(map_entity.x, map_entity.y).name != map_entity.name:
                 other_entities_are_all_valid = False
         return other_entities_are_all_valid
+
+    def remove(self, id):
+        del self.contents[id]

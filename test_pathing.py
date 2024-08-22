@@ -1,4 +1,5 @@
 from bot import Bot
+from direction import Direction
 from point import Point
 from world import World
 
@@ -64,6 +65,7 @@ class TestPathing:
         bot.do_something()
         assert bot.location == Point(10, 5)
         bot.do_something()
+        assert bot.location == Point(10, 5)
+        assert bot.direction != Direction.EAST
+        bot.do_something()
         assert bot.location != Point(10, 5)
-
-
