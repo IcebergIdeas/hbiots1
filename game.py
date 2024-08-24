@@ -59,11 +59,12 @@ class Game:
             keys = pygame.key.get_pressed()
             if keys[pygame.K_ESCAPE]:
                 self._running = False
+
     def on_execute(self):
         if self.on_init() is False:
             self._running = False
         while self._running:
-            pygame.time.delay(100)
+            pygame.time.delay(1000)
             for event in pygame.event.get():
                 self.on_event(event)
             self.clear_screen()
@@ -82,7 +83,7 @@ if __name__ == "__main__":
     world = World(40, 40)
     block = Block(20, 20)
     world.add(block)
-    bot = Bot(10, 10)
+    bot = Bot(10, 20)
     world.add(bot)
     game = Game(world, bot)
     game.on_execute()

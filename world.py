@@ -62,7 +62,12 @@ class World:
         return [(e.name, e.x, e.y) for e in self.map if e.is_close_enough(bot)]
 
     def take_east(self, bot: Bot):
-        location = bot.location + Point(1, 0)
+        self.take_at(bot, bot.location + Point(1, 0))
+    #
+    # def take(self, bot, direction):
+    #     self.take_at(bot, bot.location + direction)
+
+    def take_at(self, bot, location):
         entity = self.map.entity_at(location.x, location.y)
         if entity:
             self.map.remove(entity.id)

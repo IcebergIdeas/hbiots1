@@ -34,7 +34,13 @@ class Bot:
     def pick_up_block(self):
         result = self.scan()
         if self.block_to_east(result):
-            self.world.take_east(self)
+            self.take_east()
+
+    def take_east(self):
+        self.world.take_east(self)
+    #
+    # def take(self, direction):
+    #     self.world.take(self,  direction)
 
     def block_to_east(self, result):
         return True
@@ -67,3 +73,21 @@ class Bot:
         while direction == self.direction:
             direction = random.choice(list(Direction))
         self.direction = direction
+
+    def move_north(self):
+        self.world.move_north(self)
+
+    def move_east(self):
+        self.world.move_east(self)
+
+    def move_south(self):
+        self.world.move_south(self)
+
+    def move_west(self):
+        self.world.move_west(self)
+
+    def drop_south(self):
+        self.world.drop_south(self)
+
+    def drop_west(self):
+        self.world.drop_west(self)

@@ -39,16 +39,6 @@ class TestPathing:
             start = start.step_toward(target)
         assert start == target
 
-    def test_stop_at_edge(self):
-        world = World(10, 10)
-        bot = Bot(8, 5)
-        world.add(bot)
-        world.move_east(bot)
-        world.move_east(bot)
-        assert bot.location == Point(10, 5)
-        world.move_east(bot)
-        assert bot.location == Point(10, 5)
-
     def test_wandering(self):
         world = World(10, 10)
         bot = Bot(5, 5)

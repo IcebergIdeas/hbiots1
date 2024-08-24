@@ -31,7 +31,7 @@ class TestLocation:
         bot = Bot(5, 5)
         world.add(bot)
         point = bot.location
-        world.move_north(bot)
+        bot.move_north()
         new_point = bot.location
         assert new_point == Point(point.x, point.y + 1)
 
@@ -40,7 +40,7 @@ class TestLocation:
         bot = Bot(5, 5)
         world.add(bot)
         point = bot.location
-        world.move_east(bot)
+        bot.move_east()
         new_point = bot.location
         assert new_point == Point(point.x + 1, point.y)
 
@@ -49,7 +49,7 @@ class TestLocation:
         bot = Bot(10, 10)
         world.add(bot)
         point = bot.location
-        world.move_south(bot)
+        bot.move_south()
         new_point = bot.location
         assert new_point == Point(point.x, point.y - 1)
 
@@ -58,9 +58,19 @@ class TestLocation:
         bot = Bot(10, 10)
         world.add(bot)
         point = bot.location
-        world.move_west(bot)
+        bot.move_west()
         new_point = bot.location
         assert new_point == Point(point.x - 1, point.y)
+
+    def test_stop_at_edge(self):
+        world = World(10, 10)
+        bot = Bot(8, 5)
+        world.add(bot)
+        bot.move_east()
+        bot.move_east()
+        assert bot.location == Point(10, 5)
+        bot.move_east()
+        assert bot.location == Point(10, 5)
 
     def test_draw_empty_world(self):
         expected = \
@@ -115,8 +125,8 @@ class TestLocation:
         bot = Bot(10, 10)
         world.add(bot)
         for _ in range(5):
-            world.move_south(bot)
-            world.move_west(bot)
+            bot.move_south()
+            bot.move_west()
         block = Block(8, 5)
         world.add(block)
         drawing = world.draw()
@@ -155,7 +165,7 @@ class TestLocation:
         world.add(bot)
         block = Block(6, 5)
         world.add(block)
-        world.take_east(bot)
+        bot.take_east()
         result = bot.scan()
         expected_scan = [('R', 5, 5)]
         assert result == expected_scan
@@ -166,7 +176,7 @@ class TestLocation:
         world.add(bot)
         block = Block(6, 5)
         world.add(block)
-        world.take_east(bot)
+        bot.take_east()
         assert bot.has(block)
 
     def test_demo(self):
@@ -177,29 +187,29 @@ class TestLocation:
         world.add(block)
         print()
         self.print_result(bot)
-        world.move_east(bot) # 6, 5
-        world.move_east(bot) # 7, 5
+        bot.move_east() # 6, 5
+        bot.move_east() # 7, 5
         self.print_result(bot)
-        world.take_east(bot)
-        world.move_south(bot) # 7, 4
-        world.move_south(bot) # 7, 3
-        world.move_west(bot) # 6, 3
-        world.move_west(bot) # 5, 3
+        bot.take_east()
+        bot.move_south() # 7, 4
+        bot.move_south() # 7, 3
+        bot.move_west() # 6, 3
+        bot.move_west() # 5, 3
         self.print_result(bot)
-        world.drop_south(bot) # 5, 2
+        bot.drop_south() # 5, 2
         self.print_result(bot)
-        world.move_east(bot) # 6, 3
-        world.move_east(bot) # 7, 3
-        world.move_north(bot) # 7, 4
-        world.move_north(bot) # 7, 5
+        bot.move_east() # 6, 3
+        bot.move_east() # 7, 3
+        bot.move_north() # 7, 4
+        bot.move_north() # 7, 5
         self.print_result(bot)
-        world.take_east(bot)
-        world.move_south(bot) # 7, 4
-        world.move_south(bot) # 7, 3
-        world.move_west(bot) # 6, 3
+        bot.take_east()
+        bot.move_south() # 7, 4
+        bot.move_south() # 7, 3
+        bot.move_west() # 6, 3
         self.print_result(bot)
-        world.drop_west(bot) # 5, 3
-        world.move_east(bot) # 7, 3
+        bot.drop_west() # 5, 3
+        bot.move_east() # 7, 3
         self.print_result(bot)
         assert True
 
