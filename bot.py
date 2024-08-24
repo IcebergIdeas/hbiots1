@@ -71,7 +71,7 @@ class Bot:
     def change_direction(self):
         direction = self.direction
         while direction == self.direction:
-            direction = random.choice(list(Direction))
+            direction = random.choice(Direction.ALL)
         self.direction = direction
 
     def move_north(self):
