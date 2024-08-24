@@ -18,7 +18,7 @@ class Direction:
 
     def left(self):
         x, y = self.x, self.y
-        new_x, new_y = y, -x
+        new_x, new_y = -y, x
         return Direction(new_x, new_y)
 
 
