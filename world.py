@@ -26,11 +26,7 @@ class World:
         entity.location = Point(new_x, new_y)
 
     def clip(self, coord, limit):
-        if coord < 0:
-            return 0
-        if coord > limit:
-            return limit
-        return coord
+        return 0 if coord < 0 else (limit if coord > limit else coord)
 
     def move(self, entity, direction):
         self._move(entity, direction.x, direction.y)
