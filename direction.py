@@ -23,8 +23,8 @@ class Direction:
         return Direction(new_x, new_y)
 
 
-Direction.NORTH = Direction(0, -1)
+Direction.NORTH = Direction(0, 1)
 Direction.EAST = Direction(1, 0)
-Direction.SOUTH = Direction(0, 1)
+Direction.SOUTH = Direction(0, -1)
 Direction.WEST = Direction(-1, 0)
 Direction.ALL = [Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST]

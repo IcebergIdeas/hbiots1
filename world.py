@@ -32,17 +32,11 @@ class World:
             return limit
         return coord
 
-    def move_north(self, entity):
-        self._move(entity, 0, 1)
+    def move(self, entity, direction):
+        self._move(entity, direction.x, direction.y)
 
-    def move_east(self, entity):
-        self._move(entity, 1, 0)
-
-    def move_south(self, entity):
-        self._move(entity, 0, -1)
-
-    def move_west(self, entity):
-        self._move(entity, -1, 0)
+    def step(self, bot, direction):
+        self._move(bot, direction.x, direction.y)
 
     def draw(self):
         result = ''

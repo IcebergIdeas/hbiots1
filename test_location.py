@@ -2,6 +2,7 @@ import pytest
 
 from bot import Bot
 from block import Block
+from direction import Direction
 from world import World
 from point import Point
 
@@ -31,7 +32,8 @@ class TestLocation:
         bot = Bot(5, 5)
         world.add(bot)
         point = bot.location
-        bot.move_north()
+        bot.direction = Direction.NORTH
+        bot.step()
         new_point = bot.location
         assert new_point == Point(point.x, point.y + 1)
 
@@ -40,25 +42,25 @@ class TestLocation:
         bot = Bot(5, 5)
         world.add(bot)
         point = bot.location
-        bot.move_east()
+        bot.step()
         new_point = bot.location
         assert new_point == Point(point.x + 1, point.y)
 
     def test_move_south(self):
         world = World(10, 10)
-        bot = Bot(10, 10)
+        bot = Bot(10, 10, Direction.SOUTH)
         world.add(bot)
         point = bot.location
-        bot.move_south()
+        bot.step()
         new_point = bot.location
         assert new_point == Point(point.x, point.y - 1)
 
     def test_move_west(self):
         world = World(10, 10)
-        bot = Bot(10, 10)
+        bot = Bot(10, 10, Direction.WEST)
         world.add(bot)
         point = bot.location
-        bot.move_west()
+        bot.step()
         new_point = bot.location
         assert new_point == Point(point.x - 1, point.y)
 
@@ -66,10 +68,10 @@ class TestLocation:
         world = World(10, 10)
         bot = Bot(8, 5)
         world.add(bot)
-        bot.move_east()
-        bot.move_east()
+        bot.step()
+        bot.step()
         assert bot.location == Point(10, 5)
-        bot.move_east()
+        bot.step()
         assert bot.location == Point(10, 5)
 
     def test_draw_empty_world(self):
@@ -104,8 +106,8 @@ class TestLocation:
         bot = Bot(10, 10)
         world.add(bot)
         for _ in range(5):
-            world.move_south(bot)
-            world.move_west(bot)
+            bot.move_south()
+            bot.move_west()
         drawing = world.draw()
         assert drawing == expected
 
