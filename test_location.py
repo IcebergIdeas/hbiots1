@@ -167,19 +167,34 @@ class TestLocation:
         world.add(bot)
         block = Block(6, 5)
         world.add(block)
-        bot.take_east()
+        bot.take()
         result = bot.scan()
         expected_scan = [('R', 5, 5)]
         assert result == expected_scan
 
-    def test_bot_gets_a_block(self):
+    def test_bot_has_a_block(self):
         world = World(10, 10)
         bot = Bot(5, 5)
         world.add(bot)
         block = Block(6, 5)
         world.add(block)
-        bot.take_east()
+        bot.take()
         assert bot.has(block)
+
+    def test_bot_cant_take_diagonally(self):
+        world = World(10, 10)
+        bot = Bot(5, 5)
+        world.add(bot)
+        block = Block(4, 4)
+        world.add(block)
+        block = Block(6, 4)
+        world.add(block)
+        block = Block(4, 6)
+        world.add(block)
+        block = Block(6, 6)
+        world.add(block)
+        bot.take()
+        assert not bot.has(block)
 
     def test_demo(self):
         world = World(10, 10)
@@ -192,7 +207,7 @@ class TestLocation:
         bot.move_east() # 6, 5
         bot.move_east() # 7, 5
         self.print_result(bot)
-        bot.take_east()
+        bot.take()
         bot.move_south() # 7, 4
         bot.move_south() # 7, 3
         bot.move_west() # 6, 3
@@ -205,7 +220,7 @@ class TestLocation:
         bot.move_north() # 7, 4
         bot.move_north() # 7, 5
         self.print_result(bot)
-        bot.take_east()
+        bot.take()
         bot.move_south() # 7, 4
         bot.move_south() # 7, 3
         bot.move_west() # 6, 3

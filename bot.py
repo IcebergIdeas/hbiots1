@@ -34,10 +34,10 @@ class Bot:
     def pick_up_block(self):
         result = self.scan()
         if self.block_to_east(result):
-            self.take_east()
+            self.take()
 
-    def take_east(self):
-        self.world.take_east(self)
+    def take(self):
+        self.world.take(self)
     #
     # def take(self, direction):
     #     self.world.take(self,  direction)
