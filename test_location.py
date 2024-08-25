@@ -172,11 +172,39 @@ class TestLocation:
         expected_scan = [('R', 5, 5)]
         assert result == expected_scan
 
-    def test_bot_has_a_block(self):
+
+    def test_bot_has_a_north_block(self):
+        world = World(10, 10)
+        bot = Bot(5, 5)
+        world.add(bot)
+        block = Block(5, 4)
+        world.add(block)
+        bot.take()
+        assert bot.has(block)
+
+    def test_bot_has_a_east_block(self):
         world = World(10, 10)
         bot = Bot(5, 5)
         world.add(bot)
         block = Block(6, 5)
+        world.add(block)
+        bot.take()
+        assert bot.has(block)
+
+    def test_bot_has_a_south_block(self):
+        world = World(10, 10)
+        bot = Bot(5, 5)
+        world.add(bot)
+        block = Block(5, 6)
+        world.add(block)
+        bot.take()
+        assert bot.has(block)
+
+    def test_bot_has_a_west_block(self):
+        world = World(10, 10)
+        bot = Bot(5, 5)
+        world.add(bot)
+        block = Block(4, 5)
         world.add(block)
         bot.take()
         assert bot.has(block)
