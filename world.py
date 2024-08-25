@@ -58,6 +58,10 @@ class World:
             self.map.remove(entity.id)
             bot.receive(entity)
 
+    def drop(self, bot, entity):
+        entity.location = bot.location
+        self.add(entity)
+
     def find_entity(self, bot_location):
         directions = Direction.ALL
         for direction in directions:

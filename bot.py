@@ -13,6 +13,7 @@ class Bot:
         self.direction = direction
         self.direction_change_chance = 0.2
         self.inventory = []
+        self.tired = 0
 
     @property
     def x(self):
@@ -31,17 +32,30 @@ class Bot:
     def receive(self, entity):
         self.inventory.append(entity)
 
-    def pick_up_block(self):
-        self.take()
-
-    def take(self):
-        self.world.take(self)
-
     def is_close_enough(self, entity):
         return entity.location.distance(self.location) < 10
 
     def do_something(self):
-        self.pick_up_block()
+        self.gather()
+        self.move()
+
+    def gather(self):
+        if self.tired > 0:
+            self.tired -= 1
+            return
+        if not self.inventory:
+            self.take()
+            self.tired = 5
+        else:
+            # Check to see if there's a block here
+            # Drop the block if there's one
+            self.world.drop(self, self.inventory[0])
+            self.inventory = []
+
+    def take(self):
+        self.world.take(self)
+
+    def move(self):
         old_location = self.location
         if random.random() < self.direction_change_chance:
             self.change_direction()
