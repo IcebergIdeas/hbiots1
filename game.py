@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 from block import Block
@@ -64,7 +66,7 @@ class Game:
         if self.on_init() is False:
             self._running = False
         while self._running:
-            pygame.time.delay(1000)
+            pygame.time.delay(100)
             for event in pygame.event.get():
                 self.on_event(event)
             self.clear_screen()
@@ -81,8 +83,11 @@ class Game:
 
 if __name__ == "__main__":
     world = World(40, 40)
-    block = Block(20, 20)
-    world.add(block)
+    for _ in range(20):
+        x = random.randint(0, world.width - 1)
+        y = random.randint(0, world.height - 1)
+        block = Block(x, y)
+        world.add(block)
     bot = Bot(10, 20)
     world.add(bot)
     game = Game(world, bot)

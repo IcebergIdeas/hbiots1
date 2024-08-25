@@ -32,18 +32,10 @@ class Bot:
         self.inventory.append(entity)
 
     def pick_up_block(self):
-        result = self.scan()
-        if self.block_to_east(result):
-            self.take()
+        self.take()
 
     def take(self):
         self.world.take(self)
-    #
-    # def take(self, direction):
-    #     self.world.take(self,  direction)
-
-    def block_to_east(self, result):
-        return True
 
     def is_close_enough(self, entity):
         return entity.location.distance(self.location) < 10
@@ -51,8 +43,8 @@ class Bot:
     def do_something(self):
         self.pick_up_block()
         old_location = self.location
-        # if random.random() < self.direction_change_chance:
-        #     self.change_direction()
+        if random.random() < self.direction_change_chance:
+            self.change_direction()
         self.step()
         if self.location == old_location:
             self.change_direction()
