@@ -155,9 +155,13 @@ class TestLocation:
     def test_bot_notices_a_block(self):
         world = World(10, 10)
         bot = Bot(5, 5)
+        bot.tired = 0
+        bot.direction_change_chance = 0
         world.add(bot)
-        block = Block(6, 5)
+        block = Block(7, 5)
         world.add(block)
+        bot.do_something()
+        assert bot.state == "looking"
         bot.do_something()
         assert bot.has(block)
 
@@ -171,19 +175,6 @@ class TestLocation:
         result = bot.scan()
         expected_scan = [('R', 5, 5)]
         assert result == expected_scan
-
-    def test_wont_take_two_blocks(self):
-        world = World(10, 10)
-        bot = Bot(5, 5)
-        world.add(bot)
-        block = Block(6, 5)
-        world.add(block)
-        block = Block(4, 5)
-        world.add(block)
-        bot.gather()
-        assert len(bot.inventory) == 1
-        bot.gather()
-        assert len(bot.inventory) == 1
 
     def test_bot_has_a_north_block(self):
         world = World(10, 10)

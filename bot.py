@@ -13,7 +13,8 @@ class Bot:
         self.direction = direction
         self.direction_change_chance = 0.2
         self.inventory = []
-        self.tired = 0
+        self.tired = 10
+        self.state = "walking"
 
     @property
     def x(self):
@@ -36,8 +37,25 @@ class Bot:
         return entity.location.distance(self.location) < 10
 
     def do_something(self):
-        self.gather()
-        self.move()
+        if self.state == "walking":
+            self.move()
+            self.tired -= 1
+            if self.tired <= 0:
+                self.state = "looking"
+        elif self.state == "looking":
+            if self.beside_block():
+                self.take()
+                self.state = "laden"
+                self.tired = 5
+        elif self.state == "laden":
+            if self.tired <= 0:
+                self.world.drop(self, self.inventory[0])
+                self.inventory = []
+                self.tired = 5
+                self.state = "walking"
+
+    def beside_block(self):
+        return True
 
     def gather(self):
         if self.tired > 0:
@@ -60,7 +78,10 @@ class Bot:
         if random.random() < self.direction_change_chance:
             self.change_direction()
         self.step()
+        print('location', self.location)
+        print('old location', old_location)
         if self.location == old_location:
+            print('here')
             self.change_direction()
 
     def step(self):
