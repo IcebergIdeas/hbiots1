@@ -38,21 +38,21 @@ class Bot:
 
     def do_something(self):
         if self.state == "walking":
-            self.move()
-            self.tired -= 1
             if self.tired <= 0:
                 self.state = "looking"
         elif self.state == "looking":
             if self.beside_block():
                 self.take()
-                self.state = "laden"
-                self.tired = 5
+                if self.inventory:
+                    self.state = "laden"
+                    self.tired = 5
         elif self.state == "laden":
             if self.tired <= 0:
                 self.world.drop(self, self.inventory[0])
                 self.inventory = []
                 self.tired = 5
                 self.state = "walking"
+        self.move()
 
     def beside_block(self):
         return True
@@ -70,6 +70,7 @@ class Bot:
 
     def step(self):
         self.world.step(self, self.direction)
+        self.tired -= 1
 
     def change_direction(self):
         direction = self.direction

@@ -83,7 +83,7 @@ class Game:
 
 if __name__ == "__main__":
     world = World(40, 40)
-    for _ in range(20):
+    for _ in range(50):
         x = random.randint(0, world.width - 1)
         y = random.randint(0, world.height - 1)
         block = Block(x, y)
