@@ -227,40 +227,6 @@ class TestLocation:
         bot.take()
         assert not bot.has(block)
 
-    def test_demo(self):
-        world = World(10, 10)
-        bot = Bot(5, 5)
-        world.add(bot)
-        block = Block(8, 5)
-        world.add(block)
-        print()
-        self.print_result(bot)
-        bot.move_east() # 6, 5
-        bot.move_east() # 7, 5
-        self.print_result(bot)
-        bot.take()
-        bot.move_south() # 7, 4
-        bot.move_south() # 7, 3
-        bot.move_west() # 6, 3
-        bot.move_west() # 5, 3
-        self.print_result(bot)
-        bot.drop_south() # 5, 2
-        self.print_result(bot)
-        bot.move_east() # 6, 3
-        bot.move_east() # 7, 3
-        bot.move_north() # 7, 4
-        bot.move_north() # 7, 5
-        self.print_result(bot)
-        bot.take()
-        bot.move_south() # 7, 4
-        bot.move_south() # 7, 3
-        bot.move_west() # 6, 3
-        self.print_result(bot)
-        bot.drop_west() # 5, 3
-        bot.move_east() # 7, 3
-        self.print_result(bot)
-        assert True
-
     def print_result(self, bot):
         result = bot.scan()
         print_map(result)

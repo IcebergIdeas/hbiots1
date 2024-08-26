@@ -57,19 +57,6 @@ class Bot:
     def beside_block(self):
         return True
 
-    def gather(self):
-        if self.tired > 0:
-            self.tired -= 1
-            return
-        if not self.inventory:
-            self.take()
-            self.tired = 5
-        else:
-            # Check to see if there's a block here
-            # Drop the block if there's one
-            self.world.drop(self, self.inventory[0])
-            self.inventory = []
-
     def take(self):
         self.world.take(self)
 
@@ -78,10 +65,7 @@ class Bot:
         if random.random() < self.direction_change_chance:
             self.change_direction()
         self.step()
-        print('location', self.location)
-        print('old location', old_location)
         if self.location == old_location:
-            print('here')
             self.change_direction()
 
     def step(self):
