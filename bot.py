@@ -47,6 +47,12 @@ class Bot:
     def receive(self, entity):
         self.inventory.append(entity)
 
+    def remove(self, entity):
+        try:
+            self.inventory.remove(entity)
+        except ValueError:
+            pass
+
     def is_close_enough(self, entity):
         return entity.location.distance(self.location) < 10
 
@@ -62,10 +68,11 @@ class Bot:
                     self.tired = 5
         elif self.state == "laden":
             if self.tired <= 0:
-                self.world.drop(self, self.inventory[0])
-                self.inventory = []
-                self.tired = 5
-                self.state = "walking"
+                block = self.inventory[0]
+                self.world.drop(self, block)
+                if block not in self.inventory:
+                    self.tired = 5
+                    self.state = "walking"
         self.move()
 
     def beside_block(self):

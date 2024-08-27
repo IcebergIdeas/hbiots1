@@ -176,16 +176,17 @@ class TestLocation:
         expected_scan = [('R', 5, 5)]
         assert result == expected_scan
 
-    def test_bot_has_a_north_block(self):
+    def test_bot_facing_north_takes_a_north_block(self):
         world = World(10, 10)
         bot = Bot(5, 5)
         world.add(bot)
-        block = Block(5, 4)
+        block = Block(5, 6)
         world.add(block)
+        bot.direction = Direction.NORTH
         bot.take()
         assert bot.has(block)
 
-    def test_bot_has_a_east_block(self):
+    def test_bot_facing_east_takes_an_east_block(self):
         world = World(10, 10)
         bot = Bot(5, 5)
         world.add(bot)
@@ -194,21 +195,23 @@ class TestLocation:
         bot.take()
         assert bot.has(block)
 
-    def test_bot_has_a_south_block(self):
+    def test_bot_facing_south_takes_a_south_block(self):
         world = World(10, 10)
         bot = Bot(5, 5)
         world.add(bot)
-        block = Block(5, 6)
+        block = Block(5, 4)
         world.add(block)
+        bot.direction = Direction.SOUTH
         bot.take()
         assert bot.has(block)
 
-    def test_bot_has_a_west_block(self):
+    def test_bot_facing_west_takes_a_west_block(self):
         world = World(10, 10)
         bot = Bot(5, 5)
         world.add(bot)
         block = Block(4, 5)
         world.add(block)
+        bot.direction = Direction.WEST
         bot.take()
         assert bot.has(block)
 

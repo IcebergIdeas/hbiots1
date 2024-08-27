@@ -17,6 +17,7 @@ class World:
         entity.world = self
         World.next_id += 1
         entity.id = World.next_id
+        # deal with same loc
         self.map.place(entity)
 
     def _move(self, entity, dx, dy):
@@ -24,6 +25,7 @@ class World:
         location = entity.location
         new_x = self.clip(location.x + dx, self.width)
         new_y = self.clip(location.y + dy, self.height)
+        # if there is already something here, dont change location
         entity.location = Point(new_x, new_y)
         entity.vision = self.create_vision(entity.location)
 
@@ -63,30 +65,22 @@ class World:
         return [(e.name, e.x, e.y) for e in self.map if e.is_close_enough(bot)]
 
     def take(self, bot: Bot):
-        entity = self.find_entity(bot.location)
+        location = bot.location + bot.direction
+        entity = self.map.entity_at(location.x, location.y)
         if entity:
+            if entity.name == 'R':
+                raise ValueError
             self.map.remove(entity.id)
             bot.receive(entity)
 
     def drop(self, bot, entity):
-        entity.location = bot.location
-        self.add(entity)
+        location = bot.location + bot.direction
+        if not self.map.entity_at(location.x, location.y):
+            entity.location = location
+            self.add(entity)
+            bot.remove(entity)
 
-    def find_entity(self, bot_location):
-        directions = Direction.ALL
-        for direction in directions:
-            search_location = bot_location + direction
-            entity = self.map.entity_at(search_location.x, search_location.y)
-            if entity:
-                return entity
-        return None
-
-
-
-    #
-    # def take(self, bot, direction):
-    #     self.take_at(bot, bot.location + direction)
-
+# should remove these
     def drop_north(self, bot):
         block = Block(bot.x, bot.y + 1)
         self.add(block)
