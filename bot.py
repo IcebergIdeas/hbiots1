@@ -111,8 +111,4 @@ class Bot:
     def move_west(self):
         self.world.move(self, Direction.WEST)
 
-    def drop_south(self):
-        self.world.drop_south(self)
 
-    def drop_west(self):
-        self.world.drop_west(self)

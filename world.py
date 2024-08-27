@@ -17,7 +17,6 @@ class World:
         entity.world = self
         World.next_id += 1
         entity.id = World.next_id
-        # deal with same loc
         self.map.place(entity)
 
     def _move(self, entity, dx, dy):
@@ -25,7 +24,6 @@ class World:
         location = entity.location
         new_x = self.clip(location.x + dx, self.width)
         new_y = self.clip(location.y + dy, self.height)
-        # if there is already something here, dont change location
         entity.location = Point(new_x, new_y)
         entity.vision = self.create_vision(entity.location)
 
@@ -79,16 +77,3 @@ class World:
             entity.location = location
             self.add(entity)
             bot.remove(entity)
-
-# should remove these
-    def drop_north(self, bot):
-        block = Block(bot.x, bot.y + 1)
-        self.add(block)
-
-    def drop_west(self, bot):
-        block = Block(bot.x - 1, bot.y)
-        self.add(block)
-
-    def drop_south(self, bot):
-        block = Block(bot.x, bot.y - 1)
-        self.add(block)
