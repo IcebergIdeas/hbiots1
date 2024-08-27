@@ -64,10 +64,9 @@ class World:
         location = bot.location + bot.direction
         entity = self.map.entity_at(location.x, location.y)
         if entity:
-            if entity.name == 'R':
-                raise ValueError
-            self.map.remove(entity.id)
-            bot.receive(entity)
+            if entity.name != 'R':
+                self.map.remove(entity.id)
+                bot.receive(entity)
 
     def drop(self, bot, entity):
         location = bot.location + bot.direction
