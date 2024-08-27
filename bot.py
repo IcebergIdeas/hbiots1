@@ -3,6 +3,11 @@ import random
 from direction import Direction
 from point import Point
 
+"""
+B_.
+_R_
+...
+"""
 
 class Bot:
     def __init__(self, x, y, direction=Direction.EAST):
@@ -13,8 +18,17 @@ class Bot:
         self.direction = direction
         self.direction_change_chance = 0.2
         self.inventory = []
+        self._vision = None
         self.tired = 10
         self.state = "walking"
+
+    @property
+    def vision(self):
+        return self._vision
+
+    @vision.setter
+    def vision(self, vision):
+        self._vision = vision
 
     @property
     def x(self):

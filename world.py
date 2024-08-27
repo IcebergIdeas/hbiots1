@@ -25,12 +25,22 @@ class World:
         new_x = self.clip(location.x + dx, self.width)
         new_y = self.clip(location.y + dy, self.height)
         entity.location = Point(new_x, new_y)
+        entity.vision = self.create_vision(entity.location)
 
     def clip(self, coord, limit):
         return 0 if coord < 0 else (limit if coord > limit else coord)
 
     def move(self, entity, direction):
         self._move(entity, direction.x, direction.y)
+
+    def create_vision(self, location):
+        result = []
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                found = self.map.entity_at(location.x + dx, location.y + dy)
+                if found:
+                    result.append((found.name, found.x, found.y))
+        return result
 
     def step(self, bot, direction):
         self._move(bot, direction.x, direction.y)
