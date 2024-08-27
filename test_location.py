@@ -106,8 +106,10 @@ class TestLocation:
         bot = Bot(10, 10)
         world.add(bot)
         for _ in range(5):
-            bot.move_south()
-            bot.move_west()
+            bot.direction = Direction.SOUTH
+            bot.step()
+            bot.direction = Direction.WEST
+            bot.step()
         drawing = world.draw()
         assert drawing == expected
 
@@ -127,8 +129,10 @@ class TestLocation:
         bot = Bot(10, 10)
         world.add(bot)
         for _ in range(5):
-            bot.move_south()
-            bot.move_west()
+            bot.direction = Direction.SOUTH
+            bot.step()
+            bot.direction = Direction.WEST
+            bot.step()
         block = Block(8, 5)
         world.add(block)
         drawing = world.draw()

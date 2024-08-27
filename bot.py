@@ -64,8 +64,8 @@ class Bot:
             if self.beside_block():
                 self.take()
                 if self.inventory:
-                    self.state = "laden"
                     self.tired = 5
+                    self.state = "laden"
         elif self.state == "laden":
             if self.tired <= 0:
                 block = self.inventory[0]
@@ -82,12 +82,16 @@ class Bot:
         self.world.take(self)
 
     def move(self):
-        old_location = self.location
         if random.random() < self.direction_change_chance:
             self.change_direction()
-        self.step()
-        if self.location == old_location:
+        step_succeeded = self.took_a_step()
+        if not step_succeeded:
             self.change_direction()
+
+    def took_a_step(self):
+        old_location = self.location
+        self.step()
+        return self.location != old_location
 
     def step(self):
         self.world.step(self, self.direction)
@@ -98,17 +102,5 @@ class Bot:
         while direction == self.direction:
             direction = random.choice(Direction.ALL)
         self.direction = direction
-
-    def move_north(self):
-        self.world.move(self, Direction.NORTH)
-
-    def move_east(self):
-        self.world.move(self, Direction.EAST)
-
-    def move_south(self):
-        self.world.move(self, Direction.SOUTH)
-
-    def move_west(self):
-        self.world.move(self, Direction.WEST)
 
 

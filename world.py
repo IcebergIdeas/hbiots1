@@ -1,6 +1,4 @@
-from block import Block
 from bot import Bot
-from direction import Direction
 from entities import Entities
 from point import Point
 
