@@ -234,12 +234,39 @@ class TestLocation:
         bot.take()
         assert not bot.has(block)
 
-    def test_bot_cannot_drop_off_world(self):
+    def test_bot_cannot_drop_off_world_north(self):
+        world = World(10, 10)
+        bot = Bot(5, 10)
+        block = Block(4, 4)
+        bot.receive(block)
+        bot.direction = Direction.NORTH
+        world.drop(bot, block)
+        assert bot.has(block), 'drop should not happen'
+
+    def test_bot_cannot_drop_off_world_east(self):
         world = World(10, 10)
         bot = Bot(10, 5)
         block = Block(4, 4)
         bot.receive(block)
         bot.direction = Direction.EAST
+        world.drop(bot, block)
+        assert bot.has(block), 'drop should not happen'
+
+    def test_bot_cannot_drop_off_world_south(self):
+        world = World(10, 10)
+        bot = Bot(5, 0)
+        block = Block(4, 4)
+        bot.receive(block)
+        bot.direction = Direction.SOUTH
+        world.drop(bot, block)
+        assert bot.has(block), 'drop should not happen'
+
+    def test_bot_cannot_drop_off_world_west(self):
+        world = World(10, 10)
+        bot = Bot(0, 5)
+        block = Block(4, 4)
+        bot.receive(block)
+        bot.direction = Direction.WEST
         world.drop(bot, block)
         assert bot.has(block), 'drop should not happen'
 
