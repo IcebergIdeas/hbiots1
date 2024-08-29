@@ -69,7 +69,7 @@ class Bot:
         elif self.state == "laden":
             if self.tired <= 0:
                 block = self.inventory[0]
-                self.world.drop(self, block)
+                self.world.drop_forward(self, block)
                 if block not in self.inventory:
                     self.tired = 5
                     self.state = "walking"

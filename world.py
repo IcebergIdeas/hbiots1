@@ -68,7 +68,7 @@ class World:
                 self.map.remove(entity.id)
                 bot.receive(entity)
 
-    def drop(self, bot, entity):
+    def drop_forward(self, bot, entity):
         drop_location = bot.location + bot.direction
         if self.is_off_world(drop_location):
             return

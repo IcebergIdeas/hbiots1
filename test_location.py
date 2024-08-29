@@ -240,7 +240,7 @@ class TestLocation:
         block = Block(4, 4)
         bot.receive(block)
         bot.direction = Direction.NORTH
-        world.drop(bot, block)
+        world.drop_forward(bot, block)
         assert bot.has(block), 'drop should not happen'
 
     def test_bot_cannot_drop_off_world_east(self):
@@ -249,7 +249,7 @@ class TestLocation:
         block = Block(4, 4)
         bot.receive(block)
         bot.direction = Direction.EAST
-        world.drop(bot, block)
+        world.drop_forward(bot, block)
         assert bot.has(block), 'drop should not happen'
 
     def test_bot_cannot_drop_off_world_south(self):
@@ -258,7 +258,7 @@ class TestLocation:
         block = Block(4, 4)
         bot.receive(block)
         bot.direction = Direction.SOUTH
-        world.drop(bot, block)
+        world.drop_forward(bot, block)
         assert bot.has(block), 'drop should not happen'
 
     def test_bot_cannot_drop_off_world_west(self):
@@ -267,7 +267,7 @@ class TestLocation:
         block = Block(4, 4)
         bot.receive(block)
         bot.direction = Direction.WEST
-        world.drop(bot, block)
+        world.drop_forward(bot, block)
         assert bot.has(block), 'drop should not happen'
 
 
