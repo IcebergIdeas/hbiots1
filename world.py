@@ -69,13 +69,18 @@ class World:
                 bot.receive(entity)
 
     def drop_forward(self, bot, entity):
-        drop_location = bot.location + bot.direction
-        if self.is_off_world(drop_location):
-            return
-        if not self.map.entity_at(drop_location.x, drop_location.y):
-            entity.location = drop_location
+        valid_location = self.validate_forward(bot)
+        if valid_location and self.is_empty(valid_location):
+            entity.location = valid_location
             self.add(entity)
             bot.remove(entity)
+
+    def is_empty(self, drop_location):
+        return not self.map.entity_at(drop_location.x, drop_location.y)
+
+    def validate_forward(self, bot):
+        location = bot.location + bot.direction
+        return None if self.is_off_world(location) else location
 
     def is_off_world(self, location):
         return self.clip(location.x, self.width) != location.x \
