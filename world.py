@@ -60,7 +60,7 @@ class World:
     def scan(self, bot):
         return [(e.name, e.x, e.y) for e in self.map if e.is_close_enough(bot)]
 
-    def take(self, bot: Bot):
+    def take_forward(self, bot: Bot):
         location = bot.location + bot.direction
         entity = self.map.entity_at(location.x, location.y)
         if entity:

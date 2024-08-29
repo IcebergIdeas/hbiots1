@@ -79,7 +79,7 @@ class Bot:
         return True
 
     def take(self):
-        self.world.take(self)
+        self.world.take_forward(self)
 
     def move(self):
         if random.random() < self.direction_change_chance:
