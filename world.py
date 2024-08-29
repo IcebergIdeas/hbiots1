@@ -69,8 +69,14 @@ class World:
                 bot.receive(entity)
 
     def drop(self, bot, entity):
-        location = bot.location + bot.direction
-        if not self.map.entity_at(location.x, location.y):
-            entity.location = location
+        drop_location = bot.location + bot.direction
+        if self.is_off_world(drop_location):
+            return
+        if not self.map.entity_at(drop_location.x, drop_location.y):
+            entity.location = drop_location
             self.add(entity)
             bot.remove(entity)
+
+    def is_off_world(self, location):
+        return self.clip(location.x, self.width) != location.x \
+            or self.clip(location.y, self.height) != location.y
