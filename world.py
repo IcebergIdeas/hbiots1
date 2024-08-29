@@ -61,10 +61,10 @@ class World:
         return [(e.name, e.x, e.y) for e in self.map if e.is_close_enough(bot)]
 
     def take_forward(self, bot: Bot):
-        valid_location = self.validate_forward(bot)
-        if valid_location == bot.location:
+        take_location = self.bots_next_location(bot)
+        if take_location == bot.location:
             return
-        entity = self.map.entity_at(valid_location.x, valid_location.y)
+        entity = self.map.entity_at(take_location.x, take_location.y)
         if self.can_take_entity(entity):
             self.map.remove(entity.id)
             bot.receive(entity)
@@ -73,16 +73,16 @@ class World:
         return entity and entity.name != 'R'
 
     def drop_forward(self, bot, entity):
-        valid_location = self.validate_forward(bot)
-        if valid_location != bot.location and self.is_empty(valid_location):
-            entity.location = valid_location
+        drop_location = self.bots_next_location(bot)
+        if drop_location != bot.location and self.is_empty(drop_location):
+            entity.location = drop_location
             self.add(entity)
             bot.remove(entity)
 
     def is_empty(self, drop_location):
         return not self.map.entity_at(drop_location.x, drop_location.y)
 
-    def validate_forward(self, bot):
+    def bots_next_location(self, bot):
         location = bot.location + bot.direction
         return bot.location if self.is_off_world(location) else location
 
