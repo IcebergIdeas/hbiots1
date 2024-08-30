@@ -86,6 +86,12 @@ class Bot:
         if vision.matches(p1, self.location):
             self.direction = Direction.NORTH
             return True
+        if vision.matches('__B??????', self.location):
+            self.direction = Direction.NORTH
+            return True
+        if vision.matches('BBB??????', self.location):
+            self.direction = Direction.WEST
+            return True
         return False
 
     def take(self):
