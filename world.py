@@ -25,9 +25,6 @@ class World:
     def clip(self, coord, limit):
         return 0 if coord < 0 else (limit if coord > limit else coord)
 
-    def move(self, entity, direction):
-        self._move(entity)
-
     def create_vision(self, location):
         result = []
         for dx in (-1, 0, 1):
