@@ -1,10 +1,32 @@
 import re
 
-from block import Block
 from bot import Bot
 from direction import Direction
 from point import Point
 from world import World
+
+
+class Vision:
+    def __init__(self, vision_list):
+        self.vision_list = vision_list
+
+    def matches(self, pattern, location: Point):
+        index = 0
+        for y in (-1, 0, 1):
+            for x in (-1, 0, 1):
+                check_location = Point(x, y) + location
+                item = self.vision_at(check_location.x, check_location.y)
+                if pattern[index] != item:
+                    return False
+                index += 1
+        return True
+
+    def vision_at(self, x, y):
+        for name, vx, vy in self.vision_list:
+            if vx == x and vy == y:
+                return name
+        return '_'
+
 
 
 class TestVision:
@@ -51,4 +73,11 @@ class TestVision:
         pattern = r'.B._RBBBB'
         result = re.search(pattern, vision)
         assert not result
+
+    def test_vision_pattern(self):
+        vision_list = [('R', 5, 5), ('B', 4, 4), ('B', 6, 4)]
+        vision = Vision(vision_list)
+        pattern = 'B_B_R____'
+        assert vision.matches(pattern, Point(5, 5))
+
 
