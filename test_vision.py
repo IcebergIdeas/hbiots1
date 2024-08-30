@@ -70,4 +70,12 @@ class TestVision:
         pattern = 'B_B_R_B__'
         assert not vision.matches(pattern, Point(5, 5))
 
+    def test_bot_drop_decision(self):
+        vision_list = [('R', 5, 5), ('B', 4, 4)]
+        bot = Bot(5, 5)
+        bot.vision = vision_list
+        bot.direction = Direction.NORTH
+        assert bot.near_block()
+
+
 

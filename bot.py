@@ -2,6 +2,7 @@ import random
 
 from direction import Direction
 from point import Point
+from vision import Vision
 
 """
 B_.
@@ -68,7 +69,7 @@ class Bot:
                     self.state = "laden"
         elif self.state == "laden":
             if self.tired <= 0:
-                if self.beside_block():
+                if self.near_block():
                     block = self.inventory[0]
                     self.world.drop_forward(self, block)
                     if block not in self.inventory:
@@ -78,6 +79,14 @@ class Bot:
 
     def beside_block(self):
         return True
+
+    def near_block(self):
+        vision = Vision(self.vision)
+        p1 = 'B_???????'
+        if vision.matches(p1, self.location):
+            self.direction = Direction.NORTH
+            return True
+        return False
 
     def take(self):
         self.world.take_forward(self)
