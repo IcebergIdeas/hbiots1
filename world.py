@@ -19,10 +19,7 @@ class World:
 
     def _move(self, entity, dx, dy):
         entity = self.map.contents[entity.id]
-        location = entity.location
-        new_x = self.clip(location.x + dx, self.width)
-        new_y = self.clip(location.y + dy, self.height)
-        entity.location = Point(new_x, new_y)
+        entity.location = self.bots_next_location(entity)
         entity.vision = self.create_vision(entity.location)
 
     def clip(self, coord, limit):
