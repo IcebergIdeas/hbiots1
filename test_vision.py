@@ -86,4 +86,10 @@ class TestVision:
         pattern = 'B_???????'
         assert vision.matches(pattern, Point(5, 5))
 
+    def test_vision_pattern_does_not_match(self):
+        vision_list = [('R', 5, 5), ('B', 4, 4), ('B', 6, 4)]
+        vision = Vision(vision_list)
+        pattern = 'B_B_R_B__'
+        assert not vision.matches(pattern, Point(5, 5))
+
 
