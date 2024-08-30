@@ -16,7 +16,8 @@ class Vision:
             for x in (-1, 0, 1):
                 check_location = Point(x, y) + location
                 item = self.vision_at(check_location.x, check_location.y)
-                if pattern[index] != item:
+                pattern_item = pattern[index]
+                if pattern_item != '?' and pattern_item != item:
                     return False
                 index += 1
         return True
@@ -77,6 +78,12 @@ class TestVision:
         vision_list = [('R', 5, 5), ('B', 4, 4), ('B', 6, 4)]
         vision = Vision(vision_list)
         pattern = 'B_B_R____'
+        assert vision.matches(pattern, Point(5, 5))
+
+    def test_vision_wildcard_pattern(self):
+        vision_list = [('R', 5, 5), ('B', 4, 4), ('B', 6, 4)]
+        vision = Vision(vision_list)
+        pattern = 'B_???????'
         assert vision.matches(pattern, Point(5, 5))
 
 
