@@ -22,6 +22,9 @@ class World:
         entity.location = self.bots_next_location(entity)
         entity.vision = self.create_vision(entity.location)
 
+    def step(self, bot):
+        self._move(bot)
+
     def clip(self, coord, limit):
         return 0 if coord < 0 else (limit if coord > limit else coord)
 
@@ -33,9 +36,6 @@ class World:
                 if found:
                     result.append((found.name, found.x, found.y))
         return result
-
-    def step(self, bot):
-        self._move(bot)
 
     def draw(self):
         result = ''

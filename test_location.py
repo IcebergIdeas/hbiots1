@@ -27,6 +27,18 @@ class TestLocation:
         assert bot.id == 101
         assert bot.location == point
 
+    @pytest.mark.skip("needs to exist")
+    def test_location_plus_direction_math(self):
+        pass
+
+    @pytest.mark.skip("needs to exist")
+    def test_world_deals_with_location_at_edge(self):
+        pass
+
+    @pytest.mark.skip("needs to exist")
+    def test_bot_gets_updated(self):
+        pass
+
     def test_move_north(self):
         world = World(10, 10)
         bot = Bot(5, 5)
