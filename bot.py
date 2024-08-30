@@ -68,11 +68,12 @@ class Bot:
                     self.state = "laden"
         elif self.state == "laden":
             if self.tired <= 0:
-                block = self.inventory[0]
-                self.world.drop_forward(self, block)
-                if block not in self.inventory:
-                    self.tired = 5
-                    self.state = "walking"
+                if self.beside_block():
+                    block = self.inventory[0]
+                    self.world.drop_forward(self, block)
+                    if block not in self.inventory:
+                        self.tired = 5
+                        self.state = "walking"
         self.move()
 
     def beside_block(self):
@@ -94,7 +95,7 @@ class Bot:
         return self.location != old_location
 
     def step(self):
-        self.world.step(self, self.direction)
+        self.world.step(self)
         self.tired -= 1
 
     def change_direction(self):

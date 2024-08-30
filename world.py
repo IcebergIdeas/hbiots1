@@ -17,7 +17,7 @@ class World:
         entity.id = World.next_id
         self.map.place(entity)
 
-    def _move(self, entity, dx, dy):
+    def _move(self, entity):
         entity = self.map.contents[entity.id]
         entity.location = self.bots_next_location(entity)
         entity.vision = self.create_vision(entity.location)
@@ -26,7 +26,7 @@ class World:
         return 0 if coord < 0 else (limit if coord > limit else coord)
 
     def move(self, entity, direction):
-        self._move(entity, direction.x, direction.y)
+        self._move(entity)
 
     def create_vision(self, location):
         result = []
@@ -37,8 +37,8 @@ class World:
                     result.append((found.name, found.x, found.y))
         return result
 
-    def step(self, bot, direction):
-        self._move(bot, direction.x, direction.y)
+    def step(self, bot):
+        self._move(bot)
 
     def draw(self):
         result = ''
