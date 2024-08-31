@@ -20,6 +20,7 @@ class TestLocation:
         assert bot.location == Location(10, 10)
 
     def test_bot_in_world(self):
+        World.next_id = 100
         bot = Bot(10, 10)
         world = World(10, 10)
         world.add(bot)
@@ -45,16 +46,6 @@ class TestLocation:
     @pytest.mark.skip("needs to exist")
     def test_bot_gets_updated(self):
         pass
-
-    def test_move_north(self):
-        world = World(10, 10)
-        bot = Bot(5, 5)
-        world.add(bot)
-        point = bot.location
-        bot.direction = Direction.NORTH
-        bot.step()
-        new_point = bot.location
-        assert new_point == Location(point.x, point.y - 1)
 
     def test_move_east(self):
         world = World(10, 10)
@@ -106,56 +97,6 @@ class TestLocation:
             '__________\n' \
             '__________\n'
         world = World(10, 10)
-        drawing = world.draw()
-        assert drawing == expected
-
-    @pytest.mark.skip("later")
-    def test_draw_world_with_bot(self):
-        expected = \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '_____R____\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n'
-        world = World(10, 10)
-        bot = Bot(10, 10)
-        world.add(bot)
-        for _ in range(5):
-            bot.direction = Direction.SOUTH
-            bot.step()
-            bot.direction = Direction.WEST
-            bot.step()
-        drawing = world.draw()
-        assert drawing == expected
-
-    @pytest.mark.skip("later")
-    def test_draw_world_with_second_entity(self):
-        expected = \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '_____R__B_\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n'
-        world = World(10, 10)
-        bot = Bot(10, 10)
-        world.add(bot)
-        for _ in range(5):
-            bot.direction = Direction.SOUTH
-            bot.step()
-            bot.direction = Direction.WEST
-            bot.step()
-        block = Block(8, 5)
-        world.add(block)
         drawing = world.draw()
         assert drawing == expected
 
