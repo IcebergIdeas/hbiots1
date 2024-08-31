@@ -13,7 +13,7 @@ class FakeMap:
         return self.contents
 
 
-class TestMapping:
+class TestMap:
     def test_hookup(self):
         assert 4 == 2 + 2
 
