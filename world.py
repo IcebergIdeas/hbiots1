@@ -9,7 +9,7 @@ class World:
     def __init__(self, max_x, max_y):
         self.width = max_x
         self.height = max_y
-        self.map = Map()
+        self.map = Map(10, 10)
 
     def add(self, entity):
         entity.world = self

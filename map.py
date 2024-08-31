@@ -3,7 +3,9 @@ from location import Location
 
 
 class Map:
-    def __init__(self):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
         self.contents = {}
 
     def __iter__(self):
@@ -34,3 +36,11 @@ class Map:
 
     def remove(self, id):
         del self.contents[id]
+
+    def attempt_move(self, id, location: Location):
+        entity = self.contents[id]
+        if self.location_is_valid(location):
+            entity.location = location
+
+    def location_is_valid(self, location: Location) -> bool:
+        return location.x >= 0 and location.x < self.width and location.y >= 0 and location.y < self.height
