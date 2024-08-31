@@ -1,3 +1,5 @@
+from direction import Direction
+
 
 class Location:
     def __init__(self, x, y):
@@ -8,10 +10,12 @@ class Location:
         return self.x == other.x and self.y == other.y
 
     def __repr__(self):
-        return f'Point({self.x}, {self.y})'
+        return f'Location({self.x}, {self.y})'
 
     def __add__(self, other):
-        return Location(self.x + other.x, self.y + other.y)
+        assert isinstance(other, Direction)
+        new_location = Location(self.x + other.x, self.y + other.y)
+        return new_location
 
     def distance(self, other):
         return abs(self.x - other.x) + abs(self.y - other.y)

@@ -27,9 +27,12 @@ class TestLocation:
         assert bot.id == 101
         assert bot.location == point
 
-    @pytest.mark.skip("needs to exist")
     def test_location_plus_direction_math(self):
-        pass
+        location = Location(5, 5)
+        assert location + Direction.NORTH == Location(5, 4)
+        assert location + Direction.SOUTH == Location(5, 6)
+        assert location + Direction.EAST == Location(6, 5)
+        assert location + Direction.WEST == Location(4, 5)
 
     @pytest.mark.skip("needs to exist")
     def test_world_deals_with_location_at_edge(self):
