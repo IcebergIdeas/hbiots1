@@ -17,13 +17,10 @@ class World:
         entity.id = World.next_id
         self.map.place(entity)
 
-    def _move(self, entity):
-        location = self.bots_next_location(entity)
-        self.map.attempt_move(entity.id, location)
-        entity.vision = self.create_vision(entity.location)
-
     def step(self, bot):
-        self._move(bot)
+        location = self.bots_next_location(bot)
+        self.map.attempt_move(bot.id, location)
+        bot.vision = self.create_vision(bot.location)
 
     def clip(self, coord, limit):
         return 0 if coord < 0 else (limit if coord > limit else coord)
