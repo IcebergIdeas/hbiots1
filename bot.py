@@ -4,11 +4,6 @@ from direction import Direction
 from location import Location
 from vision import Vision
 
-"""
-B_.
-_R_
-...
-"""
 
 class Bot:
     def __init__(self, x, y, direction=Direction.EAST):

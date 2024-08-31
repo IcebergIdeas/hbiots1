@@ -1,5 +1,5 @@
 from block import Block
-from entities import Entities
+from map import Map
 from map_entry import MapEntity
 
 
@@ -16,12 +16,12 @@ class TestMapping:
         assert 4 == 2 + 2
 
     def test_map_compare(self):
-        world_map = Entities()
+        world_map = Map()
         other_map = FakeMap()
         assert world_map.map_is_OK(other_map)
 
     def test_map_with_block(self):
-        world_map = Entities()
+        world_map = Map()
         block = Block(3, 4)
         world_map.place(block)
         other_map = FakeMap()

@@ -2,7 +2,7 @@ from map_entry import MapEntity
 from location import Location
 
 
-class Entities:
+class Map:
     def __init__(self):
         self.contents = {}
 

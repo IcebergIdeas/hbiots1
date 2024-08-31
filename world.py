@@ -1,5 +1,5 @@
 from bot import Bot
-from entities import Entities
+from map import Map
 from location import Location
 
 
@@ -9,7 +9,7 @@ class World:
     def __init__(self, max_x, max_y):
         self.width = max_x
         self.height = max_y
-        self.map = Entities()
+        self.map = Map()
 
     def add(self, entity):
         entity.world = self
