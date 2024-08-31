@@ -13,7 +13,10 @@ class Location:
         return f'Location({self.x}, {self.y})'
 
     def __add__(self, other):
-        assert isinstance(other, Direction)
+        try:
+            assert isinstance(other, Direction)
+        except AssertionError:
+            return self
         new_location = Location(self.x + other.x, self.y + other.y)
         return new_location
 
