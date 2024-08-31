@@ -6,12 +6,11 @@ from world import World
 
 class TestBot:
 
-    def test_move_north(self):
+    def test_step(self):
         world = World(10, 10)
         bot = Bot(5, 5)
         world.add(bot)
-        point = bot.location
+        location = bot.location
         bot.direction = Direction.NORTH
         bot.step()
-        new_point = bot.location
-        assert new_point == Location(point.x, point.y - 1)
+        assert bot.location == location + Direction.NORTH

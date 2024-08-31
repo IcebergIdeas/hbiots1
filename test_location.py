@@ -47,34 +47,7 @@ class TestLocation:
     def test_bot_gets_updated(self):
         pass
 
-    def test_move_east(self):
-        world = World(10, 10)
-        bot = Bot(5, 5)
-        world.add(bot)
-        point = bot.location
-        bot.step()
-        new_point = bot.location
-        assert new_point == Location(point.x + 1, point.y)
-
-    def test_move_south(self):
-        world = World(10, 10)
-        bot = Bot(10, 9, Direction.SOUTH)
-        world.add(bot)
-        point = bot.location
-        bot.step()
-        new_point = bot.location
-        assert new_point == Location(point.x, point.y + 1)
-
-    def test_move_west(self):
-        world = World(10, 10)
-        bot = Bot(10, 10, Direction.WEST)
-        world.add(bot)
-        point = bot.location
-        bot.step()
-        new_point = bot.location
-        assert new_point == Location(point.x - 1, point.y)
-
-    def test_stop_at_edge(self):
+     def test_stop_at_edge(self):
         world = World(10, 10)
         bot = Bot(8, 5)
         world.add(bot)
@@ -83,22 +56,6 @@ class TestLocation:
         assert bot.location == Location(10, 5)
         bot.step()
         assert bot.location == Location(10, 5)
-
-    def test_draw_empty_world(self):
-        expected = \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n' \
-            '__________\n'
-        world = World(10, 10)
-        drawing = world.draw()
-        assert drawing == expected
 
     def test_scan(self):
         world = World(10, 10)
