@@ -47,7 +47,7 @@ class TestLocation:
     def test_bot_gets_updated(self):
         pass
 
-     def test_stop_at_edge(self):
+    def test_stop_at_edge(self):
         world = World(10, 10)
         bot = Bot(8, 5)
         world.add(bot)
@@ -188,7 +188,6 @@ class TestLocation:
         bot.direction = Direction.WEST
         world.drop_forward(bot, block)
         assert bot.has(block), 'drop should not happen'
-
 
     def print_result(self, bot):
         result = bot.scan()
