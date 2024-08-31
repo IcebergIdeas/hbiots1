@@ -9,7 +9,7 @@ class World:
     def __init__(self, max_x, max_y):
         self.width = max_x
         self.height = max_y
-        self.map = Map(10, 10)
+        self.map = Map(max_x, max_y)
 
     def add(self, entity):
         entity.world = self
@@ -18,8 +18,8 @@ class World:
         self.map.place(entity)
 
     def _move(self, entity):
-        entity = self.map.contents[entity.id]
-        entity.location = self.bots_next_location(entity)
+        location = self.bots_next_location(entity)
+        self.map.attempt_move(entity.id, location)
         entity.vision = self.create_vision(entity.location)
 
     def step(self, bot):

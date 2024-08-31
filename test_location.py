@@ -49,9 +49,8 @@ class TestLocation:
 
     def test_stop_at_edge(self):
         world = World(10, 10)
-        bot = Bot(8, 5)
+        bot = Bot(9, 5)
         world.add(bot)
-        bot.step()
         bot.step()
         assert bot.location == Location(10, 5)
         bot.step()

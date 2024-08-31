@@ -43,4 +43,4 @@ class Map:
             entity.location = location
 
     def location_is_valid(self, location: Location) -> bool:
-        return location.x >= 0 and location.x < self.width and location.y >= 0 and location.y < self.height
+        return location.x >= 0 and location.x <= self.width and location.y >= 0 and location.y <= self.height
