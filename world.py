@@ -1,6 +1,6 @@
 from bot import Bot
 from entities import Entities
-from point import Point
+from location import Location
 
 
 class World:

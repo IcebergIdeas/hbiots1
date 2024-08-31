@@ -1,6 +1,6 @@
 from bot import Bot
 from direction import Direction
-from point import Point
+from location import Location
 from world import World
 
 
@@ -32,8 +32,8 @@ class TestPathing:
         assert q.get() == 5
 
     def test_simple_path(self):
-        target = Point(10, 10)
-        start = Point(5, 5)
+        target = Location(10, 10)
+        start = Location(5, 5)
         d = start.distance(target)
         for step in range(d):
             start = start.step_toward(target)
@@ -45,7 +45,7 @@ class TestPathing:
         world.add(bot)
         bot.do_something()
         loc = bot.location
-        assert loc != Point(5, 5)
+        assert loc != Location(5, 5)
 
     def test_changes_direction(self):
         world = World(10, 10)
@@ -53,9 +53,9 @@ class TestPathing:
         bot.direction_change_chance = 0.0
         world.add(bot)
         bot.do_something()
-        assert bot.location == Point(10, 5)
+        assert bot.location == Location(10, 5)
         bot.do_something()
-        assert bot.location == Point(10, 5)
+        assert bot.location == Location(10, 5)
         assert bot.direction != Direction.EAST
         bot.do_something()
-        assert bot.location != Point(10, 5)
+        assert bot.location != Location(10, 5)

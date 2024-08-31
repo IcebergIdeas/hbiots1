@@ -1,4 +1,4 @@
-from point import Point
+from location import Location
 
 
 class Block:
@@ -6,7 +6,7 @@ class Block:
         self.world = None
         self.id = None
         self.name = 'B'
-        self.location = Point(x, y)
+        self.location = Location(x, y)
 
     @property
     def x(self):

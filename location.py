@@ -1,4 +1,5 @@
-class Point:
+
+class Location:
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -10,7 +11,7 @@ class Point:
         return f'Point({self.x}, {self.y})'
 
     def __add__(self, other):
-        return Point(self.x + other.x, self.y + other.y)
+        return Location(self.x + other.x, self.y + other.y)
 
     def distance(self, other):
         return abs(self.x - other.x) + abs(self.y - other.y)
@@ -20,7 +21,7 @@ class Point:
         dy = t.y - self.y
         if abs(dx) > abs(dy):
             step = 1 if dx > 0 else -1
-            return Point(self.x + step, self.y)
+            return Location(self.x + step, self.y)
         else:
             step = 1 if dy > 0 else -1
-            return Point(self.x, self.y + step)
+            return Location(self.x, self.y + step)

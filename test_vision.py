@@ -2,7 +2,7 @@ import re
 
 from bot import Bot
 from direction import Direction
-from point import Point
+from location import Location
 from vision import Vision
 from world import World
 
@@ -18,7 +18,7 @@ class TestVision:
         world.add(bot)
         bot.vision = None
         bot.move()
-        assert bot.location == Point(6, 5)
+        assert bot.location == Location(6, 5)
         vision = bot.vision
         assert ('R', 6, 5) in vision
 
@@ -34,7 +34,7 @@ class TestVision:
         world.add(bot)
         bot.vision = None
         bot.move()
-        assert bot.location == Point(5, 5)
+        assert bot.location == Location(5, 5)
         vision = bot.vision
         assert ('R', 5, 5) in vision
         assert ('B', 4, 5) in vision
@@ -56,19 +56,19 @@ class TestVision:
         vision_list = [('R', 5, 5), ('B', 4, 4), ('B', 6, 4)]
         vision = Vision(vision_list)
         pattern = 'B_B_R____'
-        assert vision.matches(pattern, Point(5, 5))
+        assert vision.matches(pattern, Location(5, 5))
 
     def test_vision_wildcard_pattern(self):
         vision_list = [('R', 5, 5), ('B', 4, 4), ('B', 6, 4)]
         vision = Vision(vision_list)
         pattern = 'B_???????'
-        assert vision.matches(pattern, Point(5, 5))
+        assert vision.matches(pattern, Location(5, 5))
 
     def test_vision_pattern_does_not_match(self):
         vision_list = [('R', 5, 5), ('B', 4, 4), ('B', 6, 4)]
         vision = Vision(vision_list)
         pattern = 'B_B_R_B__'
-        assert not vision.matches(pattern, Point(5, 5))
+        assert not vision.matches(pattern, Location(5, 5))
 
     def test_bot_drop_decision(self):
         vision_list = [('R', 5, 5), ('B', 4, 4)]

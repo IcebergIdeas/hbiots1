@@ -1,5 +1,5 @@
 from map_entry import MapEntity
-from point import Point
+from location import Location
 
 
 class Entities:
@@ -13,7 +13,7 @@ class Entities:
         self.contents[entity.id] = entity
 
     def entity_at(self, x, y):
-        point = Point(x, y)
+        point = Location(x, y)
         for entity in self.contents.values():
             if entity.location == point:
                 return entity

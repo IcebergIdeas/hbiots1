@@ -1,7 +1,7 @@
 import random
 
 from direction import Direction
-from point import Point
+from location import Location
 from vision import Vision
 
 """
@@ -15,7 +15,7 @@ class Bot:
         self.world = None
         self.id = None
         self.name = 'R'
-        self.location = Point(x, y)
+        self.location = Location(x, y)
         self.direction = direction
         self.direction_change_chance = 0.2
         self.inventory = []
