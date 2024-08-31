@@ -34,6 +34,10 @@ class TestLocation:
         assert location + Direction.EAST == Location(6, 5)
         assert location + Direction.WEST == Location(4, 5)
 
+    def test_location_add_returns_self_if_not_given_direction(self):
+        location = Location(5, 5)
+        assert location + location == location
+
     @pytest.mark.skip("needs to exist")
     def test_world_deals_with_location_at_edge(self):
         pass
