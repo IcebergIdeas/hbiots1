@@ -2,7 +2,7 @@ from block import Block
 from bot import Bot
 from location import Location
 from map import Map
-from map_entry import MapEntity
+from map_entity import MapEntity
 
 
 class FakeMap:

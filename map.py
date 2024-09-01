@@ -1,4 +1,4 @@
-from map_entry import MapEntity
+from map_entity import MapEntity
 from location import Location
 
 
