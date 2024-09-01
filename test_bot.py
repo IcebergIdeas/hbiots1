@@ -1,6 +1,5 @@
 from bot import Bot
 from direction import Direction
-from location import Location
 from world import World
 
 
