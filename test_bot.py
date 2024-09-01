@@ -5,7 +5,6 @@ from world import World
 
 
 class TestBot:
-
     def test_step(self):
         world = World(10, 10)
         bot = Bot(5, 5)
