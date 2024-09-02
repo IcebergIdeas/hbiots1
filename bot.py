@@ -16,7 +16,7 @@ class Bot:
         self.inventory = []
         self._vision = None
         self.tired = 10
-        self.state = "walking"
+        self.state = self.walking
 
     @property
     def vision(self):
@@ -53,24 +53,28 @@ class Bot:
         return entity.location.distance(self.location) < 10
 
     def do_something(self):
-        if self.state == "walking":
-            if self.tired <= 0:
-                self.state = "looking"
-        elif self.state == "looking":
-            if self.facing_block():
-                self.take()
-                if self.inventory:
-                    self.tired = 5
-                    self.state = "laden"
-        elif self.state == "laden":
-            if self.tired <= 0:
-                if self.near_block():
-                    block = self.inventory[0]
-                    self.world.drop_forward(self, block)
-                    if block not in self.inventory:
-                        self.tired = 5
-                        self.state = "walking"
+        self.state()
         self.move()
+
+    def laden(self):
+        if self.tired <= 0:
+            if self.near_block():
+                block = self.inventory[0]
+                self.world.drop_forward(self, block)
+                if block not in self.inventory:
+                    self.tired = 5
+                    self.state = self.walking
+
+    def looking(self):
+        if self.facing_block():
+            self.take()
+            if self.inventory:
+                self.tired = 5
+                self.state = self.laden
+
+    def walking(self):
+        if self.tired <= 0:
+            self.state = self.looking
 
     def facing_block(self):
         look_at = self.location + self.direction
