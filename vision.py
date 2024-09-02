@@ -6,6 +6,9 @@ class Vision:
     def __init__(self, vision_list):
         self.vision_list = vision_list
 
+    def __iter__(self):
+        return iter(self.vision_list)
+
     def matches(self, pattern, location: Location):
         index = 0
         for direction in Direction.EVERY:

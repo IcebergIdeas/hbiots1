@@ -24,7 +24,7 @@ class Bot:
 
     @vision.setter
     def vision(self, vision):
-        self._vision = vision
+        self._vision = Vision(vision)
 
     @property
     def x(self):
@@ -74,19 +74,18 @@ class Bot:
 
     def facing_block(self):
         look_at = self.location + self.direction
-        name = Vision(self.vision).name_at(look_at.x, look_at.y)
+        name = self.vision.name_at(look_at.x, look_at.y)
         return name == 'B'
 
     def near_block(self):
-        vision = Vision(self.vision)
         p1 = 'B_???????'
-        if vision.matches(p1, self.location):
+        if self.vision.matches(p1, self.location):
             self.direction = Direction.NORTH
             return True
-        if vision.matches('__B??????', self.location):
+        if self.vision.matches('__B??????', self.location):
             self.direction = Direction.NORTH
             return True
-        if vision.matches('BBB??????', self.location):
+        if self.vision.matches('BBB??????', self.location):
             self.direction = Direction.WEST
             return True
         return False
