@@ -7,5 +7,7 @@ GREY = (140, 140, 140)
 DARK_GREY = (40, 40, 40)
 BLUE = (56, 136, 184)
 WHITE = (232, 232, 232)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
 BLACK = (0, 0, 0)
 RIGHT_BUTTON = 3

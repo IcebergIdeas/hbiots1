@@ -4,7 +4,7 @@ import pygame
 
 from block import Block
 from bot import Bot
-from constants import GREY, DARK_GREY, LT_BLUE, BASE_FONT, WHITE, BLACK
+from constants import GREY, DARK_GREY, LT_BLUE, BASE_FONT, WHITE, BLACK, RED, GREEN
 from world import World
 
 
@@ -44,7 +44,13 @@ class Game:
             name = entity.name
             scale_x = x * self.scale
             scale_y = y * self.scale
-            self.text((scale_x + 1, scale_y + 1), name, 16, WHITE, BLACK)
+            color = WHITE
+            if name == 'R':
+                if entity.inventory:
+                    color = RED
+                else:
+                    color = GREEN
+            self.text((scale_x + 1, scale_y + 1), name, 16, color, BLACK)
 
     def text(self, location, phrase, size, front_color, back_color):
         font = pygame.font.Font(BASE_FONT, size)
@@ -71,7 +77,12 @@ class Game:
                 self.on_event(event)
             self.clear_screen()
             self.draw_grid()
-            self.bot.do_something()
+            robots = []
+            for entity in self.world.map:
+                if entity.name == 'R':
+                    robots.append(entity)
+            for bot in robots:
+                bot.do_something()
             self.draw_world()
             pygame.display.update()
         self.on_cleanup()
@@ -88,7 +99,8 @@ if __name__ == "__main__":
         y = random.randint(0, world.height - 1)
         block = Block(x, y)
         world.add(block)
-    bot = Bot(10, 20)
-    world.add(bot)
+    for _ in range(20):
+        bot = Bot(10, 20)
+        world.add(bot)
     game = Game(world, bot)
     game.on_execute()
