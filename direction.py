@@ -11,6 +11,12 @@ class Direction:
         self.x = x
         self.y = y
 
+    def __add__(self, other):
+        if isinstance(other, Direction):
+            return Direction(self.x + other.x, self.y + other.y)
+        else:
+            return other + self
+
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
 
@@ -21,6 +27,9 @@ class Direction:
         x, y = self.x, self.y
         new_x, new_y = y, -x
         return Direction(new_x, new_y)
+
+    def right(self):
+        return self.left().left().left()
 
 
 Direction.NORTH = Direction(0, -1)
