@@ -13,4 +13,6 @@ class TestBot:
         bot.step()
         assert bot.location == location + Direction.NORTH
 
-    def test_bot_
+    def test_bot_facing_block(self):
+        bot = Bot(5, 5)
+        bot.direction = Direction.NORTH

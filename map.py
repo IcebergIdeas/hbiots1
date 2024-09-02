@@ -44,3 +44,12 @@ class Map:
 
     def location_is_valid(self, location: Location) -> bool:
         return location.x >= 0 and location.x <= self.width and location.y >= 0 and location.y <= self.height
+
+    def create_vision(self, location):
+        result = []
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                found = self.entity_at(location.x + dx, location.y + dy)
+                if found:
+                    result.append((found.name, found.x, found.y))
+        return result

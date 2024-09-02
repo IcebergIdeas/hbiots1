@@ -1,6 +1,5 @@
 from bot import Bot
 from map import Map
-from location import Location
 
 
 class World:
@@ -20,19 +19,10 @@ class World:
     def step(self, bot):
         location = self.bots_next_location(bot)
         self.map.attempt_move(bot.id, location)
-        bot.vision = self.create_vision(bot.location)
+        bot.vision = self.map.create_vision(bot.location)
 
     def clip(self, coord, limit):
         return 0 if coord < 0 else (limit if coord > limit else coord)
-
-    def create_vision(self, location):
-        result = []
-        for dx in (-1, 0, 1):
-            for dy in (-1, 0, 1):
-                found = self.map.entity_at(location.x + dx, location.y + dy)
-                if found:
-                    result.append((found.name, found.x, found.y))
-        return result
 
     def draw(self):
         result = ''
