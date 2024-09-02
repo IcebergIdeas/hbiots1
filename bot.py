@@ -57,7 +57,7 @@ class Bot:
             if self.tired <= 0:
                 self.state = "looking"
         elif self.state == "looking":
-            if self.beside_block():
+            if self.facing_block():
                 self.take()
                 if self.inventory:
                     self.tired = 5
@@ -72,7 +72,7 @@ class Bot:
                         self.state = "walking"
         self.move()
 
-    def beside_block(self):
+    def facing_block(self):
         return True
 
     def near_block(self):

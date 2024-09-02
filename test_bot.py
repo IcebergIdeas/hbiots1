@@ -12,3 +12,5 @@ class TestBot:
         bot.direction = Direction.NORTH
         bot.step()
         assert bot.location == location + Direction.NORTH
+
+    def test_bot_
