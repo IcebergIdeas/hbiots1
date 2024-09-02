@@ -1,5 +1,7 @@
+from block import Block
 from bot import Bot
 from direction import Direction
+from map import Map
 from world import World
 
 
@@ -16,3 +18,10 @@ class TestBot:
     def test_bot_facing_block(self):
         bot = Bot(5, 5)
         bot.direction = Direction.NORTH
+        map = Map(10, 10)
+        map.place(bot)
+        bot.vision = map.create_vision(bot.location)
+        assert not bot.facing_block()
+        map.place(Block(5,4))
+        bot.vision = map.create_vision(bot.location)
+        assert bot.facing_block()

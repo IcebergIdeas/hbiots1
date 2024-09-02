@@ -73,7 +73,9 @@ class Bot:
         self.move()
 
     def facing_block(self):
-        return True
+        look_at = self.location + self.direction
+        name = Vision(self.vision).name_at(look_at.x, look_at.y)
+        return name == 'B'
 
     def near_block(self):
         vision = Vision(self.vision)
