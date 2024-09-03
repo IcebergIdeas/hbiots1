@@ -20,8 +20,16 @@ class Vision:
             index += 1
         return True
 
-    def name_at(self, x, y):
+    def name_at(self, x, y=None):
+        if isinstance(x, Location):
+            return self.find_name_at(x.x, x.y)
+        else:
+            return self.find_name_at(x, y)
+
+    def find_name_at(self, xx, yy):
         for name, vx, vy in self.vision_list:
-            if vx == x and vy == y:
+            if vx == xx and vy == yy:
                 return name
         return '_'
+
+

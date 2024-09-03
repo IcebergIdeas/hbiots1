@@ -80,9 +80,9 @@ class Bot:
         forward = self.location.forward(self.direction)
         name = self.vision.name_at(forward.x, forward.y)
         forward_left = self.location.forward_left(self.direction)
-        left_name = self.vision.name_at(forward_left.x, forward_left.y)
+        left_name = self.vision.name_at(forward_left)
         forward_right = self.location.forward_right(self.direction)
-        right_name = self.vision.name_at(forward_right.x, forward_right.y)
+        right_name = self.vision.name_at(forward_right)
         return name == 'B' and (left_name == '_' or right_name == '_')
 
     def near_block(self):
