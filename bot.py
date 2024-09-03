@@ -78,7 +78,7 @@ class Bot:
 
     def facing_block(self):
         forward = self.location.forward(self.direction)
-        name = self.vision.name_at(forward.x, forward.y)
+        name = self.vision.name_at(forward)
         forward_left = self.location.forward_left(self.direction)
         left_name = self.vision.name_at(forward_left)
         forward_right = self.location.forward_right(self.direction)

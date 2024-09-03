@@ -15,23 +15,19 @@ class Vision:
         index = 0
         for direction in Direction.EVERY:
             check_location = location + direction
-            item = self.name_at(check_location.x, check_location.y)
+            item = self.name_at(check_location)
             pattern_item = pattern[index]
             if pattern_item != '?' and pattern_item != item:
                 return False
             index += 1
         return True
 
-    #overload
-    def name_at(self, x: Union[Location, float], y: Union[float, None]=None):
-        if isinstance(x, Location):
-            return self.find_name_at(x.x, x.y)
-        else:
-            return self.find_name_at(x, y)
+    def name_at(self, location: Location):
+        return self._find_name_at(location.x, location.y)
 
-    def find_name_at(self, xx, yy):
+    def _find_name_at(self, x, y):
         for name, vx, vy in self.vision_list:
-            if vx == xx and vy == yy:
+            if vx == x and vy == y:
                 return name
         return '_'
 
