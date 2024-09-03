@@ -13,10 +13,8 @@ class Vision:
 
     def matches(self, pattern, location: Location):
         for index, direction in enumerate(Direction.EVERY):
-            check_location = location + direction
-            item = self.name_at(check_location)
             pattern_item = pattern[index]
-            if pattern_item != '?' and pattern_item != item:
+            if pattern_item != '?' and pattern_item != self.name_at(location + direction):
                 return False
         return True
 
