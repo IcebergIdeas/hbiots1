@@ -6,6 +6,7 @@
   would it not be better to just have location and require objects
   that want x and y to use it and decode it?
 * standardize how we communicate from world to bot and v/v.
+* * extract state machine in Bot
 
 ### long list
 

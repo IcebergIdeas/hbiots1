@@ -20,6 +20,15 @@ class Location:
         new_location = Location(self.x + other.x, self.y + other.y)
         return new_location
 
+    def forward(self, direction):
+        return self + direction
+
+    def forward_left(self, direction):
+        return self + direction + direction.left()
+
+    def forward_right(self, direction):
+        return self + direction + direction.right()
+
     def distance(self, other):
         return abs(self.x - other.x) + abs(self.y - other.y)
 
