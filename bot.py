@@ -92,16 +92,12 @@ class Bot:
         return self.vision.name_at(forward_right)
 
     def near_block(self):
-        p1 = 'B_???????'
-        if self.vision.matches(p1, self.location):
-            self.direction = Direction.NORTH
-            return True
-        if self.vision.matches('__B??????', self.location):
-            self.direction = Direction.NORTH
-            return True
-        if self.vision.matches('BBB??????', self.location):
-            self.direction = Direction.WEST
-            return True
+        patterns = ['B_???????', '__B??????', 'BBB??????']
+        directions = [Direction.NORTH, Direction.NORTH, Direction.WEST]
+        for pattern, direction in zip(patterns, directions):
+            if self.vision.matches(pattern, self.location):
+                self.direction = direction
+                return True
         return False
 
     def take(self):
