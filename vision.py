@@ -1,3 +1,5 @@
+from typing import Union
+
 from direction import Direction
 from location import Location
 
@@ -20,7 +22,8 @@ class Vision:
             index += 1
         return True
 
-    def name_at(self, x, y=None):
+    #overload
+    def name_at(self, x: Union[Location, float], y: Union[float, None]=None):
         if isinstance(x, Location):
             return self.find_name_at(x.x, x.y)
         else:
