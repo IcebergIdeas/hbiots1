@@ -56,14 +56,9 @@ class Bot:
         self.state()
         self.move()
 
-    def laden(self):
+    def walking(self):
         if self.tired <= 0:
-            if self.near_block():
-                block = self.inventory[0]
-                self.world.drop_forward(self, block)
-                if block not in self.inventory:
-                    self.tired = 5
-                    self.state = self.walking
+            self.state = self.looking
 
     def looking(self):
         if self.facing_block():
@@ -72,9 +67,14 @@ class Bot:
                 self.tired = 5
                 self.state = self.laden
 
-    def walking(self):
+    def laden(self):
         if self.tired <= 0:
-            self.state = self.looking
+            if self.near_block():
+                block = self.inventory[0]
+                self.world.drop_forward(self, block)
+                if block not in self.inventory:
+                    self.tired = 5
+                    self.state = self.walking
 
     def facing_block(self):
         look_at = self.location + self.direction
