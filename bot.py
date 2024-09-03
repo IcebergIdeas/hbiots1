@@ -83,7 +83,7 @@ class Bot:
         left_name = self.vision.name_at(look_at_left.x, look_at_left.y)
         look_at_right = self.location + (self.direction + self.direction.right())
         right_name = self.vision.name_at(look_at_right.x, look_at_right.y)
-        return name == 'B' and left_name == '_' or right_name == '_'
+        return name == 'B' and (left_name == '_' or right_name == '_')
 
     def near_block(self):
         p1 = 'B_???????'
