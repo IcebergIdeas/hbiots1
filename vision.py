@@ -12,14 +12,12 @@ class Vision:
         return iter(self.vision_list)
 
     def matches(self, pattern, location: Location):
-        index = 0
-        for direction in Direction.EVERY:
+        for index, direction in enumerate(Direction.EVERY):
             check_location = location + direction
             item = self.name_at(check_location)
             pattern_item = pattern[index]
             if pattern_item != '?' and pattern_item != item:
                 return False
-            index += 1
         return True
 
     def name_at(self, location: Location):
