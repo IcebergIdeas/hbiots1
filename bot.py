@@ -77,13 +77,19 @@ class Bot:
                     self.state = self.walking
 
     def facing_block(self):
+        return self.forward_name() == 'B' and (self.forward_left_name() == '_' or self.forward_right_name() == '_')
+
+    def forward_name(self):
         forward = self.location.forward(self.direction)
-        name = self.vision.name_at(forward)
+        return self.vision.name_at(forward)
+
+    def forward_left_name(self):
         forward_left = self.location.forward_left(self.direction)
-        left_name = self.vision.name_at(forward_left)
+        return self.vision.name_at(forward_left)
+
+    def forward_right_name(self):
         forward_right = self.location.forward_right(self.direction)
-        right_name = self.vision.name_at(forward_right)
-        return name == 'B' and (left_name == '_' or right_name == '_')
+        return self.vision.name_at(forward_right)
 
     def near_block(self):
         p1 = 'B_???????'
