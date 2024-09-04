@@ -11,13 +11,6 @@ class Vision:
     def __iter__(self):
         return iter(self.vision_list)
 
-    def matches(self, pattern, location: Location):
-        for index, direction in enumerate(Direction.EVERY):
-            pattern_item = pattern[index]
-            if pattern_item != '?' and pattern_item != self.name_at(location + direction):
-                return False
-        return True
-
     def name_at(self, location: Location):
         return self._find_name_at(location.x, location.y)
 
@@ -26,5 +19,3 @@ class Vision:
             if vx == x and vy == y:
                 return name
         return '_'
-
-

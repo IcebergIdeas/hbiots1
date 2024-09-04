@@ -41,41 +41,9 @@ class TestVision:
         assert ('B', 6, 6) in vision
         assert ('B', 4, 4) in vision
 
-    def test_a_pattern(self):
-        vision ='B_B'\
-                '_RB'\
-                'B__'
-        pattern = r'B_..R....'
-        result = re.search(pattern, vision)
-        assert result
-        pattern = r'.B._RBBBB'
-        result = re.search(pattern, vision)
-        assert not result
-
-    def test_vision_pattern(self):
-        vision_list = [('R', 5, 5), ('B', 4, 4), ('B', 6, 4)]
-        vision = Vision(vision_list)
-        pattern = 'B_B_R____'
-        assert vision.matches(pattern, Location(5, 5))
-
-    def test_vision_wildcard_pattern(self):
-        vision_list = [('R', 5, 5), ('B', 4, 4), ('B', 6, 4)]
-        vision = Vision(vision_list)
-        pattern = 'B_???????'
-        assert vision.matches(pattern, Location(5, 5))
-
-    def test_vision_pattern_does_not_match(self):
-        vision_list = [('R', 5, 5), ('B', 4, 4), ('B', 6, 4)]
-        vision = Vision(vision_list)
-        pattern = 'B_B_R_B__'
-        assert not vision.matches(pattern, Location(5, 5))
-
     def test_bot_drop_decision(self):
         vision_list = [('R', 5, 5), ('B', 4, 4)]
         bot = Bot(5, 5)
         bot.vision = vision_list
         bot.direction = Direction.NORTH
         assert bot.near_block()
-
-
-
