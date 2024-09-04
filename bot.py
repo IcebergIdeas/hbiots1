@@ -92,13 +92,7 @@ class Bot:
         return self.vision.name_at(forward_right)
 
     def near_block(self):
-        patterns = ['B_???????', '__B??????', 'BBB??????']
-        directions = [Direction.NORTH, Direction.NORTH, Direction.WEST]
-        for pattern, direction in zip(patterns, directions):
-            if self.vision.matches(pattern, self.location):
-                self.direction = direction
-                return True
-        return False
+        return self.forward_name() == '_' and (self.forward_left_name() == 'B' or self.forward_right_name() == 'B')
 
     def take(self):
         self.world.take_forward(self)
@@ -124,5 +118,3 @@ class Bot:
         while direction == self.direction:
             direction = random.choice(Direction.ALL)
         self.direction = direction
-
-
