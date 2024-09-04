@@ -26,7 +26,7 @@ class Game:
         pygame.display.set_caption('Robot World')
         self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._display_surf.fill(DARK_GREY)
-        self.draw_grid()
+        # self.draw_grid()
 
     def clear_screen(self):
         self._display_surf.fill(DARK_GREY)
@@ -76,7 +76,7 @@ class Game:
             for event in pygame.event.get():
                 self.on_event(event)
             self.clear_screen()
-            self.draw_grid()
+            # self.draw_grid()
             robots = []
             for entity in self.world.map:
                 if entity.name == 'R':
