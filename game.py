@@ -91,13 +91,28 @@ class Game:
         pygame.quit()
 
 
-if __name__ == "__main__":
-    world = World(40, 40)
+def build_block_square():
+    global y, x, block
+    for y in range(10):
+        for x in range(10):
+            block = Block(x + 15, y + 15)
+            world.add(block)
+
+
+def build_random_blocks():
+    global _, x, y, block
     for _ in range(50):
         x = random.randint(0, world.width - 1)
         y = random.randint(0, world.height - 1)
         block = Block(x, y)
         world.add(block)
+
+
+if __name__ == "__main__":
+    world = World(40, 40)
+    build_random_blocks()
+    build_block_square()
+
     for _ in range(20):
         bot = Bot(10, 20)
         world.add(bot)
