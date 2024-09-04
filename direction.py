@@ -29,7 +29,9 @@ class Direction:
         return Direction(new_x, new_y)
 
     def right(self):
-        return self.left().left().left()
+        x, y = self.x, self.y
+        new_x, new_y = -y, x
+        return Direction(new_x, new_y)
 
 
 Direction.NORTH = Direction(0, -1)

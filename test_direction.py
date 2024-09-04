@@ -12,3 +12,7 @@ class TestDirection:
         east = Direction.EAST
         assert east.left() == Direction.NORTH
 
+    def test_direction_right(self):
+        east = Direction.EAST
+        assert east.right() == Direction.SOUTH
+
