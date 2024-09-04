@@ -61,7 +61,7 @@ class Bot:
             self.state = self.looking
 
     def looking(self):
-        if self.facing_block():
+        if self.can_take():
             self.take()
             if self.inventory:
                 self.tired = 5
@@ -69,14 +69,14 @@ class Bot:
 
     def laden(self):
         if self.tired <= 0:
-            if self.near_block():
+            if self.can_drop():
                 block = self.inventory[0]
                 self.world.drop_forward(self, block)
                 if block not in self.inventory:
                     self.tired = 5
                     self.state = self.walking
 
-    def facing_block(self):
+    def can_take(self):
         return self.forward_name() == 'B' and (self.forward_left_name() == '_' or self.forward_right_name() == '_')
 
     def forward_name(self):
@@ -91,7 +91,7 @@ class Bot:
         forward_right = self.location.forward_right(self.direction)
         return self.vision.name_at(forward_right)
 
-    def near_block(self):
+    def can_drop(self):
         return self.forward_name() == '_' and (self.forward_left_name() == 'B' or self.forward_right_name() == 'B')
 
     def take(self):

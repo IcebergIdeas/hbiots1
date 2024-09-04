@@ -46,4 +46,25 @@ class TestVision:
         bot = Bot(5, 5)
         bot.vision = vision_list
         bot.direction = Direction.NORTH
-        assert bot.near_block()
+        assert bot.can_drop()
+
+    def test_bot_drop_decision_other_side(self):
+        vision_list = [('R', 5, 5), ('B', 6, 4)]
+        bot = Bot(5, 5)
+        bot.vision = vision_list
+        bot.direction = Direction.NORTH
+        assert bot.can_drop()
+
+    def test_bot_cant_drop_none_around(self):
+        vision_list = [('R', 5, 5)]
+        bot = Bot(5, 5)
+        bot.vision = vision_list
+        bot.direction = Direction.WEST
+        assert not bot.can_drop()
+
+    def test_bot_cant_drop_block_in_front(self):
+        vision_list = [('R', 5, 5), ('B', 6, 5)]
+        bot = Bot(5, 5)
+        bot.vision = vision_list
+        bot.direction = Direction.EAST
+        assert not bot.can_drop()
