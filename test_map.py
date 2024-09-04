@@ -33,15 +33,21 @@ class TestMap:
 
     def test_map_successful_move(self):
         map = Map(10, 10)
-        bot = Bot(5,5)
+        bot = Bot(5, 5)
         map.place(bot)
-        map.attempt_move(bot.id, Location(6,6))
-        assert bot.location == Location(6,6)
+        map.attempt_move(bot.id, Location(6, 6))
+        assert bot.location == Location(6, 6)
 
     def test_map_unsuccessful_move(self):
         map = Map(10, 10)
-        bot = Bot(5,5)
+        bot = Bot(5, 5)
         map.place(bot)
         map.attempt_move(bot.id, Location(10, 11))
         assert bot.location == Location(5, 5)
 
+    def test_map_rejects_bot_location(self):
+        map = Map(10, 10)
+        block = Block(5, 5)
+        map.place(block)
+        result = map.location_is_valid(Location(5, 5))
+        assert result is False

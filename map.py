@@ -43,7 +43,15 @@ class Map:
             entity.location = location
 
     def location_is_valid(self, location: Location) -> bool:
-        return location.x >= 0 and location.x <= self.width and location.y >= 0 and location.y <= self.height
+        if self.is_occupied(location):
+            return False
+        return self.is_within_map(location)
+
+    def is_within_map(self, location):
+        return 0 <= location.x <= self.width and 0 <= location.y <= self.height
+
+    def is_occupied(self, location):
+        return self.entity_at(location.x, location.y)
 
     def create_vision(self, location):
         result = []
