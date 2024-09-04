@@ -4,14 +4,13 @@ import pygame
 
 from block import Block
 from bot import Bot
-from constants import GREY, DARK_GREY, LT_BLUE, BASE_FONT, WHITE, BLACK, RED, GREEN
+from constants import DARK_GREY, BASE_FONT, WHITE, BLACK, RED, GREEN, GRID_LINE
 from world import World
 
 
 class Game:
-    def __init__(self, world, bot):
+    def __init__(self, world):
         self.world = world
-        self.bot = bot
         self._running = True
         self._display_surf = None
         self.scale = 20
@@ -26,16 +25,16 @@ class Game:
         pygame.display.set_caption('Robot World')
         self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._display_surf.fill(DARK_GREY)
-        # self.draw_grid()
+        self.draw_grid()
 
     def clear_screen(self):
         self._display_surf.fill(DARK_GREY)
 
     def draw_grid(self):
         for x in range(0, self.width, self.scale):
-            pygame.draw.line(self._display_surf, LT_BLUE, (x, 0), (x, self.height), 1)
+            pygame.draw.line(self._display_surf, GRID_LINE, (x, 0), (x, self.height), 1)
         for y in range(0, self.height, self.scale):
-            pygame.draw.line(self._display_surf, LT_BLUE, (0, y), (self.width, y), 1)
+            pygame.draw.line(self._display_surf, GRID_LINE, (0, y), (self.width, y), 1)
 
     def draw_world(self):
         for entity in self.world.map:
@@ -76,7 +75,7 @@ class Game:
             for event in pygame.event.get():
                 self.on_event(event)
             self.clear_screen()
-            # self.draw_grid()
+            self.draw_grid()
             robots = []
             for entity in self.world.map:
                 if entity.name == 'R':
@@ -102,5 +101,5 @@ if __name__ == "__main__":
     for _ in range(20):
         bot = Bot(10, 20)
         world.add(bot)
-    game = Game(world, bot)
+    game = Game(world)
     game.on_execute()
