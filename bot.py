@@ -53,28 +53,46 @@ class Bot:
         return entity.location.distance(self.location) < 10
 
     def do_something(self):
+        self.update()
         self.state()
         self.move()
+
+    def update(self):
+        pass
 
     def walking(self):
         if self.tired <= 0:
             self.state = self.looking
 
     def looking(self):
+        if self.inventory:
+            self.tired = 5
+            self.state = self.laden
+            return
         if self.can_take():
             self.take()
-            if self.inventory:
-                self.tired = 5
-                self.state = self.laden
 
     def laden(self):
+        if self.has_no_block():
+            self.tired = 5
+            self.state = self.walking
+            return
         if self.tired <= 0:
             if self.can_drop():
                 block = self.inventory[0]
                 self.world.drop_forward(self, block)
-                if block not in self.inventory:
-                    self.tired = 5
-                    self.state = self.walking
+
+    def has_block(self):
+        return self.has_inventory('B')
+
+    def has_no_block(self):
+        return not self.has_block()
+
+    def has_inventory(self, entity_name):
+        for entity in self.inventory:
+            if entity.name == entity_name:
+                return True
+        return False
 
     def can_take(self):
         return self.forward_name() == 'B' and (self.forward_left_name() == '_' or self.forward_right_name() == '_')
