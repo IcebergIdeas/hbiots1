@@ -94,6 +94,9 @@ class Bot:
     def take(self):
         self.world.take_forward(self)
 
+    def drop(self, entity):
+        self.world.drop_forward(self, entity)
+
     def move(self):
         if random.random() < self.direction_change_chance:
             self.change_direction()

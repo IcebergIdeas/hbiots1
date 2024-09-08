@@ -30,4 +30,4 @@ class Machine:
         if self.tired <= 0:
             if self.bot.can_drop():
                 block = self.bot.inventory[0]
-                self.bot.world.drop_forward(self.bot, block)
+                self.bot.drop(block)
