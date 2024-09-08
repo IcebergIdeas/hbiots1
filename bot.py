@@ -2,6 +2,7 @@ import random
 
 from direction import Direction
 from location import Location
+from machine import Machine
 from vision import Vision
 
 
@@ -16,7 +17,7 @@ class Bot:
         self.inventory = []
         self._vision = None
         self.tired = 10
-        self.state = self.walking
+        self.state = Machine(self)
 
     @property
     def vision(self):
@@ -54,33 +55,11 @@ class Bot:
 
     def do_something(self):
         self.update()
-        self.state()
+        self.state.state()
         self.move()
 
     def update(self):
         pass
-
-    def walking(self):
-        if self.tired <= 0:
-            self.state = self.looking
-
-    def looking(self):
-        if self.inventory:
-            self.tired = 5
-            self.state = self.laden
-            return
-        if self.can_take():
-            self.take()
-
-    def laden(self):
-        if self.has_no_block():
-            self.tired = 5
-            self.state = self.walking
-            return
-        if self.tired <= 0:
-            if self.can_drop():
-                block = self.inventory[0]
-                self.world.drop_forward(self, block)
 
     def has_block(self):
         return self.has_inventory('B')
