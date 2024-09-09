@@ -74,10 +74,10 @@ class Bot:
         return False
 
     def can_take(self):
-        return self.vision.forward_name() == 'B' and (self.vision.forward_left_name() == '_' or self.vision.forward_right_name() == '_')
+        return self.vision.match_forward_and_one_side('B', '_')
 
     def can_drop(self):
-        return self.vision.forward_name() == '_' and (self.vision.forward_left_name() == 'B' or self.vision.forward_right_name() == 'B')
+        return self.vision.match_forward_and_one_side('_', 'B')
 
     def take(self):
         self.world.take_forward(self)

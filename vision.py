@@ -13,6 +13,9 @@ class Vision:
     def __iter__(self):
         return iter(self.vision_list)
 
+    def match_forward_and_one_side(self, center, side):
+        return self.forward_name() == center and (self.forward_left_name() == side or self.forward_right_name() == side)
+
     def forward_name(self):
         forward = self.location.forward(self.direction)
         return self.name_at(forward)
