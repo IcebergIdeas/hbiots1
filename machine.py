@@ -12,12 +12,12 @@ class Machine:
 
     def walking(self):
         if self.tired <= 0:
-            self._state = self.looking
+            self._state = self.laden if self.bot.inventory else self.looking
 
     def looking(self):
         if self.bot.inventory:
             self.tired = 5
-            self._state = self.laden
+            self._state = self.walking
             return
         if self.bot.can_take():
             self.bot.take()
