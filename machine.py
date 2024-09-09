@@ -6,7 +6,7 @@ class Machine:
         self._state = self.walking
 
     def state(self):
-        self.tired =- 1
+        self.tired -= 1
         self._state()
         return self
 

@@ -65,3 +65,15 @@ class TestMethodObjectStateMachine:
         machine.state()
         assert not bot.has_block()
         assert machine._state == machine.walking
+
+    def test_unladen_goes_from_walking_to_looking(self):
+        bot = Bot(5, 5)
+        machine = Machine(bot)
+        assert machine.tired == 10
+        assert machine._state == machine.walking
+        machine.state()
+        assert machine.tired == 9
+        assert machine._state == machine.walking
+        machine.tired = 0
+        machine.state()
+        assert machine._state == machine.looking
