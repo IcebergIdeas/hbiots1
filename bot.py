@@ -25,7 +25,7 @@ class Bot:
 
     @vision.setter
     def vision(self, vision):
-        self._vision = Vision(vision)
+        self._vision = Vision(vision, self.location, self.direction)
 
     @property
     def x(self):
@@ -74,22 +74,10 @@ class Bot:
         return False
 
     def can_take(self):
-        return self.forward_name() == 'B' and (self.forward_left_name() == '_' or self.forward_right_name() == '_')
-
-    def forward_name(self):
-        forward = self.location.forward(self.direction)
-        return self.vision.name_at(forward)
-
-    def forward_left_name(self):
-        forward_left = self.location.forward_left(self.direction)
-        return self.vision.name_at(forward_left)
-
-    def forward_right_name(self):
-        forward_right = self.location.forward_right(self.direction)
-        return self.vision.name_at(forward_right)
+        return self.vision.forward_name() == 'B' and (self.vision.forward_left_name() == '_' or self.vision.forward_right_name() == '_')
 
     def can_drop(self):
-        return self.forward_name() == '_' and (self.forward_left_name() == 'B' or self.forward_right_name() == 'B')
+        return self.vision.forward_name() == '_' and (self.vision.forward_left_name() == 'B' or self.vision.forward_right_name() == 'B')
 
     def take(self):
         self.world.take_forward(self)

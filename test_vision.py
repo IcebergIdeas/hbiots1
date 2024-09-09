@@ -3,7 +3,6 @@ import re
 from bot import Bot
 from direction import Direction
 from location import Location
-from vision import Vision
 from world import World
 
 
@@ -44,27 +43,27 @@ class TestVision:
     def test_bot_drop_decision(self):
         vision_list = [('R', 5, 5), ('B', 4, 4)]
         bot = Bot(5, 5)
-        bot.vision = vision_list
         bot.direction = Direction.NORTH
+        bot.vision = vision_list
         assert bot.can_drop()
 
     def test_bot_drop_decision_other_side(self):
         vision_list = [('R', 5, 5), ('B', 6, 4)]
         bot = Bot(5, 5)
-        bot.vision = vision_list
         bot.direction = Direction.NORTH
+        bot.vision = vision_list
         assert bot.can_drop()
 
     def test_bot_cant_drop_none_around(self):
         vision_list = [('R', 5, 5)]
         bot = Bot(5, 5)
-        bot.vision = vision_list
         bot.direction = Direction.WEST
+        bot.vision = vision_list
         assert not bot.can_drop()
 
     def test_bot_cant_drop_block_in_front(self):
         vision_list = [('R', 5, 5), ('B', 6, 5)]
         bot = Bot(5, 5)
-        bot.vision = vision_list
         bot.direction = Direction.EAST
+        bot.vision = vision_list
         assert not bot.can_drop()

@@ -2,6 +2,7 @@
 class Machine:
     def __init__(self, bot):
         self.bot = bot
+        self.vision = bot.vision
         self.tired = 10
         self._state = self.walking
 
