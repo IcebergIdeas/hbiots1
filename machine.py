@@ -15,14 +15,24 @@ class Machine:
         self._action()
         return self
 
+    def walking_states(self):
+        return self.walking_update, self.walking_action
+
+    def looking_states(self):
+        return self.looking_update, self.looking_action
+
+    def laden_states(self):
+        return self.laden_update, self.laden_action
+
+    def set_states(self, states):
+        self._update, self._action = states
+
     def walking_update(self):
         if self.tired <= 0:
             if self.bot.inventory:
-                self._update = self.laden_update
-                self._action = self.laden_action
+                self.set_states(self.laden_states())
             else:
-                self._update = self.looking_update
-                self._action = self.looking_action
+                self.set_states(self.looking_states())
 
     def walking_action(self):
         pass
@@ -30,8 +40,7 @@ class Machine:
     def looking_update(self):
         if self.bot.inventory:
             self.tired = 5
-            self._update = self.walking_update
-            self._action = self.walking_action
+            self.set_states(self.walking_states())
 
     def looking_action(self):
         if self.bot.can_take():
@@ -40,8 +49,7 @@ class Machine:
     def laden_update(self):
         if self.bot.has_no_block():
             self.tired = 5
-            self._update = self.walking_update
-            self._action = self.walking_action
+            self.set_states(self.walking_states())
 
     def laden_action(self):
         if self.tired <= 0:
