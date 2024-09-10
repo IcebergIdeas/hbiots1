@@ -6,7 +6,9 @@ class Machine:
         self.tired = 10
         self._state = self.walking
 
-    def state(self):
+    def state(self, bot):
+        self.bot = bot
+        self.vision = bot.vision
         self.tired -= 1
         self._state()
         return self

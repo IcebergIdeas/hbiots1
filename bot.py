@@ -55,7 +55,7 @@ class Bot:
 
     def do_something(self):
         self.update()
-        self.state.state()
+        self.state.state(self)
         self.move()
 
     def update(self):

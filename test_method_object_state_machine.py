@@ -14,7 +14,7 @@ class TestMethodObjectStateMachine:
         bot = Bot(5, 5)
         machine = Machine(bot)
         machine._state = machine.laden
-        machine.state()
+        machine.state(bot)
         assert machine._state == machine.walking
 
     def test_looking_goes_to_walking_then_laden_if_block_in_inventory(self):
@@ -23,13 +23,13 @@ class TestMethodObjectStateMachine:
         bot.vision = vision_list
         machine = Machine(bot)
         machine._state = machine.looking
-        machine.state()
+        machine.state(bot)
         assert machine._state == machine.looking
         bot.receive(Block(2, 2))
-        machine.state()
+        machine.state(bot)
         assert machine._state == machine.walking
         machine.tired = 0
-        machine.state()
+        machine.state(bot)
         assert machine._state == machine.laden
 
     def test_laden_stays_laden_if_cannot_drop(self):
@@ -42,10 +42,10 @@ class TestMethodObjectStateMachine:
         machine = Machine(bot)
         bot.direction = Direction.EAST
         machine._state = machine.laden
-        machine.state()
+        machine.state(bot)
         assert bot.has_block()
         assert machine._state == machine.laden
-        machine.state()
+        machine.state(bot)
         assert bot.has_block()
         assert machine._state == machine.laden
 
@@ -58,11 +58,11 @@ class TestMethodObjectStateMachine:
         bot.vision = vision_list
         bot.direction = Direction.EAST
         machine._state = machine.laden
-        machine.state()
+        machine.state(bot)
         assert bot.has_block()
         assert machine._state == machine.laden
         bot.remove(entity)
-        machine.state()
+        machine.state(bot)
         assert not bot.has_block()
         assert machine._state == machine.walking
 
@@ -71,9 +71,9 @@ class TestMethodObjectStateMachine:
         machine = Machine(bot)
         assert machine.tired == 10
         assert machine._state == machine.walking
-        machine.state()
+        machine.state(bot)
         assert machine.tired == 9
         assert machine._state == machine.walking
         machine.tired = 0
-        machine.state()
+        machine.state(bot)
         assert machine._state == machine.looking
