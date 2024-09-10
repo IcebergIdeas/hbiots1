@@ -4,14 +4,19 @@ class Machine:
         self.bot = bot
         self.vision = bot.vision
         self.tired = 10
+        self._update = self.update_walking
         self._action = self.walking
 
     def state(self, bot):
         self.bot = bot
         self.vision = bot.vision
         self.tired -= 1
+        self._update()
         self._action()
         return self
+
+    def update_walking(self):
+        pass
 
     def walking(self):
         if self.tired <= 0:
