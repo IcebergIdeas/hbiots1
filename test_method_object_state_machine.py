@@ -13,6 +13,7 @@ class TestMethodObjectStateMachine:
     def test_laden_goes_to_walking_if_no_block_in_inventory(self):
         bot = Bot(5, 5)
         machine = Machine(bot)
+        machine._update = machine.update_laden
         machine._action = machine.laden
         machine.state(bot)
         assert machine._action == machine.walking
@@ -58,6 +59,7 @@ class TestMethodObjectStateMachine:
         vision_list = [('R', 5, 5)]
         bot.vision = vision_list
         bot.direction = Direction.EAST
+        machine._update = machine.update_laden
         machine._action = machine.laden
         machine.state(bot)
         assert bot.has_block()

@@ -15,9 +15,6 @@ class Machine:
         self._action()
         return self
 
-    def update_laden(self):
-        pass
-
     def update_walking(self):
         if self.tired <= 0:
             if self.bot.inventory:
@@ -40,12 +37,13 @@ class Machine:
         if self.bot.can_take():
             self.bot.take()
 
-    def laden(self):
+    def update_laden(self):
         if self.bot.has_no_block():
             self.tired = 5
             self._update = self.update_walking
             self._action = self.walking
-            return
+
+    def laden(self):
         if self.tired <= 0:
             if self.bot.can_drop():
                 block = self.bot.inventory[0]
