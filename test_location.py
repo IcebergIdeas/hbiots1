@@ -83,7 +83,7 @@ class TestLocation:
         block = Block(7, 5)
         world.add(block)
         bot.do_something()
-        assert bot.state._state == bot.state.looking
+        assert bot.state._action == bot.state.looking
         bot.do_something()
         assert bot.has(block)
 
