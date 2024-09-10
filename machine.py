@@ -15,9 +15,6 @@ class Machine:
         self._action()
         return self
 
-    def update_looking(self):
-        pass
-
     def update_laden(self):
         pass
 
@@ -33,12 +30,13 @@ class Machine:
     def walking(self):
         pass
 
-    def looking(self):
+    def update_looking(self):
         if self.bot.inventory:
             self.tired = 5
             self._update = self.update_walking
             self._action = self.walking
-            return
+
+    def looking(self):
         if self.bot.can_take():
             self.bot.take()
 

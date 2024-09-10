@@ -22,6 +22,7 @@ class TestMethodObjectStateMachine:
         vision_list = [('R', 5, 5)]
         bot.vision = vision_list
         machine = Machine(bot)
+        machine._update = machine.update_looking
         machine._action = machine.looking
         machine.state(bot)
         assert machine._action == machine.looking
