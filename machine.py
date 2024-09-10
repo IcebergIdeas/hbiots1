@@ -36,6 +36,7 @@ class Machine:
     def looking(self):
         if self.bot.inventory:
             self.tired = 5
+            self._update = self.update_walking
             self._action = self.walking
             return
         if self.bot.can_take():
@@ -44,6 +45,7 @@ class Machine:
     def laden(self):
         if self.bot.has_no_block():
             self.tired = 5
+            self._update = self.update_walking
             self._action = self.walking
             return
         if self.tired <= 0:
