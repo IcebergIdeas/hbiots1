@@ -18,11 +18,19 @@ class Machine:
     def update_walking(self):
         pass
 
+    def update_looking(self):
+        pass
+
+    def update_laden(self):
+        pass
+
     def walking(self):
         if self.tired <= 0:
             if self.bot.inventory:
+                self._update = self.update_laden
                 self._action = self.laden
             else:
+                self._update = self.update_looking
                 self._action = self.looking
 
     def looking(self):
