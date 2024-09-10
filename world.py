@@ -19,6 +19,9 @@ class World:
     def step(self, bot):
         location = self.bots_next_location(bot)
         self.map.attempt_move(bot.id, location)
+        self.set_bot_vision(bot)
+
+    def set_bot_vision(self, bot):
         bot.vision = self.map.create_vision(bot.location)
 
     def clip(self, coord, limit):

@@ -15,7 +15,7 @@ class Bot:
         self.direction = direction
         self.direction_change_chance = 0.2
         self.inventory = []
-        self._vision = None
+        self.vision = []
         self.tired = 10
         self.state = Machine(self)
 
