@@ -20,7 +20,10 @@ class Machine:
 
     def walking(self):
         if self.tired <= 0:
-            self._action = self.laden if self.bot.inventory else self.looking
+            if self.bot.inventory:
+                self._action = self.laden
+            else:
+                self._action = self.looking
 
     def looking(self):
         if self.bot.inventory:
