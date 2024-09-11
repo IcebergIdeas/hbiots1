@@ -1,10 +1,30 @@
+from direction import Direction
 from location import Location
+from vision import Vision
 
 
 class Knowledge:
     def __init__(self):
         self._old_location = None
         self._location = None
+        self._direction = None
+        self._vision = Vision([], None, None)
+
+    @property
+    def vision(self) -> Vision:
+        return self._vision
+
+    @vision.setter
+    def vision(self, vision_list):
+        self._vision = Vision(vision_list, self.location, self.direction)
+
+    @property
+    def direction(self):
+        return self._direction
+
+    @direction.setter
+    def direction(self, direction):
+        self._direction = direction
 
     @property
     def location(self):
@@ -18,6 +38,11 @@ class Knowledge:
     @property
     def has_moved(self):
         return self.location != self._old_location
+
+    @property
+    def can_take(self):
+        return self.vision.match_forward_and_one_side('B', '_')
+
 
 
 class TestDecisions:
@@ -37,3 +62,11 @@ class TestDecisions:
         knowledge.location = Location(10, 10)
         knowledge.location = Location(10, 10)
         assert not knowledge.has_moved
+
+    def test_vision(self):
+        knowledge = Knowledge()
+        knowledge.location = Location(10, 10)
+        knowledge.direction = Direction.NORTH
+        vision_list = [('B', 10, 9)]
+        knowledge.vision = vision_list
+        assert knowledge.can_take
