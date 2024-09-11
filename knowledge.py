@@ -2,11 +2,11 @@ from vision import Vision
 
 
 class Knowledge:
-    def __init__(self):
+    def __init__(self, location, direction):
         self._old_location = None
-        self._location = None
-        self._direction = None
-        self._vision = Vision([], None, None)
+        self._location = location
+        self._direction = direction
+        self._vision = Vision([], self.location, self.direction)
         self._entity = None
 
     @property

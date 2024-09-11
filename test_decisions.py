@@ -7,34 +7,31 @@ from location import Location
 
 class TestDecisions:
     def test_initial_knowledge(self):
-        knowledge = Knowledge()
-        knowledge.location = Location(10, 10)
+        knowledge = Knowledge(Location(10, 10), Direction.NORTH)
         assert knowledge.has_moved
 
     def test_move(self):
-        knowledge = Knowledge()
-        knowledge.location = Location(10, 10)
+        knowledge = Knowledge(Location(10, 10), Direction.NORTH)
         knowledge.location = Location(10, 9)
         assert knowledge.has_moved
 
     def test_no_move(self):
-        knowledge = Knowledge()
-        knowledge.location = Location(10, 10)
+        knowledge = Knowledge( Location(10, 10), Direction.NORTH)
         knowledge.location = Location(10, 10)
         assert not knowledge.has_moved
 
     def test_can_take(self):
-        knowledge = Knowledge()
-        knowledge.location = Location(10, 10)
-        knowledge.direction = Direction.NORTH
+        location = Location(10, 10)
+        direction = Direction.NORTH
+        knowledge = Knowledge(location, direction)
         vision_list = [('B', 10, 9)]
         knowledge.vision = vision_list
         assert knowledge.can_take
 
     def test_can_drop(self):
-        knowledge = Knowledge()
-        knowledge.location = Location(10, 10)
-        knowledge.direction = Direction.NORTH
+        location = Location(10, 10)
+        direction = Direction.NORTH
+        knowledge = Knowledge(location, direction)
         vision_list = [('B', 10, 9)]
         knowledge.vision = vision_list
         assert not knowledge.can_drop
@@ -44,7 +41,7 @@ class TestDecisions:
         assert knowledge.can_drop
 
     def test_has_block(self):
-        knowledge = Knowledge()
+        knowledge = Knowledge(None, None)
         assert not knowledge.has_block
         block = Block(3, 3)
         knowledge.receive(block)

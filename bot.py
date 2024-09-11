@@ -14,10 +14,7 @@ class Bot:
         self.name = 'R'
         self.direction_change_chance = 0.2
         self.tired = 10
-        self._knowledge = Knowledge()
-        self._knowledge.location = Location(x, y)
-        self._knowledge.direction = direction
-        self._knowledge.vision = []
+        self._knowledge = Knowledge(Location(x, y), direction)
         self.state = Machine(self)
 
     @property
