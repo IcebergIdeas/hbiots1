@@ -24,16 +24,14 @@ class TestDecisions:
         location = Location(10, 10)
         direction = Direction.NORTH
         knowledge = Knowledge(location, direction)
-        vision_list = [('B', 10, 9)]
-        knowledge.vision = vision_list
+        knowledge.vision = [('B', 10, 9)]
         assert knowledge.can_take
 
     def test_can_drop(self):
         location = Location(10, 10)
         direction = Direction.NORTH
         knowledge = Knowledge(location, direction)
-        vision_list = [('B', 10, 9)]
-        knowledge.vision = vision_list
+        knowledge.vision = [('B', 10, 9)]
         assert not knowledge.can_drop
         knowledge.vision = [('B', 9, 9)]
         assert knowledge.can_drop
