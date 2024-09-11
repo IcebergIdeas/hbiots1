@@ -1,3 +1,4 @@
+from block import Block
 from direction import Direction
 from location import Location
 from vision import Vision
@@ -9,6 +10,7 @@ class Knowledge:
         self._location = None
         self._direction = None
         self._vision = Vision([], None, None)
+        self._entity = None
 
     @property
     def vision(self) -> Vision:
@@ -43,9 +45,13 @@ class Knowledge:
     def can_take(self):
         return self.vision.match_forward_and_one_side('B', '_')
 
+    def receive(self, entity):
+        self._entity = entity
+
     @property
     def has_block(self):
-        return False
+        return self._entity
+
 
 
 class TestDecisions:
@@ -77,3 +83,6 @@ class TestDecisions:
     def test_has_block(self):
         knowledge = Knowledge()
         assert not knowledge.has_block
+        block = Block(3, 3)
+        knowledge.receive(block)
+        assert knowledge.has_block
