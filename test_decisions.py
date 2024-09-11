@@ -45,6 +45,10 @@ class Knowledge:
     def can_take(self):
         return self.vision.match_forward_and_one_side('B', '_')
 
+    @property
+    def can_drop(self):
+        return self.vision.match_forward_and_one_side('_', 'B')
+
     def receive(self, entity):
         self._entity = entity
 
@@ -76,13 +80,26 @@ class TestDecisions:
         knowledge.location = Location(10, 10)
         assert not knowledge.has_moved
 
-    def test_vision(self):
+    def test_can_take(self):
         knowledge = Knowledge()
         knowledge.location = Location(10, 10)
         knowledge.direction = Direction.NORTH
         vision_list = [('B', 10, 9)]
         knowledge.vision = vision_list
         assert knowledge.can_take
+
+    def test_can_drop(self):
+        knowledge = Knowledge()
+        knowledge.location = Location(10, 10)
+        knowledge.direction = Direction.NORTH
+        vision_list = [('B', 10, 9)]
+        knowledge.vision = vision_list
+        assert not knowledge.can_drop
+        knowledge.vision = [('B', 9, 9)]
+        assert knowledge.can_drop
+        knowledge.vision = [('B', 11, 9)]
+        assert knowledge.can_drop
+
 
     def test_has_block(self):
         knowledge = Knowledge()
