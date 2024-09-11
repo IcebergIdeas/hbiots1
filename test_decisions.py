@@ -48,6 +48,10 @@ class Knowledge:
     def receive(self, entity):
         self._entity = entity
 
+    def remove(self, entity):
+        if self._entity == entity:
+            self._entity = None
+
     @property
     def has_block(self):
         return self._entity
@@ -86,3 +90,5 @@ class TestDecisions:
         block = Block(3, 3)
         knowledge.receive(block)
         assert knowledge.has_block
+        knowledge.remove(block)
+        assert not knowledge.has_block
