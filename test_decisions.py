@@ -43,6 +43,9 @@ class Knowledge:
     def can_take(self):
         return self.vision.match_forward_and_one_side('B', '_')
 
+    @property
+    def has_block(self):
+        return False
 
 
 class TestDecisions:
@@ -70,3 +73,7 @@ class TestDecisions:
         vision_list = [('B', 10, 9)]
         knowledge.vision = vision_list
         assert knowledge.can_take
+
+    def test_has_block(self):
+        knowledge = Knowledge()
+        assert not knowledge.has_block
