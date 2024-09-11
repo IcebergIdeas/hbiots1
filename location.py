@@ -7,7 +7,7 @@ class Location:
         self.y = y
 
     def __eq__(self, other):
-        return self.x == other.x and self.y == other.y
+        return isinstance(other, Location) and self.x == other.x and self.y == other.y
 
     def __repr__(self):
         return f'Location({self.x}, {self.y})'
