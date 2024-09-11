@@ -73,7 +73,15 @@ class Bot:
 
     def do_something(self):
         self.update()
-        self.state.state(self)
+        actions = self.state.state(self._knowledge)
+        for action in actions:
+            match action:
+                case 'take':
+                    self.world.take_forward(self)
+                case 'drop':
+                    self.world.drop_forward(self, self.inventory[0])
+                case _:
+                    assert 0, f'no case {action}'
         self.move()
 
     def update(self):
