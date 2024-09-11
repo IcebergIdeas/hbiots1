@@ -1,10 +1,8 @@
-import re
 
 from bot import Bot
 from direction import Direction
 from knowledge import Knowledge
 from location import Location
-from vision import Vision
 from world import World
 
 
