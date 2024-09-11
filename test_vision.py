@@ -2,7 +2,9 @@ import re
 
 from bot import Bot
 from direction import Direction
+from knowledge import Knowledge
 from location import Location
+from vision import Vision
 from world import World
 
 
@@ -40,30 +42,34 @@ class TestVision:
         assert ('B', 6, 6) in vision
         assert ('B', 4, 4) in vision
 
-    def test_bot_drop_decision(self):
+    def test_knowledge_drop_decision(self):
+        location = Location(5, 5)
+        direction = Direction.NORTH
+        knowledge = Knowledge(location, direction)
         vision_list = [('R', 5, 5), ('B', 4, 4)]
-        bot = Bot(5, 5)
-        bot.direction = Direction.NORTH
-        bot.vision = vision_list
-        assert bot.can_drop()
+        knowledge.vision = vision_list
+        assert knowledge.can_drop
 
-    def test_bot_drop_decision_other_side(self):
+    def test_knowledge_drop_decision_other_side(self):
+        location = Location(5, 5)
+        direction = Direction.NORTH
+        knowledge = Knowledge(location, direction)
         vision_list = [('R', 5, 5), ('B', 6, 4)]
-        bot = Bot(5, 5)
-        bot.direction = Direction.NORTH
-        bot.vision = vision_list
-        assert bot.can_drop()
+        knowledge.vision = vision_list
+        assert knowledge.can_drop
 
-    def test_bot_cant_drop_none_around(self):
+    def test_knowledge_cant_drop_none_around(self):
+        location = Location(5, 5)
+        direction = Direction.WEST
+        knowledge = Knowledge(location, direction)
         vision_list = [('R', 5, 5)]
-        bot = Bot(5, 5)
-        bot.direction = Direction.WEST
-        bot.vision = vision_list
-        assert not bot.can_drop()
+        knowledge.vision = vision_list
+        assert not knowledge.can_drop
 
-    def test_bot_cant_drop_block_in_front(self):
+    def test_knowledge_cant_drop_block_in_front(self):
+        location = Location(5, 5)
+        direction = Direction.EAST
+        knowledge = Knowledge(location, direction)
         vision_list = [('R', 5, 5), ('B', 6, 5)]
-        bot = Bot(5, 5)
-        bot.direction = Direction.EAST
-        bot.vision = vision_list
-        assert not bot.can_drop()
+        knowledge.vision = vision_list
+        assert not knowledge.can_drop
