@@ -15,7 +15,7 @@ class Bot:
         self.direction_change_chance = 0.2
         self.tired = 10
         self._knowledge = Knowledge(Location(x, y), direction)
-        self.state = Machine(self)
+        self.state = Machine(self._knowledge)
 
     @property
     def direction(self):
