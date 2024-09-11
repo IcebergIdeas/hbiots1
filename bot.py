@@ -1,6 +1,7 @@
 import random
 
 from direction import Direction
+from knowledge import Knowledge
 from location import Location
 from machine import Machine
 from vision import Vision
@@ -11,21 +12,44 @@ class Bot:
         self.world = None
         self.id = None
         self.name = 'R'
-        self.location = Location(x, y)
-        self.direction = direction
         self.direction_change_chance = 0.2
-        self.inventory = []
-        self.vision = []
         self.tired = 10
+        self._knowledge = Knowledge()
+        self._knowledge.location = Location(x, y)
+        self._knowledge.direction = direction
+        self._knowledge.vision = []
         self.state = Machine(self)
 
     @property
+    def direction(self):
+        return self._knowledge.direction
+
+    @direction.setter
+    def direction(self, direction):
+        self._knowledge.direction = direction
+
+    @property
+    def inventory(self):
+        if self._knowledge._entity:
+            return [self._knowledge._entity,]
+        else:
+            return []
+
+    @property
+    def location(self):
+        return self._knowledge.location
+
+    @location.setter
+    def location(self, location):
+        self._knowledge.location = location
+
+    @property
     def vision(self):
-        return self._vision
+        return self._knowledge.vision
 
     @vision.setter
     def vision(self, vision):
-        self._vision = Vision(vision, self.location, self.direction)
+        self._knowledge.vision = vision
 
     @property
     def x(self):
@@ -39,16 +63,13 @@ class Bot:
         return self.world.scan(self)
 
     def has(self, entity):
-        return entity in self.inventory
+        return self._knowledge.has(entity)
 
     def receive(self, entity):
-        self.inventory.append(entity)
+        self._knowledge.receive(entity)
 
     def remove(self, entity):
-        try:
-            self.inventory.remove(entity)
-        except ValueError:
-            pass
+        self._knowledge.remove(entity)
 
     def is_close_enough(self, entity):
         return entity.location.distance(self.location) < 10
@@ -62,7 +83,7 @@ class Bot:
         pass
 
     def has_block(self):
-        return self.has_inventory('B')
+        return self._knowledge.has_block
 
     def has_no_block(self):
         return not self.has_block()
@@ -74,7 +95,7 @@ class Bot:
         return False
 
     def can_take(self):
-        return self.vision.match_forward_and_one_side('B', '_')
+        return self._knowledge.can_take
 
     def can_drop(self):
         return self.vision.match_forward_and_one_side('_', 'B')

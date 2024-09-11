@@ -1,65 +1,8 @@
 from block import Block
+from bot import Bot
 from direction import Direction
+from knowledge import Knowledge
 from location import Location
-from vision import Vision
-
-
-class Knowledge:
-    def __init__(self):
-        self._old_location = None
-        self._location = None
-        self._direction = None
-        self._vision = Vision([], None, None)
-        self._entity = None
-
-    @property
-    def vision(self) -> Vision:
-        return self._vision
-
-    @vision.setter
-    def vision(self, vision_list):
-        self._vision = Vision(vision_list, self.location, self.direction)
-
-    @property
-    def direction(self):
-        return self._direction
-
-    @direction.setter
-    def direction(self, direction):
-        self._direction = direction
-
-    @property
-    def location(self):
-        return self._location
-
-    @location.setter
-    def location(self, location):
-        self._old_location = self.location
-        self._location = location
-
-    @property
-    def has_moved(self):
-        return self.location != self._old_location
-
-    @property
-    def can_take(self):
-        return self.vision.match_forward_and_one_side('B', '_')
-
-    @property
-    def can_drop(self):
-        return self.vision.match_forward_and_one_side('_', 'B')
-
-    def receive(self, entity):
-        self._entity = entity
-
-    def remove(self, entity):
-        if self._entity == entity:
-            self._entity = None
-
-    @property
-    def has_block(self):
-        return self._entity
-
 
 
 class TestDecisions:
@@ -100,7 +43,6 @@ class TestDecisions:
         knowledge.vision = [('B', 11, 9)]
         assert knowledge.can_drop
 
-
     def test_has_block(self):
         knowledge = Knowledge()
         assert not knowledge.has_block
@@ -109,3 +51,9 @@ class TestDecisions:
         assert knowledge.has_block
         knowledge.remove(block)
         assert not knowledge.has_block
+
+    def test_bot_uses_knowledge_inventory(self):
+        bot = Bot(5, 5)
+        block = Block(3, 3)
+        bot.receive(block)
+        assert bot._knowledge.has_block
