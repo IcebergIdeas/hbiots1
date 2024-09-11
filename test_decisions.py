@@ -54,3 +54,35 @@ class TestDecisions:
         block = Block(3, 3)
         bot.receive(block)
         assert bot._knowledge.has_block
+
+    def test_knowledge_drop_decision(self):
+        location = Location(5, 5)
+        direction = Direction.NORTH
+        knowledge = Knowledge(location, direction)
+        vision_list = [('R', 5, 5), ('B', 4, 4)]
+        knowledge.vision = vision_list
+        assert knowledge.can_drop
+
+    def test_knowledge_drop_decision_other_side(self):
+        location = Location(5, 5)
+        direction = Direction.NORTH
+        knowledge = Knowledge(location, direction)
+        vision_list = [('R', 5, 5), ('B', 6, 4)]
+        knowledge.vision = vision_list
+        assert knowledge.can_drop
+
+    def test_knowledge_cant_drop_none_around(self):
+        location = Location(5, 5)
+        direction = Direction.WEST
+        knowledge = Knowledge(location, direction)
+        vision_list = [('R', 5, 5)]
+        knowledge.vision = vision_list
+        assert not knowledge.can_drop
+
+    def test_knowledge_cant_drop_block_in_front(self):
+        location = Location(5, 5)
+        direction = Direction.EAST
+        knowledge = Knowledge(location, direction)
+        vision_list = [('R', 5, 5), ('B', 6, 5)]
+        knowledge.vision = vision_list
+        assert not knowledge.can_drop
