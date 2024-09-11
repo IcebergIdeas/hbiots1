@@ -31,3 +31,9 @@ class TestDecisions:
         knowledge.location = Location(10, 10)
         knowledge.location = Location(10, 9)
         assert knowledge.has_moved
+
+    def test_no_move(self):
+        knowledge = Knowledge()
+        knowledge.location = Location(10, 10)
+        knowledge.location = Location(10, 10)
+        assert not knowledge.has_moved
