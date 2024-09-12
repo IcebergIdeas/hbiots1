@@ -8,6 +8,7 @@ class Knowledge:
         self._direction = direction
         self._vision = Vision([], self.location, self.direction)
         self._entity = None
+        self.tired = 0
 
     @property
     def vision(self) -> Vision:

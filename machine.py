@@ -1,11 +1,39 @@
 from knowledge import Knowledge
 
 
+class Looking:
+    def update(self, machine, knowledge):
+        if knowledge.has_block:
+            knowledge.tired = 5
+            return machine.walking_update, machine.walking_action, None
+        else:
+            return None, None, Looking()
+
+    def action(self, knowledge):
+        if knowledge.can_take:
+            return ['take']
+        return []
+
+
+class Laden:
+    def update(self, machine, knowledge):
+        if not knowledge.has_block:
+            knowledge.tired = 5
+            return machine.walking_update, machine.walking_action, None
+        else:
+            return None, None, Looking()
+
+    def action(self, knowledge):
+        if knowledge.tired <= 0:
+            if knowledge.can_drop:
+                return ['drop']
+        return []
+
+
 class Machine:
     def __init__(self, knowledge):
         assert isinstance(knowledge, Knowledge)
         self._knowledge = knowledge
-        self.tired = 10
         self._update = self.walking_update
         self._action = self.walking_action
         self._state = None
@@ -13,14 +41,15 @@ class Machine:
     def state(self, knowledge):
         assert isinstance(knowledge, Knowledge)
         self._knowledge = knowledge
-        self.tired -= 1
+        knowledge.tired -= 1
         if self._state:
-            self._state.update()
+            info = self._state.update(self, self._knowledge)
+            self._update, self._action, self._state = info
         else:
             info = self._update()
             self._update, self._action, self._state = info
         if self._state:
-            self._state.action()
+            return self._state.action(self._knowledge)
         else:
             return self._action()
 
@@ -28,7 +57,7 @@ class Machine:
         return self.walking_update, self.walking_action, None
 
     def looking_states(self):
-        return self.looking_update, self.looking_action, None
+        return None, None, Looking()
 
     def laden_states(self):
         return self.laden_update, self.laden_action, None
@@ -37,11 +66,11 @@ class Machine:
         self._update, self._action, self._state = states
 
     def walking_update(self):
-        if self.tired <= 0:
+        if self._knowledge.tired <= 0:
             if self._knowledge.has_block:
-                return self.laden_states()
+                return None, None, Laden()
             else:
-                return self.looking_states()
+                return None, None, Looking()
         return self.walking_states()
 
     def walking_action(self):
@@ -49,7 +78,7 @@ class Machine:
 
     def looking_update(self):
         if self._knowledge.has_block:
-            self.tired = 5
+            self._knowledge.tired = 5
             return self.walking_states()
         else:
             return self.looking_states()
@@ -61,13 +90,13 @@ class Machine:
 
     def laden_update(self):
         if not self._knowledge.has_block:
-            self.tired = 5
+            self._knowledge.tired = 5
             return self.walking_states()
         else:
             return self.laden_states()
 
     def laden_action(self):
-        if self.tired <= 0:
+        if self._knowledge.tired <= 0:
             if self._knowledge.can_drop:
                 return ['drop']
         return []

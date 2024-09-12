@@ -1,7 +1,8 @@
 from block import Block
 from bot import Bot
 from direction import Direction
-from machine import Machine
+from machine import Machine, Looking, Laden
+from world import World
 
 
 class TestMethodObjectStateMachine:
@@ -22,17 +23,20 @@ class TestMethodObjectStateMachine:
         vision_list = [('R', 5, 5)]
         bot.vision = vision_list
         machine = Machine(bot._knowledge)
-        machine.set_states(machine.looking_states())
+        machine.set_states((None, None, Looking()))
         assert not machine._knowledge.has_block
         machine.state(bot._knowledge)
-        assert machine._action == machine.looking_action
+        assert machine._action == None  # looking
         bot.receive(Block(2, 2))
         assert machine._knowledge.has_block
         machine.state(bot._knowledge)
         assert machine._action == machine.walking_action
-        machine.tired = 0
+        assert machine._update == machine.walking_update
+        assert machine._state is None
+        machine._knowledge.tired = 0
         machine.state(bot._knowledge)
-        assert machine._action == machine.laden_action
+        assert machine._action == None
+        assert isinstance(machine._state, Laden)
 
     def test_laden_stays_laden_if_cannot_drop(self):
         # we call state() twice to ensure round trip update
@@ -72,13 +76,34 @@ class TestMethodObjectStateMachine:
     def test_unladen_goes_from_walking_to_looking(self):
         bot = Bot(5, 5)
         machine = Machine(bot._knowledge)
-        assert machine.tired == 10
+        machine._knowledge.tired = 10
+        assert machine._knowledge.tired == 10
         assert machine._action == machine.walking_action
         machine.state(bot._knowledge)
-        assert machine.tired == 9
+        assert machine._knowledge.tired == 9
         assert machine._action == machine.walking_action
-        machine.tired = 0
+        machine._knowledge.tired = 0
         machine.state(bot._knowledge)
-        assert machine._action == machine.looking_action
+        assert machine._action is None
+        assert isinstance( machine._state, Looking)
+
+    def test_drop(self):
+        bot = Bot(5, 5)
+        machine = Machine(bot._knowledge)
+        his_block = Block(1,1)
+        world_block = Block(8, 8)
+        world = World(10,10)
+        world.add(bot)
+        world.add(world_block)
+        # vision = world.map.create_vision(Location(7, 7))
+        # assert vision == ""
+        bot.receive(his_block)
+        machine = bot.state
+        assert machine._update == machine.walking_update
+        machine._knowledge.tired = 0
+        bot.do_something()
+        assert isinstance( machine._state, Laden)
+        assert bot._knowledge.has_block
+
 
 
