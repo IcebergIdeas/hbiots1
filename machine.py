@@ -14,8 +14,14 @@ class Machine:
         assert isinstance(knowledge, Knowledge)
         self._knowledge = knowledge
         self.tired -= 1
-        self._update()
-        return self._action()
+        if self._state:
+            self._state.update()
+        else:
+            self._update()
+        if self._state:
+            self._state.action()
+        else:
+            return self._action()
 
     def walking_states(self):
         return self.walking_update, self.walking_action, None
