@@ -17,7 +17,9 @@ class Machine:
         if self._state:
             self._state.update()
         else:
-            self._update()
+            info = self._update()
+            if info:
+                self._update, self._action, self._state = info
         if self._state:
             self._state.action()
         else:
@@ -38,9 +40,9 @@ class Machine:
     def walking_update(self):
         if self.tired <= 0:
             if self._knowledge.has_block:
-                self.set_states(self.laden_states())
+                return self.laden_states()
             else:
-                self.set_states(self.looking_states())
+                return self.looking_states()
 
     def walking_action(self):
         return []
@@ -48,7 +50,7 @@ class Machine:
     def looking_update(self):
         if self._knowledge.has_block:
             self.tired = 5
-            self.set_states(self.walking_states())
+            return self.walking_states()
 
     def looking_action(self):
         if self._knowledge.can_take:
@@ -58,7 +60,7 @@ class Machine:
     def laden_update(self):
         if not self._knowledge.has_block:
             self.tired = 5
-            self.set_states(self.walking_states())
+            return self.walking_states()
 
     def laden_action(self):
         if self.tired <= 0:

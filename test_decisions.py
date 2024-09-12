@@ -84,3 +84,13 @@ class TestDecisions:
         vision_list = [('R', 5, 5), ('B', 6, 5)]
         knowledge.vision = vision_list
         assert not knowledge.can_drop
+
+    def test_how_to_do_returns(self):
+        def items():
+            return 'a', 'b', None
+
+        things = items()
+        x, y, z = things
+        assert x == 'a'
+        assert y == 'b'
+        assert z is None
