@@ -8,6 +8,7 @@ class Machine:
         self.tired = 10
         self._update = self.walking_update
         self._action = self.walking_action
+        self._state = None
 
     def state(self, knowledge):
         assert isinstance(knowledge, Knowledge)
@@ -17,16 +18,16 @@ class Machine:
         return self._action()
 
     def walking_states(self):
-        return self.walking_update, self.walking_action
+        return self.walking_update, self.walking_action, None
 
     def looking_states(self):
-        return self.looking_update, self.looking_action
+        return self.looking_update, self.looking_action, None
 
     def laden_states(self):
-        return self.laden_update, self.laden_action
+        return self.laden_update, self.laden_action, None
 
     def set_states(self, states):
-        self._update, self._action = states
+        self._update, self._action, self._state = states
 
     def walking_update(self):
         if self.tired <= 0:
