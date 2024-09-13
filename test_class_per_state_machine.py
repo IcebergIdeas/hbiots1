@@ -7,7 +7,12 @@ class FakeKnowledge():
 
 
 class TestClassPerStateMachine:
-    def test_looking_action(self):
+    def test_looking_action_can_take(self):
         state = Looking()
         knowledge = FakeKnowledge(can_take=True)
         assert state.action(knowledge) == ['take']
+
+    def test_looking_action_cannot_take(self):
+        state = Looking()
+        knowledge = FakeKnowledge(can_take=False)
+        assert state.action(knowledge) == []
