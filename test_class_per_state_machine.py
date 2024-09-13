@@ -1,9 +1,14 @@
-from machine import Looking
+from machine import Looking, Laden
 
 
 class FakeKnowledge():
-    def __init__(self, *, can_take=False, has_block=False, tired=99):
+    def __init__(self, *,
+                 can_take=False,
+                 can_drop=False,
+                 has_block=False,
+                 tired=99):
         self.can_take = can_take
+        self.can_drop = can_drop
         self.has_block = has_block
         self.tired = tired
 
@@ -45,3 +50,8 @@ class TestClassPerStateMachine:
         assert m_action == machine.walking_action
         assert m_class is None
         assert knowledge.tired == 5
+
+    def test_laden_action_tired_cannot_drop(self):
+        state = Laden()
+        knowledge = FakeKnowledge(tired=99, can_drop=True)
+        assert state.action(knowledge) == []
