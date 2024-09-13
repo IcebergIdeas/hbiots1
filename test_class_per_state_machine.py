@@ -55,3 +55,21 @@ class TestClassPerStateMachine:
         state = Laden()
         knowledge = FakeKnowledge(tired=99, can_drop=True)
         assert state.action(knowledge) == []
+
+    def test_laden_action_not_tired_cannot_drop(self):
+        state = Laden()
+        knowledge = FakeKnowledge(tired=0, can_drop=False)
+        assert state.action(knowledge) == []
+
+    def test_laden_action_not_tired_can_drop(self):
+        state = Laden()
+        knowledge = FakeKnowledge(tired=0, can_drop=True)
+        assert state.action(knowledge) == ['drop']
+
+    def test_laden_update_has_block(self):
+        state = Laden()
+        knowledge = FakeKnowledge(has_block=True)
+        u, a, c = state.update(None, knowledge)
+        assert u is None
+        assert a is None
+        assert isinstance(c, Laden)

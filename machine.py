@@ -21,7 +21,7 @@ class Laden:
             knowledge.tired = 5
             return machine.walking_update, machine.walking_action, None
         else:
-            return None, None, Looking()
+            return None, None, Laden()
 
     def action(self, knowledge):
         if knowledge.tired <= 0:
