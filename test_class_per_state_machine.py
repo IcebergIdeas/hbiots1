@@ -73,3 +73,13 @@ class TestClassPerStateMachine:
         assert u is None
         assert a is None
         assert isinstance(c, Laden)
+
+    def test_laden_update_has_no_block(self):
+        state = Laden()
+        knowledge = FakeKnowledge(has_block=False)
+        machine = FakeMachine()
+        m_update, m_action, m_class = state.update(machine, knowledge)
+        assert m_update == machine.walking_update
+        assert m_action == machine.walking_action
+        assert m_class is None
+        assert knowledge.tired == 5
