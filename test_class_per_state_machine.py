@@ -2,9 +2,18 @@ from machine import Looking
 
 
 class FakeKnowledge():
-    def __init__(self, *, can_take=False, has_block=False):
+    def __init__(self, *, can_take=False, has_block=False, tired=99):
         self.can_take = can_take
         self.has_block = has_block
+        self.tired = tired
+
+
+class FakeMachine:
+    def walking_update(self):
+        pass
+
+    def walking_action(self):
+        pass
 
 
 class TestClassPerStateMachine:
@@ -26,3 +35,13 @@ class TestClassPerStateMachine:
         assert n1 is None
         assert n2 is None
         assert isinstance(looking, Looking)
+
+    def test_looking_update_with_block(self):
+        state = Looking()
+        knowledge = FakeKnowledge(has_block=True)
+        machine = FakeMachine()
+        m_update, m_action, m_class = state.update(machine, knowledge)
+        assert m_update == machine.walking_update
+        assert m_action == machine.walking_action
+        assert m_class is None
+        assert knowledge.tired == 5
