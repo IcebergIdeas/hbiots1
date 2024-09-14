@@ -39,13 +39,3 @@ class Laden:
             if knowledge.can_drop:
                 return ['drop']
         return []
-
-
-class Machine:
-    def __init__(self):
-        self._state = Walking()
-
-    def state(self, knowledge):
-        knowledge.tired -= 1
-        self._state = self._state.update(self, knowledge)
-        return self._state.action(knowledge)
