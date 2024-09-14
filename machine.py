@@ -6,6 +6,8 @@ class Walking:
         return []
 
     def update(self, machine, knowledge):
+        if knowledge.tired <= 0:
+            return None, None, Laden()
         return None, None, Walking()
 
 
