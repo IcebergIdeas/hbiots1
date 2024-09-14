@@ -3,7 +3,7 @@ import random
 from direction import Direction
 from knowledge import Knowledge
 from location import Location
-from machine import Machine
+from machine import Walking
 
 
 class Bot:
@@ -14,7 +14,7 @@ class Bot:
         self.direction_change_chance = 0.2
         self.tired = 10
         self._knowledge = Knowledge(Location(x, y), direction)
-        self.state = Machine()
+        self.state = Walking()
 
     @property
     def direction(self):
@@ -72,7 +72,9 @@ class Bot:
 
     def do_something(self):
         self.update()
-        actions = self.state.state(self._knowledge)
+        self._knowledge.tired -= 1
+        self.state = self.state.update(None, self._knowledge)
+        actions = self.state.action(self._knowledge)
         for action in actions:
             match action:
                 case 'take':

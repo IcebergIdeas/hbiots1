@@ -95,10 +95,10 @@ class TestMethodObjectStateMachine:
         # assert vision == ""
         bot.receive(his_block)
         machine = bot.state
-        assert isinstance(machine._state, Walking)
+        assert isinstance(bot.state, Walking)
         bot._knowledge.tired = 0
         bot.do_something()
-        assert isinstance( machine._state, Laden)
+        assert isinstance( bot.state, Laden)
         assert bot._knowledge.has_block
 
 
