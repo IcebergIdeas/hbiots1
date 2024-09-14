@@ -1,3 +1,4 @@
+
 class Walking:
     def action(self, _knowledge):
         return []
@@ -5,19 +6,19 @@ class Walking:
     def update(self, machine, knowledge):
         if knowledge.tired <= 0:
             if knowledge.has_block:
-                return None, None, Laden()
+                return Laden()
             else:
-                return None, None, Looking()
-        return None, None, Walking()
+                return Looking()
+        return  Walking()
 
 
 class Looking:
     def update(self, machine, knowledge):
         if knowledge.has_block:
             knowledge.tired = 5
-            return None, None, Walking()
+            return Walking()
         else:
-            return None, None, Looking()
+            return Looking()
 
     def action(self, knowledge):
         if knowledge.can_take:
@@ -29,9 +30,9 @@ class Laden:
     def update(self, machine, knowledge):
         if not knowledge.has_block:
             knowledge.tired = 5
-            return None, None, Walking()
+            return Walking()
         else:
-            return None, None, Laden()
+            return Laden()
 
     def action(self, knowledge):
         if knowledge.tired <= 0:
@@ -48,8 +49,7 @@ class Machine:
     def state(self, knowledge):
         self._knowledge = knowledge
         knowledge.tired -= 1
-        info = self._state.update(self, self._knowledge)
-        self.set_states(info)
+        self._state = self._state.update(self, self._knowledge)
         return self._state.action(self._knowledge)
 
     def set_states(self, states):
