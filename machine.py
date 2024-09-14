@@ -5,6 +5,9 @@ class Walking:
     def action(self, _knowledge):
         return []
 
+    def update(self, machine, knowledge):
+        return None, None, Walking()
+
 
 class Looking:
     def update(self, machine, knowledge):

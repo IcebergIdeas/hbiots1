@@ -88,3 +88,13 @@ class TestClassPerStateMachine:
         state = Walking()
         knowledge = FakeKnowledge()
         assert state.action(knowledge) == []
+
+    def test_walking_tired_without_block_keeps_walking(self):
+        state = Walking()
+        knowledge = FakeKnowledge(tired=5, has_block=False)
+        u, a, c = state.update(None, knowledge)
+        assert u is None
+        assert a is None
+        assert isinstance(c, Walking)
+
+
