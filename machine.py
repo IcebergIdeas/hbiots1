@@ -18,7 +18,7 @@ class Looking:
     def update(self, machine, knowledge):
         if knowledge.has_block:
             knowledge.tired = 5
-            return machine.walking_update, machine.walking_action, None
+            return None, None, Walking()
         else:
             return None, None, Looking()
 
@@ -32,7 +32,7 @@ class Laden:
     def update(self, machine, knowledge):
         if not knowledge.has_block:
             knowledge.tired = 5
-            return machine.walking_update, machine.walking_action, None
+            return None, None, Walking()
         else:
             return None, None, Laden()
 
@@ -47,9 +47,9 @@ class Machine:
     def __init__(self, knowledge):
         assert isinstance(knowledge, Knowledge)
         self._knowledge = knowledge
-        self._update = self.walking_update
-        self._action = self.walking_action
-        self._state = None
+        self._update = None
+        self._action = None
+        self._state = Walking()
 
     def state(self, knowledge):
         assert isinstance(knowledge, Knowledge)

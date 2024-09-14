@@ -46,9 +46,9 @@ class TestClassPerStateMachine:
         knowledge = FakeKnowledge(has_block=True)
         machine = FakeMachine()
         m_update, m_action, m_class = state.update(machine, knowledge)
-        assert m_update == machine.walking_update
-        assert m_action == machine.walking_action
-        assert m_class is None
+        assert m_update is None
+        assert m_action is None
+        assert isinstance(m_class, Walking)
         assert knowledge.tired == 5
 
     def test_laden_action_tired_cannot_drop(self):
@@ -79,9 +79,9 @@ class TestClassPerStateMachine:
         knowledge = FakeKnowledge(has_block=False)
         machine = FakeMachine()
         m_update, m_action, m_class = state.update(machine, knowledge)
-        assert m_update == machine.walking_update
-        assert m_action == machine.walking_action
-        assert m_class is None
+        assert m_update is None
+        assert m_action is None
+        assert isinstance(m_class, Walking)
         assert knowledge.tired == 5
 
     def test_walking_action_returns_empty_list(self):
