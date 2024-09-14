@@ -7,7 +7,10 @@ class Walking:
 
     def update(self, machine, knowledge):
         if knowledge.tired <= 0:
-            return None, None, Laden()
+            if knowledge.has_block:
+                return None, None, Laden()
+            else:
+                return None, None, Looking()
         return None, None, Walking()
 
 

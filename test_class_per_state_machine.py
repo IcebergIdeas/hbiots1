@@ -113,4 +113,12 @@ class TestClassPerStateMachine:
         assert a is None
         assert isinstance(c, Laden)
 
+    def test_walking_not_tired_without_block_goes_looking(self):
+        state = Walking()
+        knowledge = FakeKnowledge(tired=0, has_block=False)
+        u, a, c = state.update(None, knowledge)
+        assert u is None
+        assert a is None
+        assert isinstance(c, Looking)
+
 
