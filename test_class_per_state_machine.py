@@ -1,4 +1,4 @@
-from machine import Looking, Laden
+from machine import Looking, Laden, Walking
 
 
 class FakeKnowledge():
@@ -83,3 +83,8 @@ class TestClassPerStateMachine:
         assert m_action == machine.walking_action
         assert m_class is None
         assert knowledge.tired == 5
+
+    def test_walking_action_returns_empty_list(self):
+        state = Walking()
+        knowledge = FakeKnowledge()
+        assert state.action(knowledge) == []

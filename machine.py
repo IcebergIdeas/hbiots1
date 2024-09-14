@@ -1,6 +1,11 @@
 from knowledge import Knowledge
 
 
+class Walking:
+    def action(self, _knowledge):
+        return []
+
+
 class Looking:
     def update(self, machine, knowledge):
         if knowledge.has_block:
