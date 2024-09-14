@@ -43,17 +43,15 @@ class Laden:
 class Machine:
     def __init__(self, knowledge):
         self._knowledge = knowledge
-        self._update = None
-        self._action = None
         self._state = Walking()
 
     def state(self, knowledge):
         self._knowledge = knowledge
         knowledge.tired -= 1
         info = self._state.update(self, self._knowledge)
-        self._update, self._action, self._state = info
+        self.set_states(info)
         return self._state.action(self._knowledge)
 
     def set_states(self, states):
-        self._update, self._action, self._state = states
+        _, _, self._state = states
 

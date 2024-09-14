@@ -85,7 +85,6 @@ class TestLocation:
         world.add(block)
         world.set_bot_vision(bot)
         bot.do_something()
-        assert bot.state._action == None
         assert isinstance(bot.state._state, Looking)
         bot.do_something()
         assert bot.has(block)

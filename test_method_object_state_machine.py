@@ -26,14 +26,13 @@ class TestMethodObjectStateMachine:
         machine.set_states((None, None, Looking()))
         assert not machine._knowledge.has_block
         machine.state(bot._knowledge)
-        assert machine._action == None  # looking
+        assert isinstance(machine._state, Looking)
         bot.receive(Block(2, 2))
         assert machine._knowledge.has_block
         machine.state(bot._knowledge)
         assert isinstance(machine._state, Walking)
         machine._knowledge.tired = 0
         machine.state(bot._knowledge)
-        assert machine._action == None
         assert isinstance(machine._state, Laden)
 
     def test_laden_stays_laden_if_cannot_drop(self):
@@ -82,7 +81,6 @@ class TestMethodObjectStateMachine:
         assert isinstance(machine._state, Walking)
         machine._knowledge.tired = 0
         machine.state(bot._knowledge)
-        assert machine._action is None
         assert isinstance( machine._state, Looking)
 
     def test_drop(self):
