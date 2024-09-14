@@ -3,7 +3,7 @@ class Walking:
     def action(self, _knowledge):
         return []
 
-    def update(self, machine, knowledge):
+    def update(self, knowledge):
         if knowledge.tired <= 0:
             if knowledge.has_block:
                 return Laden()
@@ -13,7 +13,7 @@ class Walking:
 
 
 class Looking:
-    def update(self, machine, knowledge):
+    def update(self, knowledge):
         if knowledge.has_block:
             knowledge.tired = 5
             return Walking()
@@ -27,7 +27,7 @@ class Looking:
 
 
 class Laden:
-    def update(self, machine, knowledge):
+    def update(self, knowledge):
         if not knowledge.has_block:
             knowledge.tired = 5
             return Walking()

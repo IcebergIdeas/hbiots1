@@ -73,7 +73,7 @@ class Bot:
     def do_something(self):
         self.update()
         self._knowledge.tired -= 1
-        self.state = self.state.update(None, self._knowledge)
+        self.state = self.state.update(self._knowledge)
         self.do_state_actions()
         self.move()
 
