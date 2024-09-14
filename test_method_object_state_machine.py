@@ -8,12 +8,12 @@ from world import World
 class TestMethodObjectStateMachine:
     def test_starts_walking(self):
         bot = Bot(5, 5)
-        machine = Machine(bot._knowledge)
+        machine = Machine()
         assert isinstance(machine._state, Walking)
 
     def test_laden_goes_to_walking_if_no_block_in_inventory(self):
         bot = Bot(5, 5)
-        machine = Machine(bot._knowledge)
+        machine = Machine()
         machine._state = Laden()
         machine.state(bot._knowledge)
         assert isinstance(machine._state, Walking)
@@ -22,16 +22,16 @@ class TestMethodObjectStateMachine:
         bot = Bot(5, 5)
         vision_list = [('R', 5, 5)]
         bot.vision = vision_list
-        machine = Machine(bot._knowledge)
+        machine = Machine()
         machine._state = Looking()
-        assert not machine._knowledge.has_block
+        assert not bot._knowledge.has_block
         machine.state(bot._knowledge)
         assert isinstance(machine._state, Looking)
         bot.receive(Block(2, 2))
-        assert machine._knowledge.has_block
+        assert bot._knowledge.has_block
         machine.state(bot._knowledge)
         assert isinstance(machine._state, Walking)
-        machine._knowledge.tired = 0
+        bot._knowledge.tired = 0
         machine.state(bot._knowledge)
         assert isinstance(machine._state, Laden)
 
@@ -42,7 +42,7 @@ class TestMethodObjectStateMachine:
         bot.receive(entity)
         vision_list = [('R', 5, 5), ('B', 6, 5)]
         bot.vision = vision_list
-        machine = Machine(bot._knowledge)
+        machine = Machine()
         bot.direction = Direction.EAST
         machine._state = Laden()
         machine.state(bot._knowledge)
@@ -54,7 +54,7 @@ class TestMethodObjectStateMachine:
 
     def test_laden_goes_walkabout_after_drop(self):
         bot = Bot(5, 5)
-        machine = Machine(bot._knowledge)
+        machine = Machine()
         entity = Block(3, 3)
         bot.receive(entity)
         vision_list = [('R', 5, 5), ('B', 6, 6)]
@@ -66,26 +66,26 @@ class TestMethodObjectStateMachine:
         assert isinstance(machine._state, Laden)
         actions = machine.state(bot._knowledge)
         assert 'drop' in actions
-        machine._knowledge.remove(machine._knowledge._entity)
+        bot._knowledge.remove(bot._knowledge._entity)
         _ = machine.state(bot._knowledge)
         assert isinstance(machine._state, Walking)
 
     def test_unladen_goes_from_walking_to_looking(self):
         bot = Bot(5, 5)
-        machine = Machine(bot._knowledge)
-        machine._knowledge.tired = 10
-        assert machine._knowledge.tired == 10
+        machine = Machine()
+        bot._knowledge.tired = 10
+        assert bot._knowledge.tired == 10
         assert isinstance(machine._state, Walking)
         machine.state(bot._knowledge)
-        assert machine._knowledge.tired == 9
+        assert bot._knowledge.tired == 9
         assert isinstance(machine._state, Walking)
-        machine._knowledge.tired = 0
+        bot._knowledge.tired = 0
         machine.state(bot._knowledge)
         assert isinstance( machine._state, Looking)
 
     def test_drop(self):
         bot = Bot(5, 5)
-        machine = Machine(bot._knowledge)
+        machine = Machine()
         his_block = Block(1,1)
         world_block = Block(8, 8)
         world = World(10,10)
@@ -96,7 +96,7 @@ class TestMethodObjectStateMachine:
         bot.receive(his_block)
         machine = bot.state
         assert isinstance(machine._state, Walking)
-        machine._knowledge.tired = 0
+        bot._knowledge.tired = 0
         bot.do_something()
         assert isinstance( machine._state, Laden)
         assert bot._knowledge.has_block

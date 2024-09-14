@@ -4,7 +4,6 @@ from direction import Direction
 from knowledge import Knowledge
 from location import Location
 from machine import Machine
-from vision import Vision
 
 
 class Bot:
@@ -15,7 +14,7 @@ class Bot:
         self.direction_change_chance = 0.2
         self.tired = 10
         self._knowledge = Knowledge(Location(x, y), direction)
-        self.state = Machine(self._knowledge)
+        self.state = Machine()
 
     @property
     def direction(self):
