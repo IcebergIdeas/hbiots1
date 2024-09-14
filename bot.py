@@ -74,8 +74,11 @@ class Bot:
         self.update()
         self._knowledge.tired -= 1
         self.state = self.state.update(None, self._knowledge)
-        actions = self.state.action(self._knowledge)
-        for action in actions:
+        self.do_state_actions()
+        self.move()
+
+    def do_state_actions(self):
+        for action in self.state.action(self._knowledge):
             match action:
                 case 'take':
                     self.world.take_forward(self)
@@ -83,7 +86,6 @@ class Bot:
                     self.world.drop_forward(self, self.inventory[0])
                 case _:
                     assert 0, f'no case {action}'
-        self.move()
 
     def update(self):
         pass
