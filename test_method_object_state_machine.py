@@ -14,7 +14,7 @@ class TestMethodObjectStateMachine:
     def test_laden_goes_to_walking_if_no_block_in_inventory(self):
         bot = Bot(5, 5)
         machine = Machine(bot._knowledge)
-        machine.set_states((None, None, Laden()))
+        machine._state = Laden()
         machine.state(bot._knowledge)
         assert isinstance(machine._state, Walking)
 
@@ -23,7 +23,7 @@ class TestMethodObjectStateMachine:
         vision_list = [('R', 5, 5)]
         bot.vision = vision_list
         machine = Machine(bot._knowledge)
-        machine.set_states((None, None, Looking()))
+        machine._state = Looking()
         assert not machine._knowledge.has_block
         machine.state(bot._knowledge)
         assert isinstance(machine._state, Looking)
@@ -44,7 +44,7 @@ class TestMethodObjectStateMachine:
         bot.vision = vision_list
         machine = Machine(bot._knowledge)
         bot.direction = Direction.EAST
-        machine.set_states((None, None, Laden()))
+        machine._state = Laden()
         machine.state(bot._knowledge)
         assert bot.has_block()
         assert isinstance(machine._state, Laden)
@@ -61,7 +61,7 @@ class TestMethodObjectStateMachine:
         bot.vision = vision_list
         bot.direction = Direction.EAST
         machine.tired = 0
-        machine.set_states((None, None, Laden()))
+        machine._state = Laden()
         assert bot.has_block()
         assert isinstance(machine._state, Laden)
         actions = machine.state(bot._knowledge)

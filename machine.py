@@ -51,7 +51,3 @@ class Machine:
         knowledge.tired -= 1
         self._state = self._state.update(self, self._knowledge)
         return self._state.action(self._knowledge)
-
-    def set_states(self, states):
-        _, _, self._state = states
-
