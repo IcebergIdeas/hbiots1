@@ -20,10 +20,10 @@ class TestBot:
         bot = Bot(5, 5)
         bot.direction = Direction.NORTH
         map.place(bot)
-        bot.vision = map.create_vision(bot.location)
+        bot.vision = map.vision_at(bot.location)
         assert not bot.can_take()
         map.place(Block(5,4))
-        bot.vision = map.create_vision(bot.location)
+        bot.vision = map.vision_at(bot.location)
         assert bot.can_take()
 
     def test_bot_facing_east_block(self):
@@ -31,8 +31,8 @@ class TestBot:
         bot = Bot(5, 5)
         bot.direction = Direction.EAST
         map.place(bot)
-        bot.vision = map.create_vision(bot.location)
+        bot.vision = map.vision_at(bot.location)
         assert not bot.can_take()
         map.place(Block(6,5))
-        bot.vision = map.create_vision(bot.location)
+        bot.vision = map.vision_at(bot.location)
         assert bot.can_take()

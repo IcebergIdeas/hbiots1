@@ -32,6 +32,7 @@ class TestDecisions:
         direction = Direction.NORTH
         knowledge = Knowledge(location, direction)
         knowledge.vision = [('B', 10, 9)]
+        knowledge.scent = Knowledge.drop_threshold
         assert not knowledge.can_drop
         knowledge.vision = [('B', 9, 9)]
         assert knowledge.can_drop
@@ -59,7 +60,17 @@ class TestDecisions:
         knowledge = Knowledge(location, direction)
         vision_list = [('R', 5, 5), ('B', 4, 4)]
         knowledge.vision = vision_list
+        knowledge.scent = Knowledge.drop_threshold
         assert knowledge.can_drop
+
+    def test_knowledge_drop_decision_low_scent(self):
+        location = Location(5, 5)
+        direction = Direction.NORTH
+        knowledge = Knowledge(location, direction)
+        vision_list = [('R', 5, 5), ('B', 4, 4)]
+        knowledge.vision = vision_list
+        knowledge.scent = Knowledge.drop_threshold - 1
+        assert not knowledge.can_drop
 
     def test_knowledge_drop_decision_other_side(self):
         location = Location(5, 5)
@@ -67,6 +78,7 @@ class TestDecisions:
         knowledge = Knowledge(location, direction)
         vision_list = [('R', 5, 5), ('B', 6, 4)]
         knowledge.vision = vision_list
+        knowledge.scent = Knowledge.drop_threshold
         assert knowledge.can_drop
 
     def test_knowledge_cant_drop_none_around(self):
@@ -85,12 +97,4 @@ class TestDecisions:
         knowledge.vision = vision_list
         assert not knowledge.can_drop
 
-    def test_how_to_do_returns(self):
-        def items():
-            return 'a', 'b', None
 
-        things = items()
-        x, y, z = things
-        assert x == 'a'
-        assert y == 'b'
-        assert z is None

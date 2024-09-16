@@ -54,7 +54,7 @@ class Map:
     def is_occupied(self, location):
         return self.entity_at(location.x, location.y)
 
-    def create_vision(self, location):
+    def vision_at(self, location):
         result = []
         for dx in (-1, 0, 1):
             for dy in (-1, 0, 1):

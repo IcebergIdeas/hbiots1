@@ -20,9 +20,13 @@ class World:
         location = self.bots_next_location(bot)
         self.map.attempt_move(bot.id, location)
         self.set_bot_vision(bot)
+        self.set_bot_scent(bot)
 
     def set_bot_vision(self, bot):
-        bot.vision = self.map.create_vision(bot.location)
+        bot.vision = self.map.vision_at(bot.location)
+
+    def set_bot_scent(self, bot):
+        bot.scent = self.map.scent_at(bot.location)
 
     def clip(self, coord, limit):
         return 0 if coord < 0 else (limit if coord > limit else coord)

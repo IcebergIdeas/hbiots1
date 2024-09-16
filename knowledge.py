@@ -2,6 +2,8 @@ from vision import Vision
 
 
 class Knowledge:
+    drop_threshold = 4
+
     def __init__(self, location, direction):
         self._old_location = None
         self._location = location
@@ -9,6 +11,7 @@ class Knowledge:
         self._vision = Vision([], self.location, self.direction)
         self._entity = None
         self.tired = 0
+        self.scent = 0
 
     @property
     def vision(self) -> Vision:
@@ -52,7 +55,8 @@ class Knowledge:
 
     @property
     def can_drop(self):
-        return self.vision.match_forward_and_one_side('_', 'B')
+        is_scent_ok = self.scent >= self.drop_threshold
+        return is_scent_ok and self.vision.match_forward_and_one_side('_', 'B')
 
     def receive(self, entity):
         self._entity = entity

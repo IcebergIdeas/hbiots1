@@ -2,6 +2,7 @@ from block import Block
 from bot import Bot
 from location import Location
 from map import Map
+from world import World
 
 
 class TestScent:
@@ -49,4 +50,11 @@ class TestScent:
         scent = map.scent_at(Location (5, 5))
         assert scent ==  0
 
-
+    def test_we_get_scent(self):
+        world = World(10, 10)
+        block = Block(5, 5)
+        world.add(block)
+        bot = Bot(4, 6)
+        world.add(bot)
+        world.step(bot)
+        assert bot._knowledge.scent == 3

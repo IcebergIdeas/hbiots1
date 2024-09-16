@@ -48,6 +48,14 @@ class Bot:
         self._knowledge.vision = vision
 
     @property
+    def scent(self):
+        return self._knowledge.scent
+
+    @scent.setter
+    def scent(self, scent):
+        self._knowledge.scent = scent
+
+    @property
     def x(self):
         return self.location.x
 
