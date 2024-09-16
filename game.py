@@ -76,15 +76,19 @@ class Game:
                 self.on_event(event)
             self.clear_screen()
             self.draw_grid()
-            robots = []
-            for entity in self.world.map:
-                if entity.name == 'R':
-                    robots.append(entity)
-            for bot in robots:
-                bot.do_something()
+            for _ in range(10):
+                self.run_one_bot_cycle()
             self.draw_world()
             pygame.display.update()
         self.on_cleanup()
+
+    def run_one_bot_cycle(self):
+        robots = []
+        for entity in self.world.map:
+            if entity.name == 'R':
+                robots.append(entity)
+        for bot in robots:
+            bot.do_something()
 
     @staticmethod
     def on_cleanup():
@@ -111,7 +115,7 @@ def build_random_blocks():
 if __name__ == "__main__":
     world = World(40, 40)
     build_random_blocks()
-    build_block_square()
+    # build_block_square()
 
     for _ in range(20):
         bot = Bot(10, 20)
