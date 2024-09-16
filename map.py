@@ -1,5 +1,6 @@
-from map_entity import MapEntity
+from direction import Direction
 from location import Location
+from map_entity import MapEntity
 
 
 class Map:
@@ -61,3 +62,21 @@ class Map:
                 if found:
                     result.append((found.name, found.x, found.y))
         return result
+
+    def scent_at(self, location):
+        total_scent = 0
+        for dx in (-2, -1, 0, 1, 2):
+            for dy in (-2, -1, 0, 1, 2):
+                current = location + Direction(dx, dy)
+                scent = self.relative_scent(location, current)
+                total_scent += scent
+        return total_scent
+
+    def relative_scent(self, location, current):
+        found = self.entity_at(current.x, current.y)
+        scent = 0
+        if found and found.name == 'B':
+            scent = 4 - location.distance(current)
+            if scent < 0:
+                scent = 0
+        return scent

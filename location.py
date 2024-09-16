@@ -12,7 +12,7 @@ class Location:
     def __repr__(self):
         return f'Location({self.x}, {self.y})'
 
-    def __add__(self, other):
+    def __add__(self, other: Direction):
         try:
             assert isinstance(other, Direction)
         except AssertionError:

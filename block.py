@@ -16,6 +16,9 @@ class Block:
     def y(self):
         return self.location.y
 
+    def __str__(self):
+        return f'{self.name} {str(self.location)}'
+
     def is_close_enough(self, entity):
         pe = entity.location
         se = self.location
