@@ -3,6 +3,7 @@ from vision import Vision
 
 class Knowledge:
     drop_threshold = 4
+    take_threshold = 7
 
     def __init__(self, location, direction):
         self._old_location = None
@@ -51,7 +52,8 @@ class Knowledge:
 
     @property
     def can_take(self):
-        return self.vision.match_forward_and_one_side('B', '_')
+        is_scent_ok = self.scent <= self.take_threshold
+        return is_scent_ok and self.vision.match_forward_and_one_side('B', '_')
 
     @property
     def can_drop(self):

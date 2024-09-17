@@ -20,12 +20,21 @@ class TestDecisions:
         knowledge.location = Location(10, 10)
         assert not knowledge.has_moved
 
-    def test_can_take(self):
+    def test_knowledge_take_decision(self):
         location = Location(10, 10)
         direction = Direction.NORTH
         knowledge = Knowledge(location, direction)
         knowledge.vision = [('B', 10, 9)]
+        knowledge.scent = Knowledge.take_threshold
         assert knowledge.can_take
+
+    def test_knowledge_take_decision_high_scent(self):
+        location = Location(10, 10)
+        direction = Direction.NORTH
+        knowledge = Knowledge(location, direction)
+        knowledge.vision = [('B', 10, 9)]
+        knowledge.scent = Knowledge.take_threshold + 1
+        assert not knowledge.can_take
 
     def test_can_drop(self):
         location = Location(10, 10)
