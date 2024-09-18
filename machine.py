@@ -4,38 +4,40 @@ class Walking:
         return []
 
     def update(self, knowledge):
-        if knowledge.tired <= 0:
+        if knowledge.has_energy():
             if knowledge.has_block:
                 return Laden()
             else:
                 return Looking()
-        return  Walking()
+        return Walking()
 
 
 class Looking:
-    def update(self, knowledge):
-        if knowledge.has_block:
-            knowledge.tired = 5
-            return Walking()
-        else:
-            return Looking()
-
     def action(self, knowledge):
         if knowledge.can_take:
             return ['take']
         return []
 
+    def update(self, knowledge):
+        if knowledge.has_block:
+            knowledge.use_energy()
+            return Walking()
+        else:
+            return Looking()
+
+
 
 class Laden:
+    def action(self, knowledge):
+        if knowledge.has_energy():
+            if knowledge.can_drop:
+                return ['drop']
+        return []
+
     def update(self, knowledge):
         if not knowledge.has_block:
-            knowledge.tired = 5
+            knowledge.use_energy()
             return Walking()
         else:
             return Laden()
 
-    def action(self, knowledge):
-        if knowledge.tired <= 0:
-            if knowledge.can_drop:
-                return ['drop']
-        return []

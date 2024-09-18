@@ -79,8 +79,7 @@ class Bot:
         return entity.location.distance(self.location) < 10
 
     def do_something(self):
-        self.update()
-        self._knowledge.tired -= 1
+        self.update_knowledge()
         self.state = self.state.update(self._knowledge)
         self.do_state_actions()
         self.move()
@@ -95,8 +94,8 @@ class Bot:
                 case _:
                     assert 0, f'no case {action}'
 
-    def update(self):
-        pass
+    def update_knowledge(self):
+        self._knowledge.gain_energy()
 
     def has_block(self):
         return self._knowledge.has_block

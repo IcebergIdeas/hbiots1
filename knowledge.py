@@ -4,6 +4,7 @@ from vision import Vision
 class Knowledge:
     drop_threshold = 4
     take_threshold = 7
+    energy_threshold = 5
 
     def __init__(self, location, direction):
         self._old_location = None
@@ -11,8 +12,17 @@ class Knowledge:
         self._direction = direction
         self._vision = Vision([], self.location, self.direction)
         self._entity = None
-        self.tired = 0
+        self._energy = self.energy_threshold
         self.scent = 0
+
+    def has_energy(self):
+        return self._energy >= self.energy_threshold
+
+    def use_energy(self):
+        self._energy = 0
+
+    def gain_energy(self):
+        self._energy += 1
 
     @property
     def vision(self) -> Vision:

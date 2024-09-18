@@ -3,6 +3,7 @@ import pytest
 from block import Block
 from bot import Bot
 from direction import Direction
+from knowledge import Knowledge
 from location import Location
 from machine import Looking
 from world import World
@@ -78,7 +79,7 @@ class TestLocation:
     def test_bot_notices_a_block(self):
         world = World(10, 10)
         bot = Bot(5, 5)
-        bot.state.tired = 0
+        bot.state._energy = Knowledge.energy_threshold
         bot.direction_change_chance = 0
         world.add(bot)
         block = Block(7, 5)
