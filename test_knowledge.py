@@ -5,7 +5,7 @@ from knowledge import Knowledge
 from location import Location
 
 
-class TestDecisions:
+class TestKnowledge:
     def test_initial_knowledge(self):
         knowledge = Knowledge(Location(10, 10), Direction.NORTH)
         assert knowledge.has_moved
