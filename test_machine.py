@@ -23,15 +23,7 @@ class FakeKnowledge():
         self._energy += 1
 
 
-class FakeMachine:
-    def walking_update(self):
-        pass
-
-    def walking_action(self):
-        pass
-
-
-class TestClassPerStateMachine:
+class TestMachine:
     def test_looking_action_can_take(self):
         state = Looking()
         knowledge = FakeKnowledge(can_take=True)
@@ -52,7 +44,6 @@ class TestClassPerStateMachine:
     def test_looking_update_with_block(self):
         state = Looking()
         knowledge = FakeKnowledge(has_block=True)
-        machine = FakeMachine()
         m_class = state.update(knowledge)
         assert isinstance(m_class, Walking)
         assert knowledge.has_energy() is False
@@ -81,7 +72,6 @@ class TestClassPerStateMachine:
     def test_laden_update_has_no_block(self):
         state = Laden()
         knowledge = FakeKnowledge(has_block=False)
-        machine = FakeMachine()
         m_class = state.update(knowledge)
         assert isinstance(m_class, Walking)
         assert not knowledge.has_energy()
