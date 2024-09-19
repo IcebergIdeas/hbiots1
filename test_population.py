@@ -1,4 +1,5 @@
 from bot import Bot
+from location import Location
 from world import World
 
 
@@ -38,6 +39,13 @@ class WorldProxy:
         entity.world = self
         self._population.add(entity)
 
+    def run_cycle(self):
+        for bot in self._population:
+            bot.do_something()
+
+    def step(self, bot):
+        self._world.step(bot)
+
 
 
 
@@ -50,3 +58,11 @@ class TestWorldProxy:
         bot = Bot(5, 5)
         proxy.add(bot)
         assert bot.world == proxy
+
+    def test_round_trip(self):
+        proxy = WorldProxy()
+        bot = Bot(5, 5)
+        bot.direction_change_chance = 0
+        proxy.add(bot)
+        proxy.run_cycle()
+        assert bot.location == Location(6, 5)
