@@ -66,3 +66,24 @@ class TestWorldProxy:
         proxy.add(bot)
         proxy.run_cycle()
         assert bot.location == Location(6, 5)
+
+
+class ClientProxy:
+    def __init__(self, width=20, height=20):
+        self._world = World(width, height)
+
+    def add(self, entity):
+        self._world.add(entity)
+
+
+class TestClientProxy:
+    def test_exists(self):
+        proxy = ClientProxy()
+
+    def test_add_bot(self):
+        proxy = ClientProxy()
+        bot = Bot(5, 5)
+        proxy.add(bot)
+        entity = proxy._world.map.entity_at(5, 5)
+        assert entity.name == 'R'
+
