@@ -32,7 +32,8 @@ class TestPopulation:
 class WorldProxy:
     def __init__(self, width=20, height=20):
         self._population = Population()
-        self._world = World(width, height)
+        # self._world = World(width, height)
+        self._world = ClientProxy(width, height)
 
     def add(self, entity):
         self._world.add(entity)
@@ -74,6 +75,9 @@ class ClientProxy:
 
     def add(self, entity):
         self._world.add(entity)
+
+    def step(self, bot):
+        self._world.step(bot)
 
 
 class TestClientProxy:
