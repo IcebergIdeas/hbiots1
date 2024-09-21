@@ -11,12 +11,21 @@ class Knowledge:
         self._direction = direction
         # world write / client read only
         self._entity = None
+        self._id = None
         self._location = location
         self._scent = 0
         self._vision = Vision([], self.location, self.direction)
         # local info client
         self._energy = self.energy_threshold
         self._old_location = None
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        self._id = id
 
     def has_energy(self):
         return self._energy >= self.energy_threshold

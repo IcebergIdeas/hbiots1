@@ -9,12 +9,19 @@ from machine import Walking
 class Bot:
     def __init__(self, x, y, direction=Direction.EAST):
         self.world = None
-        self.id = None
         self.name = 'R'
         self.direction_change_chance = 0.2
         self.tired = 10
         self._knowledge = Knowledge(Location(x, y), direction)
         self.state = Walking()
+
+    @property
+    def id(self):
+        return self._knowledge.id
+
+    @id.setter
+    def id(self, id):
+        self._knowledge.id = id
 
     @property
     def direction(self):
