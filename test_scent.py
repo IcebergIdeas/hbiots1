@@ -57,4 +57,4 @@ class TestScent:
         bot = Bot(4, 6)
         world.add(bot)
         world.step(bot)
-        assert bot._knowledge.scent == 3
+        assert bot._knowledge._scent == 3

@@ -7,13 +7,16 @@ class Knowledge:
     energy_threshold = 5
 
     def __init__(self, location, direction):
-        self._old_location = None
-        self._location = location
+        # shared info
         self._direction = direction
-        self._vision = Vision([], self.location, self.direction)
+        # world write / client read only
         self._entity = None
+        self._location = location
+        self._scent = 0
+        self._vision = Vision([], self.location, self.direction)
+        # local info client
         self._energy = self.energy_threshold
-        self.scent = 0
+        self._old_location = None
 
     def has_energy(self):
         return self._energy >= self.energy_threshold
@@ -62,12 +65,12 @@ class Knowledge:
 
     @property
     def can_take(self):
-        is_scent_ok = self.scent <= self.take_threshold
+        is_scent_ok = self._scent <= self.take_threshold
         return is_scent_ok and self.vision.match_forward_and_one_side('B', '_')
 
     @property
     def can_drop(self):
-        is_scent_ok = self.scent >= self.drop_threshold
+        is_scent_ok = self._scent >= self.drop_threshold
         return is_scent_ok and self.vision.match_forward_and_one_side('_', 'B')
 
     def receive(self, entity):

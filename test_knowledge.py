@@ -25,7 +25,7 @@ class TestKnowledge:
         direction = Direction.NORTH
         knowledge = Knowledge(location, direction)
         knowledge.vision = [('B', 10, 9)]
-        knowledge.scent = Knowledge.take_threshold
+        knowledge._scent = Knowledge.take_threshold
         assert knowledge.can_take
 
     def test_knowledge_take_decision_high_scent(self):
@@ -33,7 +33,7 @@ class TestKnowledge:
         direction = Direction.NORTH
         knowledge = Knowledge(location, direction)
         knowledge.vision = [('B', 10, 9)]
-        knowledge.scent = Knowledge.take_threshold + 1
+        knowledge._scent = Knowledge.take_threshold + 1
         assert not knowledge.can_take
 
     def test_can_drop(self):
@@ -41,7 +41,7 @@ class TestKnowledge:
         direction = Direction.NORTH
         knowledge = Knowledge(location, direction)
         knowledge.vision = [('B', 10, 9)]
-        knowledge.scent = Knowledge.drop_threshold
+        knowledge._scent = Knowledge.drop_threshold
         assert not knowledge.can_drop
         knowledge.vision = [('B', 9, 9)]
         assert knowledge.can_drop
@@ -69,7 +69,7 @@ class TestKnowledge:
         knowledge = Knowledge(location, direction)
         vision_list = [('R', 5, 5), ('B', 4, 4)]
         knowledge.vision = vision_list
-        knowledge.scent = Knowledge.drop_threshold
+        knowledge._scent = Knowledge.drop_threshold
         assert knowledge.can_drop
 
     def test_knowledge_drop_decision_low_scent(self):
@@ -78,7 +78,7 @@ class TestKnowledge:
         knowledge = Knowledge(location, direction)
         vision_list = [('R', 5, 5), ('B', 4, 4)]
         knowledge.vision = vision_list
-        knowledge.scent = Knowledge.drop_threshold - 1
+        knowledge._scent = Knowledge.drop_threshold - 1
         assert not knowledge.can_drop
 
     def test_knowledge_drop_decision_other_side(self):
@@ -87,7 +87,7 @@ class TestKnowledge:
         knowledge = Knowledge(location, direction)
         vision_list = [('R', 5, 5), ('B', 6, 4)]
         knowledge.vision = vision_list
-        knowledge.scent = Knowledge.drop_threshold
+        knowledge._scent = Knowledge.drop_threshold
         assert knowledge.can_drop
 
     def test_knowledge_cant_drop_none_around(self):

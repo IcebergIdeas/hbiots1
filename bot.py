@@ -49,11 +49,11 @@ class Bot:
 
     @property
     def scent(self):
-        return self._knowledge.scent
+        return self._knowledge._scent
 
     @scent.setter
     def scent(self, scent):
-        self._knowledge.scent = scent
+        self._knowledge._scent = scent
 
     @property
     def x(self):
