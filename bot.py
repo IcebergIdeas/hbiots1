@@ -79,9 +79,6 @@ class Bot:
     def remove(self, entity):
         self._knowledge.remove(entity)
 
-    def is_close_enough(self, entity):
-        return entity.location.distance(self.location) < 10
-
     def do_something(self):
         self.update_knowledge()
         self.state = self.state.update(self._knowledge)
