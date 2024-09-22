@@ -91,24 +91,6 @@ class TestBot:
 
 # Some of these are redundant, moved from another file
 
-    def test_scan(self):
-        world = World(10, 10)
-        bot = Bot(10, 10)
-        world.add(bot)
-        result = bot.scan()
-        expected_scan = [('R', 10, 10)]
-        assert result == expected_scan
-
-    def test_scan_a_block(self):
-        world = World(10, 10)
-        bot = Bot(5, 5)
-        world.add(bot)
-        block = Block(6, 5)
-        world.add(block)
-        result = bot.scan()
-        expected_scan = [('R', 5, 5), ('B', 6, 5)]
-        assert result == expected_scan
-
     def test_bot_notices_a_block(self):
         world = World(10, 10)
         bot = Bot(5, 5)
