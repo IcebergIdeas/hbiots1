@@ -112,7 +112,7 @@ class TestBot:
         block = Block(6, 5)
         world.add(block)
         assert not world.is_empty(Location(6, 5))
-        bot.take()
+        world.take_forward(bot)
         assert bot.has(block)
         assert world.is_empty(Location(6, 5))
 
@@ -123,7 +123,7 @@ class TestBot:
         block = Block(5, 4)
         world.add(block)
         bot.direction = Direction.NORTH
-        bot.take()
+        world.take_forward(bot)
         assert bot.has(block)
 
     def test_bot_facing_east_takes_an_east_block(self):
@@ -132,7 +132,7 @@ class TestBot:
         world.add(bot)
         block = Block(6, 5)
         world.add(block)
-        bot.take()
+        world.take_forward(bot)
         assert bot.has(block)
 
     def test_bot_facing_south_takes_a_south_block(self):
@@ -142,7 +142,7 @@ class TestBot:
         block = Block(5, 6)
         world.add(block)
         bot.direction = Direction.SOUTH
-        bot.take()
+        world.take_forward(bot)
         assert bot.has(block)
 
     def test_bot_facing_west_takes_a_west_block(self):
@@ -152,7 +152,7 @@ class TestBot:
         block = Block(4, 5)
         world.add(block)
         bot.direction = Direction.WEST
-        bot.take()
+        world.take_forward(bot)
         assert bot.has(block)
 
     def test_bot_cant_take_diagonally(self):
@@ -167,7 +167,7 @@ class TestBot:
         world.add(block)
         block = Block(6, 6)
         world.add(block)
-        bot.take()
+        world.take_forward(bot)
         assert not bot.has(block)
 
     def test_bot_cannot_drop_off_world_north(self):

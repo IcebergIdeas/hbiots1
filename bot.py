@@ -116,9 +116,6 @@ class Bot:
     def can_drop(self):
         return self.vision.match_forward_and_one_side('_', 'B')
 
-    def take(self):
-        self.world.take_forward(self)
-
     def move(self):
         if random.random() < self.direction_change_chance:
             self.change_direction()
