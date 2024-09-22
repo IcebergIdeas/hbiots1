@@ -45,9 +45,6 @@ class World:
             return entity.name
         return '_'
 
-    def scan(self, bot):
-        return [(e.name, e.x, e.y) for e in self.map if e.is_close_enough(bot)]
-
     def take_forward(self, bot: Bot):
         take_location = self.bots_next_location(bot)
         if take_location == bot.location:

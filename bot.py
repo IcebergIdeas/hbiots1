@@ -70,9 +70,6 @@ class Bot:
     def y(self):
         return self.location.y
 
-    def scan(self):
-        return self.world.scan(self)
-
     def has(self, entity):
         return self._knowledge.has(entity)
 

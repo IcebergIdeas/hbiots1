@@ -111,10 +111,10 @@ class TestBot:
         world.add(bot)
         block = Block(6, 5)
         world.add(block)
+        assert not world.is_empty(Location(6, 5))
         bot.take()
-        result = bot.scan()
-        expected_scan = [('R', 5, 5)]
-        assert result == expected_scan
+        assert bot.has(block)
+        assert world.is_empty(Location(6, 5))
 
     def test_bot_facing_north_takes_a_north_block(self):
         world = World(10, 10)
