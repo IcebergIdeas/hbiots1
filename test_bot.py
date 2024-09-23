@@ -5,6 +5,7 @@ from knowledge import Knowledge
 from location import Location
 from machine import Looking
 from map import Map
+from vision import Vision
 from world import World
 
 
@@ -19,36 +20,32 @@ class TestBot:
         bot = Bot(10, 10)
         assert bot.location == Location(10, 10)
 
-    def test_bot_in_world(self):
+    def test_bot_in_world_gets_next_id(self):
         World.next_id = 100
         bot = Bot(10, 10)
+        assert bot.id is None
         world = World(10, 10)
         world.add(bot)
-        point = Location(10, 10)
         assert bot.id == 101
-        assert bot.location == point
 
-    def test_bot_facing_north_block(self):
+    def test_knowledge_cannot_take_if_no_block(self):
         map = Map(10, 10)
-        bot = Bot(5, 5)
-        bot.direction = Direction.NORTH
-        map.place(bot)
-        bot.vision = map.vision_at(bot.location)
-        assert not bot.can_take()
+        location = Location(5, 5)
+        direction = Direction.NORTH
+        knowledge = Knowledge(location, direction)
+        knowledge._scent = map.scent_at(location)
+        knowledge._vision = Vision(map.vision_at(location), location, direction)
+        assert not knowledge.can_take
+
+    def test_knowledge_can_take_if_block(self):
+        map = Map(10, 10)
         map.place(Block(5,4))
-        bot.vision = map.vision_at(bot.location)
-        assert bot.can_take()
-
-    def test_bot_facing_east_block(self):
-        map = Map(10, 10)
-        bot = Bot(5, 5)
-        bot.direction = Direction.EAST
-        map.place(bot)
-        bot.vision = map.vision_at(bot.location)
-        assert not bot.can_take()
-        map.place(Block(6,5))
-        bot.vision = map.vision_at(bot.location)
-        assert bot.can_take()
+        location = Location(5, 5)
+        direction = Direction.NORTH
+        knowledge = Knowledge(location, direction)
+        knowledge._scent = map.scent_at(location)
+        knowledge._vision = Vision(map.vision_at(location), location, direction)
+        assert knowledge.can_take
 
     def test_wandering(self):
         world = World(10, 10)
