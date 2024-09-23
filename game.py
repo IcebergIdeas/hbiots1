@@ -3,7 +3,6 @@ import random
 import pygame
 
 from block import Block
-from bot import Bot
 from constants import DARK_GREY, BASE_FONT, WHITE, BLACK, RED, GREEN, GRID_LINE
 from world import World
 
@@ -118,7 +117,6 @@ if __name__ == "__main__":
     # build_block_square()
 
     for _ in range(20):
-        bot = Bot(10, 20)
-        world.add(bot)
+        world.add_bot(10, 20)
     game = Game(world)
     game.on_execute()

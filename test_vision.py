@@ -1,5 +1,3 @@
-
-from bot import Bot
 from direction import Direction
 from location import Location
 from world import World
@@ -11,9 +9,8 @@ class TestVision:
 
     def test_nothing_near(self):
         world = World(10, 10)
-        bot = Bot(5, 5)
+        bot = world.add_bot(5, 5)
         bot.direction_change_chance = 0.0
-        world.add(bot)
         bot.vision = None
         bot.move()
         assert bot.location == Location(6, 5)
@@ -26,10 +23,9 @@ class TestVision:
         world.add(Block(4, 4))
         world.add(Block(6, 6))
         world.add(Block(4, 5))
-        bot = Bot(6, 5)
+        bot = world.add_bot(6, 5)
         bot.direction = Direction.WEST
         bot.direction_change_chance = 0.0
-        world.add(bot)
         bot.vision = None
         bot.move()
         assert bot.location == Location(5, 5)
