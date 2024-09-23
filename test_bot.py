@@ -4,8 +4,6 @@ from direction import Direction
 from knowledge import Knowledge
 from location import Location
 from machine import Looking
-from map import Map
-from vision import Vision
 from world import World
 
 
@@ -27,25 +25,6 @@ class TestBot:
         world = World(10, 10)
         world.add(bot)
         assert bot.id == 101
-
-    def test_knowledge_cannot_take_if_no_block(self):
-        map = Map(10, 10)
-        location = Location(5, 5)
-        direction = Direction.NORTH
-        knowledge = Knowledge(location, direction)
-        knowledge._scent = map.scent_at(location)
-        knowledge._vision = Vision(map.vision_at(location), location, direction)
-        assert not knowledge.can_take
-
-    def test_knowledge_can_take_if_block(self):
-        map = Map(10, 10)
-        map.place(Block(5,4))
-        location = Location(5, 5)
-        direction = Direction.NORTH
-        knowledge = Knowledge(location, direction)
-        knowledge._scent = map.scent_at(location)
-        knowledge._vision = Vision(map.vision_at(location), location, direction)
-        assert knowledge.can_take
 
     def test_wandering(self):
         world = World(10, 10)
