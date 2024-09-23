@@ -1,3 +1,5 @@
+import copy
+
 from bot import Bot
 from location import Location
 from world import World
@@ -8,8 +10,9 @@ class DirectConnection:
         self.world = world
 
     def step(self, bot):
-        self.knowledge = bot._knowledge
-        self.world.step(self.knowledge)
+        self.world.command('step', bot.id)
+        result = self.world.fetch(bot.id)
+        bot._knowledge = copy.copy(result)
 
 
 class TestConnection:
@@ -23,5 +26,5 @@ class TestConnection:
         world.add(bot)
         connection = DirectConnection(world)
         connection.step(bot)
-        assert connection.knowledge.location == Location(11, 10)
-        assert world.map.entity_at(11, 10) == bot
+        assert bot.location == Location(11, 10)
+        assert world.map.at_xy(11, 10) == bot

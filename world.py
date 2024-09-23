@@ -16,6 +16,16 @@ class World:
         entity.id = World.next_id
         self.map.place(entity)
 
+    def command(self, action, parameter):
+        if action == 'step':
+            bot = self.map.at_id(parameter)
+            self.step(bot)
+        else:
+            raise Exception('Unknown command')
+
+    def fetch(self, entity_id):
+        return self.map.at_id(entity_id)._knowledge
+
     def step(self, bot):
         location = self.bots_next_location(bot)
         self.map.attempt_move(bot.id, location)
@@ -40,7 +50,7 @@ class World:
         return result
 
     def _location_code(self, x, y):
-        entity = self.map.entity_at(x, y)
+        entity = self.map.at_xy(x, y)
         if entity:
             return entity.name
         return '_'
@@ -49,7 +59,7 @@ class World:
         take_location = self.bots_next_location(bot)
         if take_location == bot.location:
             return
-        entity = self.map.entity_at(take_location.x, take_location.y)
+        entity = self.map.at_xy(take_location.x, take_location.y)
         if self.can_take_entity(entity):
             self.map.remove(entity.id)
             bot.receive(entity)
@@ -65,7 +75,7 @@ class World:
             bot.remove(entity)
 
     def is_empty(self, drop_location):
-        return not self.map.entity_at(drop_location.x, drop_location.y)
+        return not self.map.at_xy(drop_location.x, drop_location.y)
 
     def bots_next_location(self, bot):
         location = bot.location + bot.direction

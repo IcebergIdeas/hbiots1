@@ -88,6 +88,6 @@ class TestClientProxy:
         proxy = ClientProxy()
         bot = Bot(5, 5)
         proxy.add(bot)
-        entity = proxy._world.map.entity_at(5, 5)
+        entity = proxy._world.map.at_xy(5, 5)
         assert entity.name == 'R'
 

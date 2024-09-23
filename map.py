@@ -12,15 +12,18 @@ class Map:
     def __iter__(self):
         return iter(self.contents.values())
 
-    def place(self, entity):
-        self.contents[entity.id] = entity
+    def at_id(self, entity_id):
+        return self.contents[entity_id]
 
-    def entity_at(self, x, y):
+    def at_xy(self, x, y):
         point = Location(x, y)
         for entity in self.contents.values():
             if entity.location == point:
                 return entity
         return None
+
+    def place(self, entity):
+        self.contents[entity.id] = entity
 
     def map_is_OK(self, other: [MapEntity]):
         other_entities = other.get_entities()
@@ -31,7 +34,7 @@ class Map:
     def check_all_other_entities_are_valid(self, other_contents: [MapEntity]):
         other_entities_are_all_valid = True
         for map_entity in other_contents:
-            if self.entity_at(map_entity.x, map_entity.y).name != map_entity.name:
+            if self.at_xy(map_entity.x, map_entity.y).name != map_entity.name:
                 other_entities_are_all_valid = False
         return other_entities_are_all_valid
 
@@ -52,13 +55,13 @@ class Map:
         return 0 <= location.x <= self.width and 0 <= location.y <= self.height
 
     def is_occupied(self, location):
-        return self.entity_at(location.x, location.y)
+        return self.at_xy(location.x, location.y)
 
     def vision_at(self, location):
         result = []
         for dx in (-1, 0, 1):
             for dy in (-1, 0, 1):
-                found = self.entity_at(location.x + dx, location.y + dy)
+                found = self.at_xy(location.x + dx, location.y + dy)
                 if found:
                     result.append((found.name, found.x, found.y))
         return result
@@ -73,7 +76,7 @@ class Map:
         return total_scent
 
     def relative_scent(self, location, current):
-        found = self.entity_at(current.x, current.y)
+        found = self.at_xy(current.x, current.y)
         scent = 0
         if found and found.name == 'B':
             scent = 4 - location.distance(current)
