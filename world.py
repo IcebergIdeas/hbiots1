@@ -1,4 +1,5 @@
 from bot import Bot
+from direction import Direction
 from map import Map
 
 
@@ -9,6 +10,11 @@ class World:
         self.width = max_x
         self.height = max_y
         self.map = Map(max_x, max_y)
+
+    def add_bot(self, x, y, direction = Direction.EAST):
+        bot = Bot(x, y, direction)
+        self.add(bot)
+        return bot
 
     def add(self, entity):
         entity.world = self

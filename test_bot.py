@@ -20,25 +20,21 @@ class TestBot:
 
     def test_bot_in_world_gets_next_id(self):
         World.next_id = 100
-        bot = Bot(10, 10)
-        assert bot.id is None
         world = World(10, 10)
-        world.add(bot)
+        bot = world.add_bot(5, 5)
         assert bot.id == 101
 
     def test_wandering(self):
         world = World(10, 10)
-        bot = Bot(5, 5)
-        world.add(bot)
+        bot = world.add_bot(5, 5)
         bot.do_something()
         loc = bot.location
         assert loc != Location(5, 5)
 
     def test_changes_direction(self):
         world = World(10, 10)
-        bot = Bot(9, 5)
+        bot = world.add_bot(9, 5)
         bot.direction_change_chance = 0.0
-        world.add(bot)
         bot.do_something()
         assert bot.location == Location(10, 5)
         bot.do_something()
@@ -49,8 +45,7 @@ class TestBot:
 
     def test_stop_at_edge(self):
         world = World(10, 10)
-        bot = Bot(9, 5)
-        world.add(bot)
+        bot = world.add_bot(9, 5)
         bot.step()
         assert bot.location == Location(10, 5)
         bot.step()
@@ -60,10 +55,9 @@ class TestBot:
 
     def test_bot_notices_a_block(self):
         world = World(10, 10)
-        bot = Bot(5, 5)
+        bot = world.add_bot(5, 5)
         bot.state._energy = Knowledge.energy_threshold
         bot.direction_change_chance = 0
-        world.add(bot)
         block = Block(7, 5)
         world.add(block)
         world.set_bot_vision(bot)
@@ -74,8 +68,7 @@ class TestBot:
 
     def test_take_a_block(self):
         world = World(10, 10)
-        bot = Bot(5, 5)
-        world.add(bot)
+        bot = world.add_bot(5, 5)
         block = Block(6, 5)
         world.add(block)
         assert not world.is_empty(Location(6, 5))
@@ -85,8 +78,7 @@ class TestBot:
 
     def test_bot_facing_north_takes_a_north_block(self):
         world = World(10, 10)
-        bot = Bot(5, 5)
-        world.add(bot)
+        bot = world.add_bot(5, 5)
         block = Block(5, 4)
         world.add(block)
         bot.direction = Direction.NORTH
@@ -95,8 +87,7 @@ class TestBot:
 
     def test_bot_facing_east_takes_an_east_block(self):
         world = World(10, 10)
-        bot = Bot(5, 5)
-        world.add(bot)
+        bot = world.add_bot(5, 5)
         block = Block(6, 5)
         world.add(block)
         world.take_forward(bot)
@@ -104,8 +95,7 @@ class TestBot:
 
     def test_bot_facing_south_takes_a_south_block(self):
         world = World(10, 10)
-        bot = Bot(5, 5)
-        world.add(bot)
+        bot = world.add_bot(5, 5)
         block = Block(5, 6)
         world.add(block)
         bot.direction = Direction.SOUTH
@@ -114,8 +104,7 @@ class TestBot:
 
     def test_bot_facing_west_takes_a_west_block(self):
         world = World(10, 10)
-        bot = Bot(5, 5)
-        world.add(bot)
+        bot = world.add_bot(5, 5)
         block = Block(4, 5)
         world.add(block)
         bot.direction = Direction.WEST
@@ -124,8 +113,7 @@ class TestBot:
 
     def test_bot_cant_take_diagonally(self):
         world = World(10, 10)
-        bot = Bot(5, 5)
-        world.add(bot)
+        bot = world.add_bot(5, 5)
         block = Block(4, 4)
         world.add(block)
         block = Block(6, 4)
@@ -139,7 +127,7 @@ class TestBot:
 
     def test_bot_cannot_drop_off_world_north(self):
         world = World(10, 10)
-        bot = Bot(5, 0)
+        bot = world.add_bot(5, 0)
         block = Block(4, 4)
         bot.receive(block)
         bot.direction = Direction.NORTH
@@ -148,7 +136,7 @@ class TestBot:
 
     def test_bot_cannot_drop_off_world_east(self):
         world = World(10, 10)
-        bot = Bot(10, 5)
+        bot = world.add_bot(10, 5)
         block = Block(4, 4)
         bot.receive(block)
         bot.direction = Direction.EAST
@@ -157,7 +145,7 @@ class TestBot:
 
     def test_bot_cannot_drop_off_world_south(self):
         world = World(10, 10)
-        bot = Bot(5, 10)
+        bot = world.add_bot(5, 10)
         block = Block(4, 4)
         bot.receive(block)
         bot.direction = Direction.SOUTH
@@ -166,7 +154,7 @@ class TestBot:
 
     def test_bot_cannot_drop_off_world_west(self):
         world = World(10, 10)
-        bot = Bot(0, 5)
+        bot = world.add_bot(0, 5)
         block = Block(4, 4)
         bot.receive(block)
         bot.direction = Direction.WEST
