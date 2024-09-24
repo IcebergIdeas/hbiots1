@@ -15,8 +15,7 @@ class TestVision:
         real_bot.direction_change_chance = 0.0
         client_bot.vision = None
         client_bot.move()
-        real_bot = world.map.at_id(client_bot.id)
-        client_bot._knowledge = real_bot._knowledge
+        world.update_client_for_test(client_bot)
         assert client_bot.location == Location(6, 5)
         vision = client_bot.vision
         assert ('R', 6, 5) in vision
@@ -32,8 +31,7 @@ class TestVision:
         client_bot.direction_change_chance = 0.0
         client_bot.vision = None
         client_bot.move()
-        real_bot = world.map.at_id(client_bot.id)
-        client_bot._knowledge = real_bot._knowledge
+        world.update_client_for_test(client_bot)
         assert client_bot.location == Location(5, 5)
         vision = client_bot.vision
         assert ('R', 5, 5) in vision

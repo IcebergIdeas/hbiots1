@@ -94,3 +94,7 @@ class World:
     def is_off_world(self, location):
         return self.clip(location.x, self.width) != location.x \
             or self.clip(location.y, self.height) != location.y
+
+    def update_client_for_test(self, client_bot):
+        real_bot = self.map.at_id(client_bot.id)
+        client_bot._knowledge = real_bot._knowledge

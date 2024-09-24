@@ -28,8 +28,7 @@ class TestBot:
         world = World(10, 10)
         client_bot = world.add_bot(5, 5)
         client_bot.do_something()
-        real_bot = world.map.at_id(client_bot.id)
-        client_bot._knowledge = real_bot._knowledge
+        world.update_client_for_test(client_bot)
         loc = client_bot.location
         assert loc != Location(5, 5)
 
@@ -38,29 +37,24 @@ class TestBot:
         client_bot = world.add_bot(9, 5)
         client_bot.direction_change_chance = 0.0
         client_bot.do_something()
-        real_bot = world.map.at_id(client_bot.id)
-        client_bot._knowledge = real_bot._knowledge
+        world.update_client_for_test(client_bot)
         assert client_bot.location == Location(10, 5)
         client_bot.do_something()
-        real_bot = world.map.at_id(client_bot.id)
-        client_bot._knowledge = real_bot._knowledge
+        world.update_client_for_test(client_bot)
         assert client_bot.location == Location(10, 5)
         assert client_bot.direction != Direction.EAST
         client_bot.do_something()
-        real_bot = world.map.at_id(client_bot.id)
-        client_bot._knowledge = real_bot._knowledge
+        world.update_client_for_test(client_bot)
         assert client_bot.location != Location(10, 5)
 
     def test_stop_at_edge(self):
         world = World(10, 10)
         client_bot = world.add_bot(9, 5)
         client_bot.step()
-        real_bot = world.map.at_id(client_bot.id)
-        client_bot._knowledge = real_bot._knowledge
+        world.update_client_for_test(client_bot)
         assert client_bot.location == Location(10, 5)
         client_bot.step()
-        real_bot = world.map.at_id(client_bot.id)
-        client_bot._knowledge = real_bot._knowledge
+        world.update_client_for_test(client_bot)
         assert client_bot.location == Location(10, 5)
 
 # Some of these are redundant, moved from another file
@@ -80,14 +74,10 @@ class TestBot:
         world.set_bot_scent(client_bot)
         world.set_bot_scent(real_bot)
         client_bot.do_something()
-        real_bot = world.map.at_id(client_bot.id)
-        client_bot._knowledge = real_bot._knowledge
+        world.update_client_for_test(client_bot)
         assert isinstance(client_bot.state, Looking)
         client_bot.do_something()
-        print(client_bot._knowledge._entity)
-        real_bot = world.map.at_id(client_bot.id)
-        print(real_bot._knowledge._entity)
-        client_bot._knowledge = real_bot._knowledge
+        world.update_client_for_test(client_bot)
         assert client_bot.has(block)
 
     def test_take_a_block(self):
