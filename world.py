@@ -14,7 +14,10 @@ class World:
     def add_bot(self, x, y, direction = Direction.EAST):
         bot = Bot(x, y, direction)
         self.add(bot)
-        return bot
+        returned_bot = Bot(x, y, direction)
+        returned_bot.id = bot.id
+        returned_bot.world = self
+        return returned_bot
 
     def add(self, entity):
         entity.world = self
@@ -34,9 +37,10 @@ class World:
 
     def step(self, bot):
         location = self.bots_next_location(bot)
-        self.map.attempt_move(bot.id, location)
-        self.set_bot_vision(bot)
-        self.set_bot_scent(bot)
+        self.map.attempt_move(bot.id, location)  # changes world version
+        real_bot = self.map.at_id(bot.id)
+        self.set_bot_vision(real_bot)
+        self.set_bot_scent(real_bot)
 
     def set_bot_vision(self, bot):
         bot.vision = self.map.vision_at(bot.location)

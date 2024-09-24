@@ -26,45 +26,69 @@ class TestBot:
 
     def test_wandering(self):
         world = World(10, 10)
-        bot = world.add_bot(5, 5)
-        bot.do_something()
-        loc = bot.location
+        client_bot = world.add_bot(5, 5)
+        client_bot.do_something()
+        real_bot = world.map.at_id(client_bot.id)
+        client_bot._knowledge = real_bot._knowledge
+        loc = client_bot.location
         assert loc != Location(5, 5)
 
     def test_changes_direction(self):
         world = World(10, 10)
-        bot = world.add_bot(9, 5)
-        bot.direction_change_chance = 0.0
-        bot.do_something()
-        assert bot.location == Location(10, 5)
-        bot.do_something()
-        assert bot.location == Location(10, 5)
-        assert bot.direction != Direction.EAST
-        bot.do_something()
-        assert bot.location != Location(10, 5)
+        client_bot = world.add_bot(9, 5)
+        client_bot.direction_change_chance = 0.0
+        client_bot.do_something()
+        real_bot = world.map.at_id(client_bot.id)
+        client_bot._knowledge = real_bot._knowledge
+        assert client_bot.location == Location(10, 5)
+        client_bot.do_something()
+        real_bot = world.map.at_id(client_bot.id)
+        client_bot._knowledge = real_bot._knowledge
+        assert client_bot.location == Location(10, 5)
+        assert client_bot.direction != Direction.EAST
+        client_bot.do_something()
+        real_bot = world.map.at_id(client_bot.id)
+        client_bot._knowledge = real_bot._knowledge
+        assert client_bot.location != Location(10, 5)
 
     def test_stop_at_edge(self):
         world = World(10, 10)
-        bot = world.add_bot(9, 5)
-        bot.step()
-        assert bot.location == Location(10, 5)
-        bot.step()
-        assert bot.location == Location(10, 5)
+        client_bot = world.add_bot(9, 5)
+        client_bot.step()
+        real_bot = world.map.at_id(client_bot.id)
+        client_bot._knowledge = real_bot._knowledge
+        assert client_bot.location == Location(10, 5)
+        client_bot.step()
+        real_bot = world.map.at_id(client_bot.id)
+        client_bot._knowledge = real_bot._knowledge
+        assert client_bot.location == Location(10, 5)
 
 # Some of these are redundant, moved from another file
 
     def test_bot_notices_a_block(self):
         world = World(10, 10)
-        bot = world.add_bot(5, 5)
-        bot.state._energy = Knowledge.energy_threshold
-        bot.direction_change_chance = 0
+        client_bot = world.add_bot(5, 5)
+        client_bot.state._energy = Knowledge.energy_threshold
+        client_bot.direction_change_chance = 0
+        real_bot = world.map.at_id(client_bot.id)
+        real_bot.direction_change_chance = 0
+        real_bot.state._energy = Knowledge.energy_threshold
         block = Block(7, 5)
         world.add(block)
-        world.set_bot_vision(bot)
-        bot.do_something()
-        assert isinstance(bot.state, Looking)
-        bot.do_something()
-        assert bot.has(block)
+        world.set_bot_vision(client_bot)
+        world.set_bot_vision(real_bot)
+        world.set_bot_scent(client_bot)
+        world.set_bot_scent(real_bot)
+        client_bot.do_something()
+        real_bot = world.map.at_id(client_bot.id)
+        client_bot._knowledge = real_bot._knowledge
+        assert isinstance(client_bot.state, Looking)
+        client_bot.do_something()
+        print(client_bot._knowledge._entity)
+        real_bot = world.map.at_id(client_bot.id)
+        print(real_bot._knowledge._entity)
+        client_bot._knowledge = real_bot._knowledge
+        assert client_bot.has(block)
 
     def test_take_a_block(self):
         world = World(10, 10)

@@ -26,13 +26,12 @@ class TestConnection:
         connection = DirectConnection(world)
         connection.step(bot)
         assert bot.location == Location(11, 10)
-        assert world.map.at_xy(11, 10) == bot
+        assert world.map.at_xy(11, 10).id == bot.id
 
     def test_step_north(self):
         world = World(10, 10)
-        bot = world.add_bot(5, 5)
-        location = bot.location
-        bot.direction = Direction.NORTH
+        client_bot = world.add_bot(5, 5, Direction.NORTH)
+        location = client_bot.location
         connection = DirectConnection(world)
-        connection.step(bot)
-        assert bot.location == location + Direction.NORTH
+        connection.step(client_bot)
+        assert client_bot.location == location + Direction.NORTH
