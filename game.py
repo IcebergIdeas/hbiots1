@@ -39,16 +39,17 @@ class Game:
         for entity in self.world.map:
             x = entity.x
             y = entity.y
-            name = entity.name
-            scale_x = x * self.scale
-            scale_y = y * self.scale
-            color = WHITE
-            if name == 'R':
-                if entity.inventory:
-                    color = RED
-                else:
-                    color = GREEN
-            self.text((scale_x + 1, scale_y + 1), name, 16, color, BLACK)
+            if x and y:
+                name = entity.name
+                scale_x = x * self.scale
+                scale_y = y * self.scale
+                color = WHITE
+                if name == 'R':
+                    if entity.inventory:
+                        color = RED
+                    else:
+                        color = GREEN
+                self.text((scale_x + 1, scale_y + 1), name, 16, color, BLACK)
 
     def text(self, location, phrase, size, front_color, back_color):
         font = pygame.font.Font(BASE_FONT, size)
