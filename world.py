@@ -12,12 +12,16 @@ class World:
         self.map = Map(max_x, max_y)
 
     def add_bot(self, x, y, direction = Direction.EAST):
-        bot = Bot(x, y, direction)
-        self.add(bot)
+        id = self.add_world_bot(x, y, direction)
         returned_bot = Bot(x, y, direction)
-        returned_bot.id = bot.id
+        returned_bot.id = id
         returned_bot.world = self
         return returned_bot
+
+    def add_world_bot(self, x, y, direction = Direction.EAST):
+        bot = Bot(x, y, direction)
+        self.add(bot)
+        return bot.id
 
     def add(self, entity):
         entity.world = self

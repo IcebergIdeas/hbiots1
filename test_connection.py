@@ -1,6 +1,7 @@
 import copy
 
 from block import Block
+from bot import Bot
 from direction import Direction
 from location import Location
 from world import World
@@ -9,6 +10,15 @@ from world import World
 class DirectConnection:
     def __init__(self, world):
         self.world = world
+
+    def add_bot(self, x, y):
+        id = self.world.add_world_bot(x, y)
+        client_bot = Bot(x, y)
+        client_bot.id = id
+        client_bot.world = self.world
+        result = self.world.fetch(id)
+        client_bot._knowledge = copy.copy(result)
+        return client_bot
 
     def step(self, bot):
         self.world.command('step', bot.id)
@@ -74,3 +84,9 @@ class TestConnection:
         assert len(world.map.contents.keys()) == 2
         assert not world_bot.has(block)
         assert not world.is_empty(Location(6, 5))
+
+    def test_connection_add_bot(self):
+        world = World(10, 10)
+        connection = DirectConnection(world)
+        bot = connection.add_bot(5, 5)
+        assert bot.location == Location(5, 5)
