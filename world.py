@@ -25,13 +25,17 @@ class World:
         entity.id = World.next_id
         self.map.place(entity)
 
-    def command(self, action, parameter):
+    def command(self, action, parm1, parm2=None):
         if action == 'step':
-            bot = self.map.at_id(parameter)
+            bot = self.map.at_id(parm1)
             self.step(bot)
         elif action == 'take':
-            bot = self.map.at_id(parameter)
+            bot = self.map.at_id(parm1)
             self.take_forward(bot)
+        elif action == 'drop':
+            bot = self.map.at_id(parm1)
+            block = self.map.at_id(parm2)
+            self.drop_forward(bot, block)
         else:
             raise Exception('Unknown command')
 
@@ -84,7 +88,6 @@ class World:
         drop_location = self.bots_next_location(bot)
         if drop_location != bot.location and self.is_empty(drop_location):
             entity.location = drop_location
-            self.add(entity)
             bot.remove(entity)
 
     def is_empty(self, drop_location):

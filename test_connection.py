@@ -20,6 +20,11 @@ class DirectConnection:
         result = self.world.fetch(client_bot.id)
         client_bot._knowledge = copy.copy(result)
 
+    def drop(self, client_bot, block):
+        self.world.command('drop', client_bot.id, block.id)
+        result = self.world.fetch(client_bot.id)
+        client_bot._knowledge = copy.copy(result)
+
 
 class TestConnection:
     def test_exists(self):
@@ -54,3 +59,18 @@ class TestConnection:
         world_bot = world.map.at_id(bot_id)
         assert world_bot.has(block)
         assert world.is_empty(Location(6, 5))
+
+    def test_drop_block_on_open_cell(self):
+        world = World(10, 10)
+        client_bot = world.add_bot(5, 5)
+        bot_id = client_bot.id
+        world_bot = world.map.at_id(bot_id)
+        block = Block(1, 9)
+        world.add(block)
+        world_bot.receive(block)
+        connection = DirectConnection(world)
+        assert len(world.map.contents.keys()) == 2
+        connection.drop(client_bot, block)
+        assert len(world.map.contents.keys()) == 2
+        assert not world_bot.has(block)
+        assert not world.is_empty(Location(6, 5))

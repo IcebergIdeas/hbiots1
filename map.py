@@ -39,7 +39,8 @@ class Map:
         return other_entities_are_all_valid
 
     def remove(self, id):
-        del self.contents[id]
+        entity = self.contents[id]
+        entity.location = Location(None, None)
 
     def attempt_move(self, id, location: Location):
         entity = self.contents[id]
