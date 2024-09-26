@@ -82,12 +82,12 @@ class TestBot:
 
     def test_take_a_block(self):
         world = World(10, 10)
-        bot = world.add_bot(5, 5)
+        client_bot = world.add_bot(5, 5)
         block = Block(6, 5)
         world.add(block)
         assert not world.is_empty(Location(6, 5))
-        world.take_forward(bot)
-        assert bot.has(block)
+        world.take_forward(client_bot)
+        assert client_bot.has(block)
         assert world.is_empty(Location(6, 5))
 
     def test_bot_facing_north_takes_a_north_block(self):

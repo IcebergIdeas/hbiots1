@@ -1,5 +1,6 @@
 import copy
 
+from block import Block
 from direction import Direction
 from location import Location
 from world import World
@@ -13,6 +14,11 @@ class DirectConnection:
         self.world.command('step', bot.id)
         result = self.world.fetch(bot.id)
         bot._knowledge = copy.copy(result)
+
+    def take(self, client_bot):
+        self.world.command('take', client_bot.id)
+        result = self.world.fetch(client_bot.id)
+        client_bot._knowledge = copy.copy(result)
 
 
 class TestConnection:
@@ -35,3 +41,16 @@ class TestConnection:
         connection = DirectConnection(world)
         connection.step(client_bot)
         assert client_bot.location == location + Direction.NORTH
+
+    def test_take_a_block(self):
+        world = World(10, 10)
+        client_bot = world.add_bot(5, 5)
+        bot_id = client_bot.id
+        connection = DirectConnection(world)
+        block = Block(6, 5)
+        world.add(block)
+        assert not world.is_empty(Location(6, 5))
+        connection.take(client_bot)
+        world_bot = world.map.at_id(bot_id)
+        assert world_bot.has(block)
+        assert world.is_empty(Location(6, 5))

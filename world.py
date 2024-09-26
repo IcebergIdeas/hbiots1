@@ -29,6 +29,9 @@ class World:
         if action == 'step':
             bot = self.map.at_id(parameter)
             self.step(bot)
+        elif action == 'take':
+            bot = self.map.at_id(parameter)
+            self.take_forward(bot)
         else:
             raise Exception('Unknown command')
 
