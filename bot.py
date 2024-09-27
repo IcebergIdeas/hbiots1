@@ -14,6 +14,7 @@ class Bot:
         self.tired = 10
         self._knowledge = Knowledge(Location(x, y), direction)
         self.state = Walking()
+        self._old_location = None
 
     @property
     def id(self):
@@ -97,6 +98,8 @@ class Bot:
 
     def update_knowledge(self):
         self._knowledge.gain_energy()
+        if self.location == self._old_location:
+            self.change_direction()
 
     def has_block(self):
         return self._knowledge.has_block
@@ -119,14 +122,8 @@ class Bot:
     def move(self):
         if random.random() < self.direction_change_chance:
             self.change_direction()
-        step_succeeded = self.took_a_step()
-        if not step_succeeded:
-            self.change_direction()
-
-    def took_a_step(self):
-        old_location = self.location
+        self._old_location = self.location
         self.step()
-        return self.location != old_location
 
     def step(self):
         self.world.step(self)
