@@ -11,7 +11,6 @@ class Bot:
         self.world = None
         self.name = 'R'
         self.direction_change_chance = 0.2
-        self.tired = 10
         self._knowledge = Knowledge(Location(x, y), direction)
         self.state = Walking()
         self._old_location = None
@@ -127,7 +126,6 @@ class Bot:
 
     def step(self):
         self.world.step(self)
-        self.tired -= 1
 
     def change_direction(self):
         direction = self.direction
