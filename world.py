@@ -46,6 +46,22 @@ class World:
     def fetch(self, entity_id):
         return self.map.at_id(entity_id)._knowledge
 
+    def set_direction(self, client_bot, direction_name):
+        bot = self.map.at_id(client_bot.id)
+        print(f'bot {bot} {direction_name}')
+        match direction_name:
+            case 'NORTH':
+                bot.direction = Direction.NORTH
+            case 'EAST':
+                bot.direction = Direction.EAST
+            case 'WEST':
+                bot.direction = Direction.WEST
+            case 'SOUTH':
+                bot.direction = Direction.SOUTH
+            case _:
+                pass
+
+
     def step(self, bot):
         location = self.bots_next_location(bot)
         self.map.attempt_move(bot.id, location)  # changes world version

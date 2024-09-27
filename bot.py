@@ -80,25 +80,38 @@ class Bot:
         self._knowledge.remove(entity)
 
     def do_something(self):
-        self.update_for_state_machine()
+        actions = []
+        actions += self.update_for_state_machine()
         self.state = self.state.update(self._knowledge)
-        self.do_state_actions()
-        self.move()
+        actions += self.state.action(self._knowledge)
+        if random.random() < self.direction_change_chance:
+            actions += self.change_direction()
+        self._old_location = self.location
+        actions += ['step']
+        self.perform_actions(actions)
 
-    def do_state_actions(self):
-        for action in self.state.action(self._knowledge):
+    def perform_actions(self, actions):
+        for action in actions:
             match action:
                 case 'take':
                     self.world.take_forward(self)
                 case 'drop':
                     self.world.drop_forward(self, self.inventory[0])
+                case 'step':
+                    self._old_location = self.location
+                    self.world.step(self)
+                case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
+                    self.world.set_direction(self, action)
                 case _:
                     assert 0, f'no case {action}'
 
     def update_for_state_machine(self):
         self._knowledge.gain_energy()
         if self.location == self._old_location:
-            self.change_direction()
+            new_direction = self.change_direction()
+            return new_direction
+        else:
+            return []
 
     def has_block(self):
         return self._knowledge.has_block
@@ -125,10 +138,10 @@ class Bot:
         self.step()
 
     def step(self):
-        self.world.step(self)
+        self.perform_actions(['step'])
 
     def change_direction(self):
         direction = self.direction
         while direction == self.direction:
             direction = random.choice(Direction.ALL)
-        self.direction = direction
+        return [direction.name()]

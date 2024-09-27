@@ -33,6 +33,20 @@ class Direction:
         new_x, new_y = -y, x
         return Direction(new_x, new_y)
 
+    def name(self):
+        match self:
+            case Direction.NORTH:
+                return 'NORTH'
+            case Direction.EAST:
+                return 'EAST'
+            case Direction.SOUTH:
+                return 'SOUTH'
+            case Direction.WEST:
+                return 'WEST'
+            case _:
+                raise ValueError
+
+
 
 Direction.NORTH = Direction(0, -1)
 Direction.EAST = Direction(1, 0)

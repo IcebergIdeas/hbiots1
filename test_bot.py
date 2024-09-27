@@ -34,9 +34,11 @@ class TestBot:
 
     def test_change_direction_if_stuck(self):
         def move_and_update():
-            client_bot.move()
+            print("move and update")
+            client_bot.perform_actions(['step'])
             world.update_client_for_test(client_bot)
-            client_bot.update_for_state_machine()
+            actions = client_bot.update_for_state_machine()
+            client_bot.perform_actions(actions)
 
         world = World(10, 10)
         client_bot = world.add_bot(9, 5)
@@ -46,7 +48,16 @@ class TestBot:
         assert client_bot.direction == Direction.EAST
         move_and_update()
         assert client_bot.location == Location(10, 5)
+        move_and_update()
+        world_bot = world.map.at_id(client_bot.id)
+        assert world_bot.direction != Direction.EAST
         assert client_bot.direction != Direction.EAST
+
+    def test_requests_direction_change_if_stuck(self):
+        bot = Bot(10, 10)
+        bot._old_location = Location(10, 10)
+        actions = bot.update_for_state_machine()
+        assert actions[0] in ["NORTH", "SOUTH", "WEST"]
 
 
     def test_stop_at_edge(self):
