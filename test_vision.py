@@ -1,4 +1,3 @@
-from direction import Direction
 from location import Location
 from world import World
 
@@ -22,16 +21,21 @@ class TestVision:
 
     def test_three_blocks_near(self):
         from block import Block
+
+        def turn_move_and_update():
+            client_bot.perform_actions(['WEST', 'step'])
+            world.update_client_for_test(client_bot)
+            actions = client_bot.update_for_state_machine()
+            client_bot.perform_actions(actions)
+
         world = World(10, 10)
         world.add(Block(4, 4))
         world.add(Block(6, 6))
         world.add(Block(4, 5))
         client_bot = world.add_bot(6, 5)
-        client_bot.direction = Direction.WEST
         client_bot.direction_change_chance = 0.0
         client_bot.vision = None
-        client_bot.move()
-        world.update_client_for_test(client_bot)
+        turn_move_and_update()
         assert client_bot.location == Location(5, 5)
         vision = client_bot.vision
         assert ('R', 5, 5) in vision

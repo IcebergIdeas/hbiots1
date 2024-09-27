@@ -29,35 +29,33 @@ class World:
         entity.id = World.next_id
         self.map.place(entity)
 
-    def command(self, action, parm1, parm2=None):
+    def command(self, action, bot_id, parameter=None):
+        world_bot = self.map.at_id(bot_id)
         if action == 'step':
-            bot = self.map.at_id(parm1)
-            self.step(bot)
+            self.step(world_bot)
         elif action == 'take':
-            bot = self.map.at_id(parm1)
-            self.take_forward(bot)
+            self.take_forward(world_bot)
         elif action == 'drop':
-            bot = self.map.at_id(parm1)
-            block = self.map.at_id(parm2)
-            self.drop_forward(bot, block)
+            block = self.map.at_id(parameter)
+            self.drop_forward(world_bot, block)
+        elif action == 'turn':
+            self.set_direction(world_bot, parameter)
         else:
             raise Exception('Unknown command')
 
     def fetch(self, entity_id):
         return self.map.at_id(entity_id)._knowledge
 
-    def set_direction(self, client_bot, direction_name):
-        bot = self.map.at_id(client_bot.id)
-        print(f'bot {bot} {direction_name}')
+    def set_direction(self, world_bot, direction_name):
         match direction_name:
             case 'NORTH':
-                bot.direction = Direction.NORTH
+                world_bot.direction = Direction.NORTH
             case 'EAST':
-                bot.direction = Direction.EAST
+                world_bot.direction = Direction.EAST
             case 'WEST':
-                bot.direction = Direction.WEST
+                world_bot.direction = Direction.WEST
             case 'SOUTH':
-                bot.direction = Direction.SOUTH
+                world_bot.direction = Direction.SOUTH
             case _:
                 pass
 

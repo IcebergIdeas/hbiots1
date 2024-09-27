@@ -1,5 +1,6 @@
 import random
 
+from direct_connection import DirectConnection
 from direction import Direction
 from knowledge import Knowledge
 from location import Location
@@ -91,17 +92,18 @@ class Bot:
         self.perform_actions(actions)
 
     def perform_actions(self, actions):
+        connection = DirectConnection(self.world)
         for action in actions:
             match action:
                 case 'take':
-                    self.world.take_forward(self)
+                    connection.take(self)
                 case 'drop':
-                    self.world.drop_forward(self, self.inventory[0])
+                    connection.drop(self, self.inventory[0])
                 case 'step':
                     self._old_location = self.location
-                    self.world.step(self)
+                    connection.step(self)
                 case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
-                    self.world.set_direction(self, action)
+                    connection.set_direction(self, action)
                 case _:
                     assert 0, f'no case {action}'
 

@@ -34,7 +34,6 @@ class TestBot:
 
     def test_change_direction_if_stuck(self):
         def move_and_update():
-            print("move and update")
             client_bot.perform_actions(['step'])
             world.update_client_for_test(client_bot)
             actions = client_bot.update_for_state_machine()

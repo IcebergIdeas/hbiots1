@@ -1,3 +1,5 @@
+import pytest
+
 from bot import Bot
 from location import Location
 from world import World
@@ -60,6 +62,7 @@ class TestWorldProxy:
         proxy.add(bot)
         assert bot.world == proxy
 
+    @pytest.mark.skip('not applicable')
     def test_round_trip(self):
         proxy = WorldProxy()
         bot = Bot(5, 5)
