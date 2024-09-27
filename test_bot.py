@@ -36,7 +36,7 @@ class TestBot:
         def move_and_update():
             client_bot.move()
             world.update_client_for_test(client_bot)
-            client_bot.update_knowledge()
+            client_bot.update_for_state_machine()
 
         world = World(10, 10)
         client_bot = world.add_bot(9, 5)

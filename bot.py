@@ -80,7 +80,7 @@ class Bot:
         self._knowledge.remove(entity)
 
     def do_something(self):
-        self.update_knowledge()
+        self.update_for_state_machine()
         self.state = self.state.update(self._knowledge)
         self.do_state_actions()
         self.move()
@@ -95,7 +95,7 @@ class Bot:
                 case _:
                     assert 0, f'no case {action}'
 
-    def update_knowledge(self):
+    def update_for_state_machine(self):
         self._knowledge.gain_energy()
         if self.location == self._old_location:
             self.change_direction()
