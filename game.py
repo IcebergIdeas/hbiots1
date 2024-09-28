@@ -39,7 +39,7 @@ class Game:
         for entity in self.world.map:
             x = entity.x
             y = entity.y
-            if x and y:
+            if x is not None and y is not None and x >= 0 and y >= 0:
                 name = entity.name
                 scale_x = x * self.scale
                 scale_y = y * self.scale
@@ -76,7 +76,7 @@ class Game:
                 self.on_event(event)
             self.clear_screen()
             self.draw_grid()
-            for _ in range(10):
+            for _ in range(1):
                 self.run_one_bot_cycle()
             self.draw_world()
             pygame.display.update()
@@ -116,8 +116,12 @@ if __name__ == "__main__":
     world = World(40, 40)
     build_random_blocks()
     # build_block_square()
+    # world.add(Block(0, 0))
+    # world.add(Block(0, world.height))
+    # world.add(Block(world.width , 0))
+    # world.add(Block(world.width, world.height))
 
     for _ in range(20):
-        world.add_bot(10, 20)
+        bot =  world.add_bot(10, 20)
     game = Game(world)
     game.on_execute()
