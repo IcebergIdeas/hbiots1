@@ -45,7 +45,7 @@ class Game:
                 scale_y = y * self.scale
                 color = WHITE
                 if name == 'R':
-                    if entity.inventory:
+                    if entity.holding:
                         color = RED
                     else:
                         color = GREEN

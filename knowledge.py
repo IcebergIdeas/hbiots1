@@ -19,6 +19,10 @@ class Knowledge:
         self._old_location = None
 
     @property
+    def holding(self):
+        return self._held_entity
+
+    @property
     def id(self):
         return self._id
 

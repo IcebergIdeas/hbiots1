@@ -33,11 +33,8 @@ class Bot:
         self._knowledge.direction = direction
 
     @property
-    def inventory(self):
-        if self._knowledge._held_entity:
-            return [self._knowledge._held_entity, ]
-        else:
-            return []
+    def holding(self):
+        return self._knowledge.holding
 
     @property
     def location(self):
@@ -98,7 +95,7 @@ class Bot:
                 case 'take':
                     connection.take(self)
                 case 'drop':
-                    connection.drop(self, self.inventory[0])
+                    connection.drop(self, self.holding)
                 case 'step':
                     self._old_location = self.location
                     connection.step(self)
