@@ -121,12 +121,6 @@ class Bot:
     def has_no_block(self):
         return not self.has_block()
 
-    def has_inventory(self, entity_name):
-        for entity in self.inventory:
-            if entity.name == entity_name:
-                return True
-        return False
-
     def can_take(self):
         return self._knowledge.can_take
 
