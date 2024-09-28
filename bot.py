@@ -34,8 +34,8 @@ class Bot:
 
     @property
     def inventory(self):
-        if self._knowledge._entity:
-            return [self._knowledge._entity,]
+        if self._knowledge._held_entity:
+            return [self._knowledge._held_entity, ]
         else:
             return []
 

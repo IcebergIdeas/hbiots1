@@ -7,15 +7,14 @@ class Knowledge:
     energy_threshold = 5
 
     def __init__(self, location, direction):
-        # shared info
-        self._direction = direction
         # world write / client read only
-        self._entity = None
+        self._direction = direction
+        self._held_entity = None
         self._id = None
         self._location = location
         self._scent = 0
         self._vision = Vision([], self.location, self.direction)
-        # local info client
+        # local Bot client-side info
         self._energy = self.energy_threshold
         self._old_location = None
 
@@ -62,11 +61,11 @@ class Knowledge:
         self._location = location
 
     def has(self, entity):
-        return entity == self._entity
+        return entity == self._held_entity
 
     @property
     def has_block(self):
-        return self._entity and self._entity.name == 'B'
+        return self._held_entity and self._held_entity.name == 'B'
 
     @property
     def has_moved(self):
@@ -83,9 +82,9 @@ class Knowledge:
         return is_scent_ok and self.vision.match_forward_and_one_side('_', 'B')
 
     def receive(self, entity):
-        self._entity = entity
+        self._held_entity = entity
 
     def remove(self, entity):
-        if self._entity == entity:
-            self._entity = None
+        if self._held_entity == entity:
+            self._held_entity = None
 
