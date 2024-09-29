@@ -6,20 +6,6 @@ from location import Location
 
 
 class TestKnowledge:
-    def test_initial_knowledge(self):
-        knowledge = Knowledge(Location(10, 10), Direction.NORTH)
-        assert knowledge.has_moved
-
-    def test_move(self):
-        knowledge = Knowledge(Location(10, 10), Direction.NORTH)
-        knowledge.location = Location(10, 9)
-        assert knowledge.has_moved
-
-    def test_no_move(self):
-        knowledge = Knowledge( Location(10, 10), Direction.NORTH)
-        knowledge.location = Location(10, 10)
-        assert not knowledge.has_moved
-
     def test_knowledge_take_decision(self):
         location = Location(10, 10)
         direction = Direction.NORTH

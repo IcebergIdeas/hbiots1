@@ -35,7 +35,7 @@ class TestBot:
     def test_change_direction_if_stuck(self):
         def move_and_update():
             client_bot.perform_actions(['step'])
-            world.update_client_for_test(client_bot)
+            # world.update_client_for_test(client_bot)
             actions = client_bot.update_for_state_machine()
             client_bot.perform_actions(actions)
 
@@ -74,19 +74,14 @@ class TestBot:
         client_bot.direction_change_chance = 0.0
         client_bot.perform_actions(['WEST'])
         client_bot.do_something()
-        world.update_client_for_test(client_bot)
         assert client_bot.location == Location(2, 5)
         client_bot.do_something()
-        world.update_client_for_test(client_bot)
         assert client_bot.location == Location(1, 5)
         client_bot.do_something()
-        world.update_client_for_test(client_bot)
         assert client_bot.location == Location(0, 5)
         client_bot.do_something()
-        world.update_client_for_test(client_bot)
         assert client_bot.location == Location(0, 5)
         client_bot.do_something()
-        world.update_client_for_test(client_bot)
         assert client_bot.location != Location(0, 5)
 
 # Some of these are redundant, moved from another file

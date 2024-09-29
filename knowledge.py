@@ -16,7 +16,6 @@ class Knowledge:
         self._vision = Vision([], self.location, self.direction)
         # local Bot client-side info
         self._energy = self.energy_threshold
-        self._old_location = None
 
     def as_dictionary(self):
         return {'direction': self._direction,
@@ -77,7 +76,6 @@ class Knowledge:
 
     @location.setter
     def location(self, location):
-        self._old_location = self.location
         self._location = location
 
     def has(self, entity):
@@ -86,10 +84,6 @@ class Knowledge:
     @property
     def has_block(self):
         return self._held_entity and self._held_entity.name == 'B'
-
-    @property
-    def has_moved(self):
-        return self.location != self._old_location
 
     @property
     def can_take(self):
