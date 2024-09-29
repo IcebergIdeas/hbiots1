@@ -18,6 +18,22 @@ class Knowledge:
         self._energy = self.energy_threshold
         self._old_location = None
 
+    def as_dictionary(self):
+        return {'direction': self._direction,
+                'held_entity': self._held_entity,
+                'id': self._id,
+                'location': self._location,
+                'scent': self._scent,
+                'vision': self._vision}
+
+    def update(self, update_dictionary):
+        self.direction = update_dictionary['direction']
+        self.receive(update_dictionary['held_entity'])
+        self.id = update_dictionary['id']
+        self.location = update_dictionary['location']
+        self._scent = update_dictionary['scent']
+        self.vision = update_dictionary['vision']
+
     @property
     def holding(self):
         return self._held_entity

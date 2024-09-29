@@ -1,7 +1,3 @@
-import copy
-
-
-
 class DirectConnection:
     def __init__(self, world):
         self.world = world
@@ -12,26 +8,25 @@ class DirectConnection:
         client_bot = Bot(x, y)
         client_bot.id = id
         client_bot.world = self.world
-        result = self.world.fetch(id)
-        client_bot._knowledge = copy.copy(result)
+        self.update_client(client_bot)
         return client_bot
 
     def set_direction(self, bot, direction_string):
         self.world.command('turn', bot.id, direction_string)
-        result = self.world.fetch(bot.id)
-        bot._knowledge = copy.copy(result)
+        self.update_client(bot)
+
+    def update_client(self, bot):
+        result_dict = self.world.fetch(bot.id)
+        bot._knowledge.update(result_dict)
 
     def step(self, bot):
         self.world.command('step', bot.id)
-        result = self.world.fetch(bot.id)
-        bot._knowledge = copy.copy(result)
+        self.update_client(bot)
 
     def take(self, client_bot):
         self.world.command('take', client_bot.id)
-        result = self.world.fetch(client_bot.id)
-        client_bot._knowledge = copy.copy(result)
+        self.update_client(client_bot)
 
     def drop(self, client_bot, block):
         self.world.command('drop', client_bot.id, block.id)
-        result = self.world.fetch(client_bot.id)
-        client_bot._knowledge = copy.copy(result)
+        self.update_client(client_bot)

@@ -44,7 +44,7 @@ class World:
             raise Exception('Unknown command')
 
     def fetch(self, entity_id):
-        return self.map.at_id(entity_id)._knowledge
+        return self.map.at_id(entity_id)._knowledge.as_dictionary()
 
     def set_direction(self, world_bot, direction_name):
         match direction_name:
