@@ -84,7 +84,6 @@ class Bot:
         actions += self.state.action(self._knowledge)
         if random.random() < self.direction_change_chance:
             actions += self.change_direction()
-        self._old_location = self.location
         actions += ['step']
         self.perform_actions(actions)
 
