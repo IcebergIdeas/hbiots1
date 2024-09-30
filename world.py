@@ -59,7 +59,6 @@ class World:
             case _:
                 pass
 
-
     def step(self, bot):
         location = self.bots_next_location(bot)
         self.map.attempt_move(bot.id, location)  # changes world version
@@ -75,20 +74,6 @@ class World:
 
     def clip(self, coord, limit):
         return 0 if coord < 0 else (limit if coord > limit else coord)
-
-    def draw(self):
-        result = ''
-        for y in range(10):
-            for x in range(10):
-                result += self._location_code(x, y)
-            result += '\n'
-        return result
-
-    def _location_code(self, x, y):
-        entity = self.map.at_xy(x, y)
-        if entity:
-            return entity.name
-        return '_'
 
     def take_forward(self, bot: Bot):
         take_location = self.bots_next_location(bot)
