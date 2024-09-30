@@ -49,5 +49,5 @@ class TestMap:
         map = Map(10, 10)
         block = Block(5, 5)
         map.place(block)
-        result = map.location_is_valid(Location(5, 5))
+        result = map.location_is_open(Location(5, 5))
         assert result is False

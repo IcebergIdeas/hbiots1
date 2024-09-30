@@ -44,13 +44,11 @@ class Map:
 
     def attempt_move(self, id, location: Location):
         entity = self.contents[id]
-        if self.location_is_valid(location):
+        if self.location_is_open(location):
             entity.location = location
 
-    def location_is_valid(self, location: Location) -> bool:
-        if self.is_occupied(location):
-            return False
-        return self.is_within_map(location)
+    def location_is_open(self, location: Location):
+        return self.is_within_map(location) and not self.is_occupied(location)
 
     def is_within_map(self, location):
         return 0 <= location.x <= self.width and 0 <= location.y <= self.height

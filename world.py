@@ -88,8 +88,8 @@ class World:
         return entity and entity.name != 'R'
 
     def drop_forward(self, bot, entity):
-        drop_location = self.bots_next_location(bot)
-        if drop_location != bot.location and self.is_empty(drop_location):
+        drop_location = bot.location + bot.direction
+        if self.map.location_is_open(drop_location):
             entity.location = drop_location
             bot.remove(entity)
 
