@@ -22,6 +22,14 @@ class Map:
                 return entity
         return None
 
+    def place_at(self, entity, drop_location):
+        if self.location_is_open(drop_location):
+            entity.location = drop_location
+            self.place(entity)
+            return True
+        else:
+            return False
+
     def place(self, entity):
         self.contents[entity.id] = entity
 

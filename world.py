@@ -89,8 +89,7 @@ class World:
 
     def drop_forward(self, bot, entity):
         drop_location = bot.location + bot.direction
-        if self.map.location_is_open(drop_location):
-            entity.location = drop_location
+        if self.map.place_at(entity, drop_location):
             bot.remove(entity)
 
     def is_empty(self, drop_location):
