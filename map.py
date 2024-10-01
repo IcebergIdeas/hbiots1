@@ -90,3 +90,11 @@ class Map:
             if scent < 0:
                 scent = 0
         return scent
+
+    def take_conditionally_at(self, take_location, condition):
+        item = self.at_xy(take_location.x, take_location.y)
+        if item and condition(item):
+            self.remove(item.id)
+            return item
+        else:
+            return None

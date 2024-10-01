@@ -75,14 +75,22 @@ class World:
     def clip(self, coord, limit):
         return 0 if coord < 0 else (limit if coord > limit else coord)
 
-    def take_forward(self, bot: Bot):
-        take_location = self.bots_next_location(bot)
-        if take_location == bot.location:
-            return
-        entity = self.map.at_xy(take_location.x, take_location.y)
-        if self.can_take_entity(entity):
-            self.map.remove(entity.id)
-            bot.receive(entity)
+    # def take_forward(self, bot: Bot):
+    #     take_location = self.bots_next_location(bot)
+    #     if take_location == bot.location:
+    #         return
+    #     entity = self.map.at_xy(take_location.x, take_location.y)
+    #     if self.can_take_entity(entity):
+    #         self.map.remove(entity.id)
+    #         bot.receive(entity)
+
+    def take_forward(self, bot):
+        def is_block(entity):
+            return entity.name == 'B'
+
+        take_location = bot.location + bot.direction
+        if block := self.map.take_conditionally_at(take_location, is_block):
+            bot.receive(block)
 
     def can_take_entity(self, entity):
         return entity and entity.name != 'R'
