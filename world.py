@@ -81,9 +81,6 @@ class World:
         if block := self.map.take_conditionally_at(take_location, is_block):
             bot.receive(block)
 
-    def can_take_entity(self, entity):
-        return entity and entity.name != 'R'
-
     def drop_forward(self, bot, entity):
         drop_location = bot.location + bot.direction
         if self.map.place_at(entity, drop_location):
