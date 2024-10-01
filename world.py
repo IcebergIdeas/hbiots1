@@ -85,10 +85,8 @@ class World:
     #         bot.receive(entity)
 
     def take_forward(self, bot):
-        def is_block(entity):
-            return entity.name == 'B'
-
         take_location = bot.location + bot.direction
+        is_block = lambda e: e.name == 'B'
         if block := self.map.take_conditionally_at(take_location, is_block):
             bot.receive(block)
 
