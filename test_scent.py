@@ -53,7 +53,7 @@ class TestScent:
     def test_we_get_scent(self):
         world = World(10, 10)
         block = Block(5, 5)
-        world.add(block)  # spurious comment
+        world.add(block)
         client_bot = world.add_bot(4, 6)
         world_bot = world.map.at_id(client_bot.id)
         client_bot.do_something()
