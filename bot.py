@@ -137,3 +137,6 @@ class Bot:
         while direction == self.direction:
             direction = random.choice(Direction.ALL)
         return [direction.name()]
+
+    def forward_location(self):
+        return self.location + self.direction
