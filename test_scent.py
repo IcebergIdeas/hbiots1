@@ -53,7 +53,7 @@ class TestScent:
     def test_we_get_scent(self):
         world = World(10, 10)
         block = Block(5, 5)
-        world.add(block)
+        world.add(block)  # comment?
         client_bot = world.add_bot(4, 6)
         world.step(client_bot)
         world.update_client_for_test(client_bot)
