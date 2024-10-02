@@ -60,8 +60,7 @@ class World:
                 pass
 
     def step(self, bot: Bot):
-        new_location = bot.forward_location()
-        self.map.attempt_move(bot.id, new_location)  # changes world version
+        self.map.attempt_move(bot.id, bot.forward_location())  # changes world version
         self.set_bot_vision(bot)
         self.set_bot_scent(bot)
 
@@ -75,14 +74,12 @@ class World:
         return 0 if coord < 0 else (limit if coord > limit else coord)
 
     def take_forward(self, bot):
-        take_location = bot.location + bot.direction
         is_block = lambda e: e.name == 'B'
-        if block := self.map.take_conditionally_at(take_location, is_block):
+        if block := self.map.take_conditionally_at(bot.forward_location(), is_block):
             bot.receive(block)
 
     def drop_forward(self, bot, entity):
-        drop_location = bot.location + bot.direction
-        if self.map.place_at(entity, drop_location):
+        if self.map.place_at(entity, bot.forward_location()):
             bot.remove(entity)
 
     def is_empty(self, drop_location):
