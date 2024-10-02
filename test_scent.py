@@ -55,7 +55,6 @@ class TestScent:
         block = Block(5, 5)
         world.add(block)
         client_bot = world.add_bot(4, 6)
-        world_bot = world.map.at_id(client_bot.id)
-        client_bot.do_something()
-        assert world_bot._knowledge._scent == 3
+        world.step(client_bot)
+        world.update_client_for_test(client_bot)
         assert client_bot._knowledge._scent == 3

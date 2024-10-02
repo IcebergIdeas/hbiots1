@@ -62,8 +62,9 @@ class World:
     def step(self, bot):
         location = self.bots_next_location(bot)
         self.map.attempt_move(bot.id, location)  # changes world version
-        self.set_bot_vision(bot)
-        self.set_bot_scent(bot)
+        real_bot = self.map.at_id(bot.id)
+        self.set_bot_vision(real_bot)
+        self.set_bot_scent(real_bot)
 
     def set_bot_vision(self, bot):
         bot.vision = self.map.vision_at(bot.location)
