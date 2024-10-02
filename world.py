@@ -70,9 +70,6 @@ class World:
     def set_bot_scent(self, bot):
         bot.scent = self.map.scent_at(bot.location)
 
-    def clip(self, coord, limit):
-        return 0 if coord < 0 else (limit if coord > limit else coord)
-
     def take_forward(self, bot):
         is_block = lambda e: e.name == 'B'
         if block := self.map.take_conditionally_at(bot.forward_location(), is_block):
@@ -84,14 +81,6 @@ class World:
 
     def is_empty(self, drop_location):
         return not self.map.at_xy(drop_location.x, drop_location.y)
-
-    def bots_next_location(self, bot):
-        location = bot.location + bot.direction
-        return bot.location if self.is_off_world(location) else location
-
-    def is_off_world(self, location):
-        return self.clip(location.x, self.width) != location.x \
-            or self.clip(location.y, self.height) != location.y
 
     def update_client_for_test(self, client_bot):
         result_dict = self.fetch(client_bot.id)
