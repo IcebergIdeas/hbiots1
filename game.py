@@ -97,7 +97,7 @@ class Game:
 
 
 def build_block_square():
-    global y, x, block
+    # global y, x, block
     for y in range(10):
         for x in range(10):
             block = Block(x + 15, y + 15)
@@ -105,7 +105,7 @@ def build_block_square():
 
 
 def build_random_blocks():
-    global _, x, y, block
+    # global _, x, y, block
     for _ in range(50):
         x = random.randint(0, world.width - 1)
         y = random.randint(0, world.height - 1)
