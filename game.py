@@ -4,6 +4,7 @@ import pygame
 
 from block import Block
 from constants import DARK_GREY, BASE_FONT, WHITE, BLACK, RED, GREEN, GRID_LINE
+from direct_connection import DirectConnection
 from world import World
 
 
