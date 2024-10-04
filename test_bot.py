@@ -61,10 +61,10 @@ class TestBot:
     def test_stop_at_edge(self):
         world = World(10, 10)
         client_bot = world.add_bot(9, 5)
-        client_bot.step()
+        client_bot.do_something()
         world.update_client_for_test(client_bot)
         assert client_bot.location == Location(10, 5)
-        client_bot.step()
+        client_bot.do_something()
         world.update_client_for_test(client_bot)
         assert client_bot.location == Location(10, 5)
 
