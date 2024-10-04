@@ -78,6 +78,7 @@ class Bot:
         self._knowledge.remove(entity)
 
     def do_something(self):
+        connection = DirectConnection(self.world)
         actions = []
         actions += self.update_for_state_machine()
         self.state = self.state.update(self._knowledge)
@@ -85,10 +86,9 @@ class Bot:
         if random.random() < self.direction_change_chance:
             actions += self.change_direction()
         actions += ['step']
-        self.perform_actions(actions)
+        self.perform_actions(actions, connection)
 
-    def perform_actions(self, actions):
-        connection = DirectConnection(self.world)
+    def perform_actions(self, actions, connection):
         for action in actions:
             match action:
                 case 'take':
