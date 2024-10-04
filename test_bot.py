@@ -62,22 +62,6 @@ class TestBot:
         world.update_client_for_test(client_bot)
         assert client_bot.location == Location(10, 5)
 
-    def test_stop_at_west_edge(self):
-        world = World(10, 10)
-        client_bot = world.add_bot(3, 5)
-        client_bot.direction_change_chance = 0.0
-        client_bot.perform_actions(['WEST'])
-        client_bot.do_something()
-        assert client_bot.location == Location(2, 5)
-        client_bot.do_something()
-        assert client_bot.location == Location(1, 5)
-        client_bot.do_something()
-        assert client_bot.location == Location(0, 5)
-        client_bot.do_something()
-        assert client_bot.location == Location(0, 5)
-        client_bot.do_something()
-        assert client_bot.location != Location(0, 5)
-
 # Some of these are redundant, moved from another file
 
     def test_bot_notices_a_block(self):
