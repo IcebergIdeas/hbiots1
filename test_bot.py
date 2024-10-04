@@ -33,21 +33,15 @@ class TestBot:
         assert loc != Location(5, 5)
 
     def test_change_direction_if_stuck(self):
-        def move_and_update():
-            client_bot.perform_actions(['step'])
-            # world.update_client_for_test(client_bot)
-            actions = client_bot.update_for_state_machine()
-            client_bot.perform_actions(actions)
-
         world = World(10, 10)
         client_bot = world.add_bot(9, 5)
         client_bot.direction_change_chance = 0.0
-        move_and_update()
+        client_bot.do_something()
         assert client_bot.location == Location(10, 5)
         assert client_bot.direction == Direction.EAST
-        move_and_update()
+        client_bot.do_something()
         assert client_bot.location == Location(10, 5)
-        move_and_update()
+        client_bot.do_something()
         world_bot = world.map.at_id(client_bot.id)
         assert world_bot.direction != Direction.EAST
         assert client_bot.direction != Direction.EAST
