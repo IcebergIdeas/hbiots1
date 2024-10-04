@@ -1,5 +1,6 @@
 from block import Block
 from bot import Bot
+from direct_connection import DirectConnection
 from direction import Direction
 from knowledge import Knowledge
 from location import Location
@@ -27,7 +28,7 @@ class TestBot:
     def test_wandering(self):
         world = World(10, 10)
         client_bot = world.add_bot(5, 5)
-        client_bot.do_something()
+        client_bot.do_something(DirectConnection(world))
         world.update_client_for_test(client_bot)
         loc = client_bot.location
         assert loc != Location(5, 5)
@@ -36,12 +37,12 @@ class TestBot:
         world = World(10, 10)
         client_bot = world.add_bot(9, 5)
         client_bot.direction_change_chance = 0.0
-        client_bot.do_something()
+        client_bot.do_something(DirectConnection(world))
         assert client_bot.location == Location(10, 5)
         assert client_bot.direction == Direction.EAST
-        client_bot.do_something()
+        client_bot.do_something(DirectConnection(world))
         assert client_bot.location == Location(10, 5)
-        client_bot.do_something()
+        client_bot.do_something(DirectConnection(world))
         world_bot = world.map.at_id(client_bot.id)
         assert world_bot.direction != Direction.EAST
         assert client_bot.direction != Direction.EAST
@@ -56,10 +57,10 @@ class TestBot:
         world = World(10, 10)
         client_bot = world.add_bot(9, 5)
         client_bot.direction_change_chance = 0
-        client_bot.do_something()
+        client_bot.do_something(DirectConnection(world))
         world.update_client_for_test(client_bot)
         assert client_bot.location == Location(10, 5)
-        client_bot.do_something()
+        client_bot.do_something(DirectConnection(world))
         world.update_client_for_test(client_bot)
         assert client_bot.location == Location(10, 5)
 
@@ -79,10 +80,10 @@ class TestBot:
         world.set_bot_vision(real_bot)
         world.set_bot_scent(client_bot)
         world.set_bot_scent(real_bot)
-        client_bot.do_something()
+        client_bot.do_something(DirectConnection(world))
         world.update_client_for_test(client_bot)
         assert isinstance(client_bot.state, Looking)
-        client_bot.do_something()
+        client_bot.do_something(DirectConnection(world))
         world.update_client_for_test(client_bot)
         assert client_bot.has(block)
 

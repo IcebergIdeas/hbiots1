@@ -1,6 +1,5 @@
 import random
 
-from direct_connection import DirectConnection
 from direction import Direction
 from knowledge import Knowledge
 from location import Location
@@ -77,8 +76,7 @@ class Bot:
     def remove(self, entity):
         self._knowledge.remove(entity)
 
-    def do_something(self):
-        connection = DirectConnection(self.world)
+    def do_something(self, connection):
         actions = []
         actions += self.update_for_state_machine()
         self.state = self.state.update(self._knowledge)

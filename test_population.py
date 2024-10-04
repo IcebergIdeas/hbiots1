@@ -44,7 +44,7 @@ class WorldProxy:
 
     def run_cycle(self):
         for bot in self._population:
-            bot.do_something()
+            bot.do_something(DirectConnection(world))
 
     def step(self, bot):
         self._world.step(bot)

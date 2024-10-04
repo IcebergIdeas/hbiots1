@@ -88,7 +88,7 @@ class Game:
             if entity.name == 'R':
                 robots.append(entity)
         for bot in robots:
-            bot.do_something()
+            bot.do_something(DirectConnection(world))
 
     @staticmethod
     def on_cleanup():

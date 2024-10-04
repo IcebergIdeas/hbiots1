@@ -1,5 +1,6 @@
 from block import Block
 from bot import Bot
+from direct_connection import DirectConnection
 from location import Location
 from map import Map
 from world import World
@@ -56,5 +57,5 @@ class TestScent:
         world.add(block)  # comment?
         client_bot = world.add_bot(4, 6)
         client_bot.direction_change_chance = 0.0
-        client_bot.do_something()
+        client_bot.do_something(DirectConnection(world))
         assert client_bot._knowledge._scent == 3
