@@ -123,12 +123,6 @@ class Bot:
     def can_drop(self):
         return self.vision.match_forward_and_one_side('_', 'B')
 
-    def move(self):
-        if random.random() < self.direction_change_chance:
-            self.change_direction()
-        self._old_location = self.location
-        self.step()
-
     def step(self):
         self.perform_actions(['step'])
 
