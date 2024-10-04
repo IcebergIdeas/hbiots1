@@ -8,7 +8,6 @@ from machine import Walking
 
 class Bot:
     def __init__(self, x, y, direction=Direction.EAST):
-        self.world = None
         self.name = 'R'
         self.direction_change_chance = 0.2
         self._knowledge = Knowledge(Location(x, y), direction)

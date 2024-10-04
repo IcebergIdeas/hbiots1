@@ -15,7 +15,6 @@ class World:
         id = self.add_world_bot(x, y, direction)
         returned_bot = Bot(x, y, direction)
         returned_bot.id = id
-        returned_bot.world = self
         return returned_bot
 
     def add_world_bot(self, x, y, direction = Direction.EAST):
@@ -24,7 +23,6 @@ class World:
         return bot.id
 
     def add(self, entity):
-        entity.world = self
         World.next_id += 1
         entity.id = World.next_id
         self.map.place(entity)

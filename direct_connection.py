@@ -7,7 +7,6 @@ class DirectConnection:
         id = self.world.add_world_bot(x, y)
         client_bot = Bot(x, y)
         client_bot.id = id
-        client_bot.world = self.world
         self.update_client(client_bot)
         return client_bot
 

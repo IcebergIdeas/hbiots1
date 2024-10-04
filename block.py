@@ -3,7 +3,6 @@ from location import Location
 
 class Block:
     def __init__(self, x, y):
-        self.world = None
         self.id = None
         self.name = 'B'
         self.location = Location(x, y)
