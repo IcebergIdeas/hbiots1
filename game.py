@@ -3,6 +3,7 @@ import random
 import pygame
 
 from block import Block
+from bot import Bot
 from constants import DARK_GREY, BASE_FONT, WHITE, BLACK, RED, GREEN, GRID_LINE
 from direct_connection import DirectConnection
 from world import World
@@ -89,7 +90,11 @@ class Game:
             if entity.name == 'R':
                 robots.append(entity)
         for bot in robots:
-            bot.do_something(DirectConnection(world))
+            client_bot = Bot(bot.x, bot.y, bot.direction)
+            result_dict = self.world.fetch(bot.id)
+            client_bot._knowledge.update(result_dict)
+            connection = DirectConnection(world)
+            client_bot.do_something(connection)
 
     @staticmethod
     def on_cleanup():
