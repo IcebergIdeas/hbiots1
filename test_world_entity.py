@@ -54,6 +54,9 @@ class WorldEntity:
     def holding(self, value):
         self._dict['holding'] = value
 
+    def as_dictionary(self):
+        return self._dict
+
     def receive(self, entity):
         self.holding = entity
 
@@ -86,3 +89,4 @@ class TestWorldEntity:
         entity.vision = []
         assert entity.vision == []
         assert self.is_valid(entity)
+        assert entity.as_dictionary() is entity._dict
