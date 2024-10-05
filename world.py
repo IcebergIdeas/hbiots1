@@ -1,6 +1,7 @@
 from bot import Bot
 from direction import Direction
 from map import Map
+from world_entity import WorldEntity
 
 
 class World:
@@ -18,7 +19,7 @@ class World:
         return returned_bot
 
     def add_world_bot(self, x, y, direction = Direction.EAST):
-        bot = Bot(x, y, direction)
+        bot = WorldEntity(x, y, direction)
         self.add(bot)
         return bot.id
 

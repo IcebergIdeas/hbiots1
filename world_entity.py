@@ -1,6 +1,15 @@
+from location import Location
+
+
 class WorldEntity:
-    def __init__(self):
+    def __init__(self, x=None, y=None, direction=None):
         self._dict = dict()
+        if x is not None:
+            self.location = Location(x, y)
+            self.direction = direction
+        self.holding = None
+        self.scent = 0
+        self.vision = []
 
     @property
     def id(self):
@@ -17,6 +26,10 @@ class WorldEntity:
     @direction.setter
     def direction(self, value):
         self._dict['direction'] = value
+
+    @property
+    def name(self):
+        return 'R'
 
     @property
     def location(self):
@@ -43,15 +56,36 @@ class WorldEntity:
         self._dict['vision'] = value
 
     @property
+    def x(self):
+        return self.location.x
+
+    @property
+    def y(self):
+        return self.location.y
+
+    @property
     def holding(self):
-        return self._dict['holding']
+        try:
+            return self._dict['held_entity']
+        except KeyError:
+            return None
 
     @holding.setter
     def holding(self, value):
-        self._dict['holding'] = value
+        self._dict['held_entity'] = value
 
     def as_dictionary(self):
         return self._dict
 
+    def forward_location(self):
+        return self.location + self.direction
+
+    def has(self, entity):
+        return self.holding is entity
+
     def receive(self, entity):
         self.holding = entity
+
+    def remove(self, entity):
+        if self.holding is entity:
+            self.holding = None

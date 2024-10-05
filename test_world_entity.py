@@ -7,7 +7,7 @@ class TestWorldEntity:
     def is_valid(self, entity):
         assert entity._dict['id'] == entity.id
         assert entity._dict['direction'] == entity.direction
-        assert entity._dict['holding'] == entity.holding
+        assert entity._dict['held_entity'] == entity.holding
         assert entity._dict['location'] == entity.location
         assert entity._dict['scent'] == entity.scent
         assert entity._dict['vision'] == entity.vision
