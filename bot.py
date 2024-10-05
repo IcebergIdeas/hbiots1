@@ -66,6 +66,9 @@ class Bot:
     def y(self):
         return self.location.y
 
+    def as_dictionary(self):
+        return self._knowledge.as_dictionary()
+
     def has(self, entity):
         return self._knowledge.has(entity)
 
