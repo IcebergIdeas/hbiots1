@@ -46,12 +46,23 @@ class WorldEntity:
     def vision(self, value):
         self._dict['vision'] = value
 
+    @property
+    def holding(self):
+        return self._dict['holding']
+
+    @holding.setter
+    def holding(self, value):
+        self._dict['holding'] = value
+
+    def receive(self, entity):
+        self.holding = entity
 
 
 class TestWorldEntity:
     def is_valid(self, entity):
         assert entity._dict['id'] == entity.id
         assert entity._dict['direction'] == entity.direction
+        assert entity._dict['holding'] == entity.holding
         assert entity._dict['location'] == entity.location
         assert entity._dict['scent'] == entity.scent
         assert entity._dict['vision'] == entity.vision
@@ -68,6 +79,8 @@ class TestWorldEntity:
         assert entity.direction == Direction.EAST
         entity.location = Location(6,4)
         assert entity.location == Location(6,4)
+        entity.receive("hello")
+        assert entity.holding == "hello"
         entity.scent = 37
         assert entity.scent == 37
         entity.vision = []
