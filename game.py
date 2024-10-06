@@ -3,7 +3,6 @@ import random
 import pygame
 
 from block import Block
-from bot import Bot
 from constants import DARK_GREY, BASE_FONT, WHITE, BLACK, RED, GREEN, GRID_LINE
 from direct_connection import DirectConnection
 from world import World
@@ -18,6 +17,10 @@ class Game:
         self.size = (self.width, self.height) = ((world.width + 1) * self.scale, (world.height + 1) * self.scale)
         self.timer_event = None
         self.clock = 0
+        self.client_bots = []
+
+    def add_bot(self, client_bot):
+        self.client_bots.append(client_bot)
 
     def on_init(self):
         pygame.init()
@@ -85,14 +88,7 @@ class Game:
         self.on_cleanup()
 
     def run_one_bot_cycle(self):
-        world_robots = []
-        for world_entity in self.world.map:
-            if world_entity.name == 'R':
-                world_robots.append(world_entity)
-        for world_bot in world_robots:
-            client_bot = Bot(world_bot.x, world_bot.y, world_bot.direction)
-            result_dict = self.world.fetch(world_bot.id)
-            client_bot._knowledge.update(result_dict)
+        for client_bot in self.client_bots:
             connection = DirectConnection(world)
             client_bot.do_something(connection)
 
@@ -127,7 +123,8 @@ if __name__ == "__main__":
     # world.add(Block(world.width , 0))
     # world.add(Block(world.width, world.height))
 
-    for _ in range(20):
-        bot =  world.add_bot(10, 20)
     game = Game(world)
+    for _ in range(20):
+        client_bot =  world.add_bot(10, 20)
+        game.add_bot(client_bot)
     game.on_execute()

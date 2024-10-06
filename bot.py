@@ -106,8 +106,7 @@ class Bot:
     def update_for_state_machine(self):
         self._knowledge.gain_energy()
         if self.location == self._old_location:
-            new_direction = self.change_direction()
-            return new_direction
+            return self.change_direction()
         else:
             return []
 

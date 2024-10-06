@@ -59,6 +59,7 @@ class World:
                 pass
 
     def step(self, bot: Bot):
+        old_location = bot.location
         self.map.attempt_move(bot.id, bot.forward_location())  # changes world version
         self.set_bot_vision(bot)
         self.set_bot_scent(bot)
