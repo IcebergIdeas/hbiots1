@@ -85,13 +85,13 @@ class Game:
         self.on_cleanup()
 
     def run_one_bot_cycle(self):
-        robots = []
-        for entity in self.world.map:
-            if entity.name == 'R':
-                robots.append(entity)
-        for bot in robots:
-            client_bot = Bot(bot.x, bot.y, bot.direction)
-            result_dict = self.world.fetch(bot.id)
+        world_robots = []
+        for world_entity in self.world.map:
+            if world_entity.name == 'R':
+                world_robots.append(world_entity)
+        for world_bot in world_robots:
+            client_bot = Bot(world_bot.x, world_bot.y, world_bot.direction)
+            result_dict = self.world.fetch(world_bot.id)
             client_bot._knowledge.update(result_dict)
             connection = DirectConnection(world)
             client_bot.do_something(connection)

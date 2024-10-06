@@ -45,6 +45,7 @@ class TestBot:
         client_bot.do_something(DirectConnection(world))
         assert client_bot.location == Location(10, 5)
         client_bot.do_something(DirectConnection(world))
+        assert client_bot.location != Location(10, 5)
         world_bot = world.map.at_id(client_bot.id)
         assert world_bot.direction != Direction.EAST
         assert client_bot.direction != Direction.EAST
@@ -60,11 +61,11 @@ class TestBot:
         client_bot = world.add_bot(9, 5)
         client_bot.direction_change_chance = 0
         client_bot.do_something(DirectConnection(world))
-        world.update_client_for_test(client_bot)
         assert client_bot.location == Location(10, 5)
         client_bot.do_something(DirectConnection(world))
-        world.update_client_for_test(client_bot)
         assert client_bot.location == Location(10, 5)
+        client_bot.do_something(DirectConnection(world))
+        assert client_bot.location != Location(10, 5)
 
 # Some of these are redundant, moved from another file
     @pytest.mark.skip("too weird")
