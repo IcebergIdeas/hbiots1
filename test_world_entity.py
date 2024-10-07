@@ -24,8 +24,9 @@ class TestWorldEntity:
         assert entity.direction == Direction.EAST
         entity.location = Location(6, 4)
         assert entity.location == Location(6,4)
-        entity.receive("hello")
-        assert entity.holding == "hello"
+        block = WorldEntity.block(9, 9)
+        entity.receive(block)
+        assert entity.holding == block
         entity.scent = 37
         assert entity.scent == 37
         entity.vision = []
@@ -34,4 +35,4 @@ class TestWorldEntity:
         assert entity.as_dictionary() is entity._dict
 
     def test_create_block(self):
-        entity = WorldEntity.block(0, 0, Direction.EAST)
+        entity = WorldEntity.block(0, 0)

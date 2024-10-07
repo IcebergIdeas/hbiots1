@@ -43,7 +43,8 @@ class TestConnection:
         bot_id = client_bot.id
         world_bot = world.map.at_id(bot_id)
         client_block = world.add_block(1,9)
-        world_bot.receive(client_block)
+        world_block = world.map.at_id(client_block.id)
+        world_bot.receive(world_block)
         connection = DirectConnection(world)
         assert len(world.map.contents.keys()) == 2
         connection.drop(client_bot, client_block)

@@ -18,8 +18,8 @@ class WorldEntity:
         return cls(EntityKind.BOT, x, y, direction)
 
     @classmethod
-    def block(cls, x, y, direction):
-        return cls(EntityKind.BLOCK, x, y, direction)
+    def block(cls, x, y):
+        return cls(EntityKind.BLOCK, x, y, Direction.EAST)
 
     @property
     def id(self):

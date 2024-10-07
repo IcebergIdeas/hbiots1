@@ -26,7 +26,7 @@ class World:
         return returned_client_bot
 
     def add_world_block(self, x, y, direction = Direction.EAST):
-        block = WorldEntity.block(x, y, direction)
+        block = WorldEntity.block(x, y)
         self.add(block)
         return block.id
 
