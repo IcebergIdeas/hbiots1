@@ -14,8 +14,7 @@ class WorldEntity:
 
     @classmethod
     def bot(cls, x, y, direction):
-        instance = cls(EntityKind.BOT, x, y, direction)
-        return instance
+        return cls(EntityKind.BOT, x, y, direction)
 
     @property
     def id(self):
