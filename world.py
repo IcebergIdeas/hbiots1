@@ -36,8 +36,6 @@ class World:
         return bot.id
 
     def add(self, entity):
-        World.next_id += 1
-        entity.id = World.next_id
         self.map.place(entity)
 
     def command(self, action, bot_id, parameter=None):

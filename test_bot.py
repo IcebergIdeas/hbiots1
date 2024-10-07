@@ -8,6 +8,7 @@ from knowledge import Knowledge
 from location import Location
 from machine import Looking
 from world import World
+from world_entity import WorldEntity
 
 
 class TestBot:
@@ -22,7 +23,7 @@ class TestBot:
         assert bot.location == Location(10, 10)
 
     def test_bot_in_world_gets_next_id(self):
-        World.next_id = 100
+        WorldEntity.next_id = 100
         world = World(10, 10)
         bot = world.add_bot(5, 5)
         assert bot.id == 101

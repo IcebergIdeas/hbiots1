@@ -4,8 +4,12 @@ from location import Location
 
 
 class WorldEntity:
+    next_id = 100
+
     def __init__(self, kind: EntityKind, x: int, y: int, direction: Direction):
         self._dict = dict()
+        WorldEntity.next_id += 1
+        self._dict['eid'] = self.next_id
         self._dict['kind'] = kind
         self.location = Location(x, y)
         self.direction = direction
@@ -23,11 +27,12 @@ class WorldEntity:
 
     @property
     def id(self):
-        return self._dict['id']
+        return self._dict['eid']
 
     @id.setter
     def id(self, value):
-        self._dict['id'] = value
+        assert False
+        self._dict['eid'] = value
 
     @property
     def direction(self):

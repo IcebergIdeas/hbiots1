@@ -6,7 +6,7 @@ from world_entity import WorldEntity
 
 class TestWorldEntity:
     def is_valid(self, entity):
-        assert entity._dict['id'] == entity.id
+        assert entity._dict['eid'] == entity.id
         assert entity._dict['direction'] == entity.direction
         assert entity._dict['held_entity'] == entity.holding
         assert entity._dict['location'] == entity.location
@@ -20,7 +20,6 @@ class TestWorldEntity:
 
     def test_set_and_fetch(self):
         entity = WorldEntity.bot(0, 0, Direction.EAST)
-        entity.id = 102
         assert entity.direction == Direction.EAST
         entity.location = Location(6, 4)
         assert entity.location == Location(6,4)

@@ -28,7 +28,7 @@ class Knowledge:
     def update(self, update_dictionary):
         self.direction = update_dictionary['direction']
         self.receive(update_dictionary['held_entity'])
-        self.id = update_dictionary['id']
+        self.id = update_dictionary['eid']
         self.location = update_dictionary['location']
         self._scent = update_dictionary['scent']
         self.vision = update_dictionary['vision']
