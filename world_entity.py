@@ -16,6 +16,10 @@ class WorldEntity:
     def bot(cls, x, y, direction):
         return cls(EntityKind.BOT, x, y, direction)
 
+    @classmethod
+    def block(cls, x, y, direction):
+        return cls(EntityKind.BLOCK, x, y, direction)
+
     @property
     def id(self):
         return self._dict['id']

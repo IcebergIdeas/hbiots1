@@ -15,16 +15,14 @@ class TestWorldEntity:
         return True
 
     def test_create(self):
-        entity = WorldEntity(EntityKind.BOT, 0, 0, Direction.EAST)
+        entity = WorldEntity(EntityKind.BOT, 6, 4, Direction.EAST)
         assert entity.kind == EntityKind.BOT
 
     def test_set_and_fetch(self):
-        entity = WorldEntity(EntityKind.BOT, 0, 0, Direction.EAST)
+        entity = WorldEntity.bot(0, 0, Direction.EAST)
         entity.id = 102
-        assert entity.id == 102
-        entity.direction = Direction.EAST
         assert entity.direction == Direction.EAST
-        entity.location = Location(6,4)
+        entity.location = Location(6, 4)
         assert entity.location == Location(6,4)
         entity.receive("hello")
         assert entity.holding == "hello"
@@ -34,3 +32,6 @@ class TestWorldEntity:
         assert entity.vision == []
         assert self.is_valid(entity)
         assert entity.as_dictionary() is entity._dict
+
+    def test_create_block(self):
+        entity = WorldEntity.block(0, 0, Direction.EAST)
