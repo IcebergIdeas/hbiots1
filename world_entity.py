@@ -6,9 +6,8 @@ class WorldEntity:
     def __init__(self, kind, x, y, direction):
         self._dict = dict()
         self._dict['kind'] = kind
-        if x is not None:
-            self.location = Location(x, y)
-            self.direction = direction
+        self.location = Location(x, y)
+        self.direction = direction
         self.holding = None
         self.scent = 0
         self.vision = []
