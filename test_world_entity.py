@@ -15,10 +15,11 @@ class TestWorldEntity:
         return True
 
     def test_create(self):
-        WorldEntity(EntityKind.BOT)
+        entity = WorldEntity(EntityKind.BOT, 0, 0, Direction.EAST)
+        assert entity.kind == EntityKind.BOT
 
     def test_set_and_fetch(self):
-        entity = WorldEntity(EntityKind.BOT)
+        entity = WorldEntity(EntityKind.BOT, 0, 0, Direction.EAST)
         entity.id = 102
         assert entity.id == 102
         entity.direction = Direction.EAST

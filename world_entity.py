@@ -3,8 +3,9 @@ from location import Location
 
 
 class WorldEntity:
-    def __init__(self, kind, x=None, y=None, direction=None):
+    def __init__(self, kind, x, y, direction):
         self._dict = dict()
+        self._dict['kind'] = kind
         if x is not None:
             self.location = Location(x, y)
             self.direction = direction
@@ -13,7 +14,7 @@ class WorldEntity:
         self.vision = []
 
     @classmethod
-    def bot(cls, x=None, y=None, direction=None):
+    def bot(cls, x, y, direction):
         instance = cls(EntityKind.BOT, x, y, direction)
         return instance
 
@@ -32,6 +33,10 @@ class WorldEntity:
     @direction.setter
     def direction(self, value):
         self._dict['direction'] = value
+
+    @property
+    def kind(self):
+        return self._dict['kind']
 
     @property
     def name(self):
