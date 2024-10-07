@@ -1,9 +1,10 @@
+from direction import Direction
 from entity_kind import EntityKind
 from location import Location
 
 
 class WorldEntity:
-    def __init__(self, kind, x, y, direction):
+    def __init__(self, kind: EntityKind, x: int, y: int, direction: Direction):
         self._dict = dict()
         self._dict['kind'] = kind
         self.location = Location(x, y)

@@ -2,7 +2,6 @@ import random
 
 import pygame
 
-from block import Block
 from constants import DARK_GREY, BASE_FONT, WHITE, BLACK, RED, GREEN, GRID_LINE
 from direct_connection import DirectConnection
 from world import World
@@ -101,8 +100,7 @@ def build_block_square():
     # global y, x, block
     for y in range(10):
         for x in range(10):
-            block = Block(x + 15, y + 15)
-            world.add(block)
+            world.add_block(x + 15, y + 15)
 
 
 def build_random_blocks():
@@ -110,8 +108,7 @@ def build_random_blocks():
     for _ in range(50):
         x = random.randint(0, world.width - 1)
         y = random.randint(0, world.height - 1)
-        block = Block(x, y)
-        world.add(block)
+        world.add_block(x, y)
 
 
 if __name__ == "__main__":
