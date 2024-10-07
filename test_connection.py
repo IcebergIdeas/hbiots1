@@ -1,4 +1,3 @@
-from block import Block
 from direct_connection import DirectConnection
 from direction import Direction
 from location import Location
@@ -43,14 +42,13 @@ class TestConnection:
         client_bot = world.add_bot(5, 5)
         bot_id = client_bot.id
         world_bot = world.map.at_id(bot_id)
-        block = Block(1, 9)
-        world.add(block)
-        world_bot.receive(block)
+        client_block = world.add_block(1,9)
+        world_bot.receive(client_block)
         connection = DirectConnection(world)
         assert len(world.map.contents.keys()) == 2
-        connection.drop(client_bot, block)
+        connection.drop(client_bot, client_block)
         assert len(world.map.contents.keys()) == 2
-        assert not world_bot.has(block)
+        assert not world_bot.has(client_block)
         assert not world.is_empty(Location(6, 5))
 
     def test_connection_add_bot(self):
