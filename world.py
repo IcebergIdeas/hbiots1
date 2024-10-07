@@ -13,30 +13,21 @@ class World:
         self.height = max_y
         self.map = Map(max_x, max_y)
 
-    def add_block(self, x, y, direction = Direction.EAST):
-        id = self.add_world_block(x, y, direction)
-        returned_client_block = Block(x, y)
-        returned_client_block.id = id
-        return returned_client_block
+    def add_block(self, x, y):
+        entity = WorldEntity.block(x, y)
+        returned_client_entity = Block(x, y)
+        return self.add_and_return_client_entity(entity, returned_client_entity)
 
     def add_bot(self, x, y, direction = Direction.EAST):
-        id = self.add_world_bot(x, y, direction)
-        returned_client_bot = Bot(x, y, direction)
-        returned_client_bot.id = id
-        return returned_client_bot
+        entity = WorldEntity.bot(x, y, direction)
+        returned_client_entity = Bot(x, y, direction)
+        return self.add_and_return_client_entity(entity, returned_client_entity)
 
-    def add_world_block(self, x, y, direction = Direction.EAST):
-        block = WorldEntity.block(x, y)
-        self.add(block)
-        return block.id
-
-    def add_world_bot(self, x, y, direction = Direction.EAST):
-        bot = WorldEntity.bot(x, y, direction)
-        self.add(bot)
-        return bot.id
-
-    def add(self, entity):
+    def add_and_return_client_entity(self, entity, returned_client_entity):
         self.map.place(entity)
+        id = entity.id
+        returned_client_entity.id = id
+        return returned_client_entity
 
     def command(self, action, bot_id, parameter=None):
         world_bot = self.map.at_id(bot_id)

@@ -3,10 +3,7 @@ class DirectConnection:
         self.world = world
 
     def add_bot(self, x, y):
-        from bot import Bot
-        id = self.world.add_world_bot(x, y)
-        client_bot = Bot(x, y)
-        client_bot.id = id
+        client_bot = self.world.add_bot(x, y)
         self.update_client(client_bot)
         return client_bot
 

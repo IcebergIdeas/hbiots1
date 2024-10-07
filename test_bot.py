@@ -133,10 +133,10 @@ class TestBot:
     def test_bot_cant_take_diagonally(self):
         world = World(10, 10)
         bot = world.add_bot(5, 5)
-        world.add_block(4,4)
-        world.add_block(6,4)
-        world.add_block(4,6)
-        world.add_block(6,6)
+        world.add_block(4, 4)
+        world.add_block(6, 4)
+        world.add_block(4, 6)
+        world.add_block(6, 6)
         world.take_forward(bot)
         assert not bot.has_block()
 

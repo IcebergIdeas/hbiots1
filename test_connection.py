@@ -42,7 +42,7 @@ class TestConnection:
         client_bot = world.add_bot(5, 5)
         bot_id = client_bot.id
         world_bot = world.map.at_id(bot_id)
-        client_block = world.add_block(1,9)
+        client_block = world.add_block(1, 9)
         world_block = world.map.at_id(client_block.id)
         world_bot.receive(world_block)
         connection = DirectConnection(world)
