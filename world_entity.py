@@ -11,6 +11,11 @@ class WorldEntity:
         self.scent = 0
         self.vision = []
 
+    @classmethod
+    def bot(cls, x=None, y=None, direction=None):
+        instance = cls(x, y, direction)
+        return instance
+
     @property
     def id(self):
         return self._dict['id']

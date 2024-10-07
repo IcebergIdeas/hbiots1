@@ -19,7 +19,7 @@ class World:
         return returned_bot
 
     def add_world_bot(self, x, y, direction = Direction.EAST):
-        bot = WorldEntity(x, y, direction)
+        bot = WorldEntity.bot(x, y, direction)
         self.add(bot)
         return bot.id
 
