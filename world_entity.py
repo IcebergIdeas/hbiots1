@@ -104,5 +104,5 @@ class WorldEntity:
         self.holding = entity
 
     def remove(self, entity):
-        if self.holding.id is entity.id:
+        if self.holding is entity:
             self.holding = None
