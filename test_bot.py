@@ -77,8 +77,7 @@ class TestBot:
         real_bot = world.map.at_id(client_bot.id)
         real_bot.direction_change_chance = 0
         real_bot.state._energy = Knowledge.energy_threshold
-        block = Block(7, 5)
-        world.add(block)
+        world.add_block(7, 5)
         world.set_bot_vision(client_bot)
         world.set_bot_vision(real_bot)
         world.set_bot_scent(client_bot)
@@ -93,61 +92,52 @@ class TestBot:
     def test_take_a_block(self):
         world = World(10, 10)
         client_bot = world.add_bot(5, 5)
-        block = Block(6, 5)
-        world.add(block)
+        world.add_block(6, 5)
         assert not world.is_empty(Location(6, 5))
         world.take_forward(client_bot)
-        assert client_bot.has(block)
+        assert client_bot.has_block()
         assert world.is_empty(Location(6, 5))
 
     def test_bot_facing_north_takes_a_north_block(self):
         world = World(10, 10)
         bot = world.add_bot(5, 5)
-        block = Block(5, 4)
-        world.add(block)
+        world.add_block(5, 4)
         bot.direction = Direction.NORTH
         world.take_forward(bot)
-        assert bot.has(block)
+        assert bot.has_block()
 
     def test_bot_facing_east_takes_an_east_block(self):
         world = World(10, 10)
         bot = world.add_bot(5, 5)
-        block = Block(6, 5)
-        world.add(block)
+        world.add_block(6, 5)
         world.take_forward(bot)
-        assert bot.has(block)
+        assert bot.has_block()
 
     def test_bot_facing_south_takes_a_south_block(self):
         world = World(10, 10)
         bot = world.add_bot(5, 5)
-        block = Block(5, 6)
-        world.add(block)
+        world.add_block(5, 6)
         bot.direction = Direction.SOUTH
         world.take_forward(bot)
-        assert bot.has(block)
+        assert bot.has_block()
 
     def test_bot_facing_west_takes_a_west_block(self):
         world = World(10, 10)
         bot = world.add_bot(5, 5)
-        block = Block(4, 5)
-        world.add(block)
+        world.add_block(4, 5)
         bot.direction = Direction.WEST
         world.take_forward(bot)
-        assert bot.has(block)
+        assert bot.has_block()
 
     def test_bot_cant_take_diagonally(self):
         world = World(10, 10)
         bot = world.add_bot(5, 5)
-        block = Block(4, 4)
-        world.add(block)
-        block = Block(6, 4)
-        world.add(block)
-        block = Block(4, 6)
-        world.add(block)
-        block = Block(6, 6)
-        world.add(block)
+        world.add_block(4,4)
+        world.add_block(6,4)
+        world.add_block(4,6)
+        world.add_block(6,6)
         world.take_forward(bot)
-        assert not bot.has(block)
+        assert not bot.has_block()
 
     def test_bot_cannot_drop_off_world_north(self):
         world = World(10, 10)

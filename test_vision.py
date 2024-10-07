@@ -21,14 +21,11 @@ class TestVision:
         assert ('R', 6, 5) in vision
 
     def test_three_blocks_near(self):
-        from block import Block
-        from bot import Bot
-
         world = World(10, 10)
-        world.add(Block(4, 4))
-        world.add(Block(6, 6))
-        world.add(Block(4, 5))
-        world.add(Bot(5, 5))
+        world.add_block(4, 4)
+        world.add_block(6, 6)
+        world.add_block(4, 5)
+        world.add_bot(5, 5)
         vision = world.map.vision_at(Location(5, 5))
         assert ('R', 5, 5) in vision
         assert ('B', 4, 5) in vision

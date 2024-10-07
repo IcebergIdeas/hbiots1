@@ -1,3 +1,4 @@
+from block import Block
 from bot import Bot
 from direction import Direction
 from map import Map
@@ -12,11 +13,22 @@ class World:
         self.height = max_y
         self.map = Map(max_x, max_y)
 
+    def add_block(self, x, y, direction = Direction.EAST):
+        id = self.add_world_block(x, y, direction)
+        returned_client_block = Block(x, y)
+        returned_client_block.id = id
+        return returned_client_block
+
     def add_bot(self, x, y, direction = Direction.EAST):
         id = self.add_world_bot(x, y, direction)
-        returned_bot = Bot(x, y, direction)
-        returned_bot.id = id
-        return returned_bot
+        returned_client_bot = Bot(x, y, direction)
+        returned_client_bot.id = id
+        return returned_client_bot
+
+    def add_world_block(self, x, y, direction = Direction.EAST):
+        block = WorldEntity.block(x, y, direction)
+        self.add(block)
+        return block.id
 
     def add_world_bot(self, x, y, direction = Direction.EAST):
         bot = WorldEntity.bot(x, y, direction)

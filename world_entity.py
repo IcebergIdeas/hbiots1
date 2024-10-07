@@ -42,7 +42,7 @@ class WorldEntity:
 
     @property
     def name(self):
-        return 'R'
+        return 'R' if self.kind is EntityKind.BOT else 'B'
 
     @property
     def location(self):
@@ -95,6 +95,9 @@ class WorldEntity:
 
     def has(self, entity):
         return self.holding is entity
+
+    def has_block(self):
+        return self.holding.kind is EntityKind.BLOCK
 
     def receive(self, entity):
         self.holding = entity

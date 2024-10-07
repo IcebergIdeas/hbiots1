@@ -31,12 +31,11 @@ class TestConnection:
         client_bot = world.add_bot(5, 5)
         bot_id = client_bot.id
         connection = DirectConnection(world)
-        block = Block(6, 5)
-        world.add(block)
+        world.add_block(6, 5)
         assert not world.is_empty(Location(6, 5))
         connection.take(client_bot)
         world_bot = world.map.at_id(bot_id)
-        assert world_bot.has(block)
+        assert world_bot.has_block()
         assert world.is_empty(Location(6, 5))
 
     def test_drop_block_on_open_cell(self):
