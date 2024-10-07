@@ -1,4 +1,5 @@
 from direction import Direction
+from entity_kind import EntityKind
 from location import Location
 from world_entity import WorldEntity
 
@@ -14,10 +15,10 @@ class TestWorldEntity:
         return True
 
     def test_create(self):
-        WorldEntity()
+        WorldEntity(EntityKind.BOT)
 
     def test_set_and_fetch(self):
-        entity = WorldEntity()
+        entity = WorldEntity(EntityKind.BOT)
         entity.id = 102
         assert entity.id == 102
         entity.direction = Direction.EAST

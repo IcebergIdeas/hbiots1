@@ -1,8 +1,9 @@
+from entity_kind import EntityKind
 from location import Location
 
 
 class WorldEntity:
-    def __init__(self, x=None, y=None, direction=None):
+    def __init__(self, kind, x=None, y=None, direction=None):
         self._dict = dict()
         if x is not None:
             self.location = Location(x, y)
@@ -13,7 +14,7 @@ class WorldEntity:
 
     @classmethod
     def bot(cls, x=None, y=None, direction=None):
-        instance = cls(x, y, direction)
+        instance = cls(EntityKind.BOT, x, y, direction)
         return instance
 
     @property
