@@ -29,11 +29,6 @@ class WorldEntity:
     def id(self):
         return self._dict['eid']
 
-    @id.setter
-    def id(self, value):
-        assert False
-        self._dict['eid'] = value
-
     @property
     def direction(self):
         return self._dict['direction']
