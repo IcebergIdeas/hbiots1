@@ -92,8 +92,9 @@ class Knowledge:
 
     @property
     def can_drop(self):
-        is_scent_ok = self._scent >= self.drop_threshold
-        return is_scent_ok and self.vision.match_forward_and_one_side('_', 'B')
+        vision_ok = self.vision.match_forward_and_one_side('_', 'B')
+        scent_ok = self._scent >= self.drop_threshold
+        return vision_ok and scent_ok
 
     def receive(self, entity):
         self._held_entity = entity

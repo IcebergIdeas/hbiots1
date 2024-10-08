@@ -13,8 +13,8 @@ class World:
         self.height = max_y
         self.map = Map(max_x, max_y)
 
-    def add_block(self, x, y):
-        entity = WorldEntity.block(x, y, 0)
+    def add_block(self, x, y, aroma=0):
+        entity = WorldEntity.block(x, y, aroma)
         returned_client_entity = Block(x, y)
         return self.add_and_return_client_entity(entity, returned_client_entity)
 

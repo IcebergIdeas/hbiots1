@@ -2,7 +2,7 @@ import random
 
 import pygame
 
-from constants import DARK_GREY, BASE_FONT, WHITE, BLACK, RED, GREEN, GRID_LINE
+from constants import MAGENTA, DARK_GREY, BASE_FONT, WHITE, BLACK, RED, GREEN, BLUE, GRID_LINE
 from direct_connection import DirectConnection
 from world import World
 
@@ -50,10 +50,25 @@ class Game:
                 color = WHITE
                 if name == 'R':
                     if entity.holding:
-                        color = RED
+                        color = self.aroma_color(entity.holding.aroma)
                     else:
                         color = GREEN
+                if name == 'B':
+                    color = self.aroma_color(entity.aroma)
                 self.text((scale_x + 1, scale_y + 1), name, 16, color, BLACK)
+
+    def aroma_color(self, aroma):
+                    match aroma:
+                        case 0:
+                            return RED
+                        case 1:
+                            return BLUE
+                        case 2:
+                            return WHITE
+                        case 3:
+                            return MAGENTA
+                        case _:
+                            return GREEN
 
     def text(self, location, phrase, size, front_color, back_color):
         font = pygame.font.Font(BASE_FONT, size)
@@ -80,7 +95,7 @@ class Game:
                 self.on_event(event)
             self.clear_screen()
             self.draw_grid()
-            for _ in range(1):
+            for _ in range(10):
                 self.run_one_bot_cycle()
             self.draw_world()
             pygame.display.update()
@@ -105,10 +120,10 @@ def build_block_square():
 
 def build_random_blocks():
     # global _, x, y, block
-    for _ in range(50):
+    for _ in range(150):
         x = random.randint(0, world.width - 1)
         y = random.randint(0, world.height - 1)
-        world.add_block(x, y)
+        world.add_block(x, y, None)
 
 
 if __name__ == "__main__":
