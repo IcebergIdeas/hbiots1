@@ -49,7 +49,7 @@ class TestConnection:
         assert len(world.map.contents.keys()) == 2
         connection.drop(client_bot, client_block)
         assert len(world.map.contents.keys()) == 2
-        assert not world_bot.has(client_block)
+        assert not world_bot.has(world_block)
         assert not world.is_empty(Location(6, 5))
 
     def test_connection_add_bot(self):
