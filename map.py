@@ -85,7 +85,7 @@ class Map:
     def relative_scent(self, location, current, desired_aroma):
         found = self.at_xy(current.x, current.y)
         scent = 0
-        if found and found.name == 'B':
+        if found and found.name == 'B' and found.aroma == desired_aroma:
             scent = 4 - location.distance(current)
             if scent < 0:
                 scent = 0

@@ -18,7 +18,7 @@ class TestScent:
     def test_relative_scent_right_here(self):
         map = Map(10, 10)
         loc = Location (5, 5)
-        block = WorldEntity.block(loc.x, loc.y)
+        block = WorldEntity.block(loc.x, loc.y, 0)
         map.place(block)
         scent = map.relative_scent(loc, loc, 0)
         assert scent == 4
@@ -26,18 +26,18 @@ class TestScent:
     def test_scent_right_here(self):
         map = Map(10, 10)
         loc = Location (5, 5)
-        block = WorldEntity.block(loc.x, loc.y)
+        block = WorldEntity.block(loc.x, loc.y, 1)
         map.place(block)
-        scent = map.scent_at(loc, 0)
+        scent = map.scent_at(loc, 1)
         assert scent == 4
 
     def test_scent_all_around(self):
         map = Map(10, 10)
         for x in range(11):
             for y in range(11):
-                block = WorldEntity.block(x, y)
+                block = WorldEntity.block(x, y, 2)
                 map.place(block)
-        scent = map.scent_at(Location(5, 5), 0)
+        scent = map.scent_at(Location(5, 5), 2)
         assert scent ==  40
 
     def test_bots_dont_smell(self):
