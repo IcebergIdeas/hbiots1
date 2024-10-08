@@ -1,9 +1,9 @@
-from block import Block
 from bot import Bot
 from direct_connection import DirectConnection
 from location import Location
 from map import Map
 from world import World
+from world_entity import WorldEntity
 
 
 class TestScent:
@@ -12,33 +12,32 @@ class TestScent:
 
     def test_empty_map(self):
         map = Map(10, 10)
-        scent = map.scent_at(Location(5, 5))
+        scent = map.scent_at(Location(5, 5), 0)
         assert scent == 0
 
     def test_relative_scent_right_here(self):
         map = Map(10, 10)
         loc = Location (5, 5)
-        block = Block(loc.x, loc.y)
+        block = WorldEntity.block(loc.x, loc.y)
         map.place(block)
-        scent = map.relative_scent(loc, loc)
+        scent = map.relative_scent(loc, loc, 0)
         assert scent == 4
 
     def test_scent_right_here(self):
         map = Map(10, 10)
         loc = Location (5, 5)
-        block = Block(loc.x, loc.y)
+        block = WorldEntity.block(loc.x, loc.y)
         map.place(block)
-        scent = map.scent_at(loc)
+        scent = map.scent_at(loc, 0)
         assert scent == 4
 
     def test_scent_all_around(self):
         map = Map(10, 10)
         for x in range(11):
             for y in range(11):
-                block = Block(x, y)
-                block.id = 11*x + y
+                block = WorldEntity.block(x, y)
                 map.place(block)
-        scent = map.scent_at(Location (5, 5))
+        scent = map.scent_at(Location(5, 5), 0)
         assert scent ==  40
 
     def test_bots_dont_smell(self):
@@ -48,7 +47,7 @@ class TestScent:
                 block = Bot(x, y)
                 block.id = 11*x + y
                 map.place(block)
-        scent = map.scent_at(Location (5, 5))
+        scent = map.scent_at(Location(5, 5), 0)
         assert scent ==  0
 
     def test_we_get_scent(self):

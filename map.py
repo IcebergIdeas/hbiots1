@@ -73,16 +73,16 @@ class Map:
                     result.append((found.name, found.x, found.y))
         return result
 
-    def scent_at(self, location):
+    def scent_at(self, location, desired_aroma):
         total_scent = 0
         for dx in (-2, -1, 0, 1, 2):
             for dy in (-2, -1, 0, 1, 2):
                 current = location + Direction(dx, dy)
-                scent = self.relative_scent(location, current)
+                scent = self.relative_scent(location, current, desired_aroma)
                 total_scent += scent
         return total_scent
 
-    def relative_scent(self, location, current):
+    def relative_scent(self, location, current, desired_aroma):
         found = self.at_xy(current.x, current.y)
         scent = 0
         if found and found.name == 'B':

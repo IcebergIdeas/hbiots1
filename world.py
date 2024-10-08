@@ -14,7 +14,7 @@ class World:
         self.map = Map(max_x, max_y)
 
     def add_block(self, x, y):
-        entity = WorldEntity.block(x, y)
+        entity = WorldEntity.block(x, y, 0)
         returned_client_entity = Block(x, y)
         return self.add_and_return_client_entity(entity, returned_client_entity)
 
@@ -69,7 +69,10 @@ class World:
         bot.vision = self.map.vision_at(bot.location)
 
     def set_bot_scent(self, bot):
-        bot.scent = self.map.scent_at(bot.location)
+        aroma_to_seek = 0
+        if bot.holding:
+            aroma_to_seek = bot.holding.aroma
+        bot.scent = self.map.scent_at(bot.location, aroma_to_seek)
 
     def take_forward(self, bot):
         is_block = lambda e: e.name == 'B'

@@ -1,3 +1,5 @@
+import random
+
 from direction import Direction
 from entity_kind import EntityKind
 from location import Location
@@ -23,8 +25,10 @@ class WorldEntity:
         return cls(EntityKind.BOT, x, y, direction)
 
     @classmethod
-    def block(cls, x, y):
-        return cls(EntityKind.BLOCK, x, y, Direction.EAST)
+    def block(cls, x, y, aroma=None):
+        blk = cls(EntityKind.BLOCK, x, y, Direction.EAST)
+        blk.aroma = random.randint(0, 4) if aroma is None else aroma
+        return blk
 
     @property
     def aroma(self):
