@@ -11,6 +11,7 @@ class WorldEntity:
         WorldEntity.next_id += 1
         self._dict['eid'] = self.next_id
         self._dict['kind'] = kind
+        self.aroma = 0
         self.location = Location(x, y)
         self.direction = direction
         self.holding = None
@@ -24,6 +25,14 @@ class WorldEntity:
     @classmethod
     def block(cls, x, y):
         return cls(EntityKind.BLOCK, x, y, Direction.EAST)
+
+    @property
+    def aroma(self):
+        return self._dict['aroma']
+
+    @aroma.setter
+    def aroma(self, aroma):
+        self._dict['aroma'] = aroma
 
     @property
     def id(self):
