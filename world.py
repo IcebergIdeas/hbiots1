@@ -1,5 +1,4 @@
 from block import Block
-from bot import Bot
 from direction import Direction
 from map import Map
 from world_entity import WorldEntity
@@ -59,8 +58,7 @@ class World:
             case _:
                 pass
 
-    def step(self, bot: Bot):
-        old_location = bot.location
+    def step(self, bot):
         self.map.attempt_move(bot.id, bot.forward_location())  # changes world version
         self.set_bot_vision(bot)
         self.set_bot_scent(bot)
