@@ -20,8 +20,8 @@ class World:
 
     def add_bot(self, x, y, direction = Direction.EAST):
         entity = WorldEntity.bot(x, y, direction)
-        returned_client_entity = Bot(x, y, direction)
-        return self.add_and_return_client_entity(entity, returned_client_entity)
+        self.map.place(entity)
+        return entity.id
 
     def add_and_return_client_entity(self, entity, returned_client_entity):
         self.map.place(entity)

@@ -1,11 +1,17 @@
+from bot import Bot
+from direction import Direction
+
+
 class DirectConnection:
     def __init__(self, world):
         self.world = world
 
-    def add_bot(self, x, y):
-        client_bot = self.world.add_bot(x, y)
-        self.update_client(client_bot)
-        return client_bot
+    def add_bot(self, x, y, direction=Direction.EAST):
+        bot_id = self.world.add_bot(x, y, direction)
+        result_dict = self.world.fetch(bot_id)
+        bot = Bot(x, y)
+        bot._knowledge.update(result_dict)
+        return bot
 
     def set_direction(self, bot, direction_string):
         self.world.command('turn', bot.id, direction_string)

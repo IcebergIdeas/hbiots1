@@ -9,7 +9,7 @@ class TestVision:
 
     def test_nothing_near(self):
         world = World(10, 10)
-        client_bot = world.add_bot(5, 5)
+        client_bot = DirectConnection(world).add_bot(5, 5)
         real_bot = world.map.at_id(client_bot.id)
         client_bot.direction_change_chance = 0.0
         real_bot.direction_change_chance = 0.0
@@ -25,7 +25,7 @@ class TestVision:
         world.add_block(4, 4)
         world.add_block(6, 6)
         world.add_block(4, 5)
-        world.add_bot(5, 5)
+        DirectConnection(world).add_bot(5, 5)
         vision = world.map.vision_at(Location(5, 5))
         assert ('R', 5, 5) in vision
         assert ('B', 4, 5) in vision

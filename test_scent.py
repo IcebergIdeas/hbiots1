@@ -53,7 +53,7 @@ class TestScent:
     def test_we_get_scent(self):
         world = World(10, 10)
         world.add_block(5, 5)  # comment?
-        client_bot = world.add_bot(4, 6)
+        client_bot = DirectConnection(world).add_bot(4, 6)
         client_bot.direction_change_chance = 0.0
         client_bot.do_something(DirectConnection(world))
         assert client_bot._knowledge._scent == 3
