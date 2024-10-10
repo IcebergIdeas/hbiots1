@@ -136,7 +136,8 @@ if __name__ == "__main__":
     # world.add(Block(world.width, world.height))
 
     game = Game(world)
+    connection = DirectConnection(world)
     for _ in range(20):
-        client_bot =  world.add_bot(10, 20)
+        client_bot =  connection.add_bot(10, 20)
         game.add_bot(client_bot)
     game.on_execute()
