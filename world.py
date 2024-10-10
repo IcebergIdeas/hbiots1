@@ -1,4 +1,3 @@
-from block import Block
 from direction import Direction
 from map import Map
 from world_entity import WorldEntity
@@ -14,8 +13,8 @@ class World:
 
     def add_block(self, x, y, aroma=0):
         entity = WorldEntity.block(x, y, aroma)
-        returned_client_entity = Block(x, y)
-        return self.add_and_return_client_entity(entity, returned_client_entity)
+        self.map.place(entity)
+        return entity.id
 
     def add_bot(self, x, y, direction = Direction.EAST):
         entity = WorldEntity.bot(x, y, direction)

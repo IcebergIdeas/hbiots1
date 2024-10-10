@@ -1,5 +1,6 @@
 import pytest
 
+from block import Block
 from direct_connection import DirectConnection
 from direction import Direction
 from location import Location
@@ -46,8 +47,10 @@ class TestConnection:
         client_bot = connection.add_bot(5, 5)
         bot_id = client_bot.id
         world_bot = world.map.at_id(bot_id)
-        client_block = world.add_block(1, 9)
-        world_block = world.map.at_id(client_block.id)
+        block_id = world.add_block(1, 9)
+        client_block = Block(1, 9)
+        client_block.id = block_id
+        world_block = world.map.at_id(block_id)
         world_bot.receive(world_block)
         assert len(world.map.contents.keys()) == 2
         connection.drop(client_bot, client_block)
