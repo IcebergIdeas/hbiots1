@@ -29,6 +29,6 @@ class DirectConnection:
         self.world.command('take', client_bot.id)
         self.update_client(client_bot)
 
-    def drop(self, client_bot, block):
-        self.world.command('drop', client_bot.id, block.id)
+    def drop(self, client_bot, block_id):
+        self.world.command('drop', client_bot.id, block_id)
         self.update_client(client_bot)

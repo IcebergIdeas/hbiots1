@@ -19,6 +19,7 @@ class TestWorldEntity:
         assert entity.kind == EntityKind.BOT
 
     def test_set_and_fetch(self):
+        # not much of a test really
         entity = WorldEntity.bot(0, 0, Direction.EAST)
         assert entity.direction == Direction.EAST
         entity.location = Location(6, 4)
@@ -31,7 +32,13 @@ class TestWorldEntity:
         entity.vision = []
         assert entity.vision == []
         assert self.is_valid(entity)
-        assert entity.as_dictionary() is entity._dict
+        fetched = entity.as_dictionary()
+        assert fetched['eid'] == entity.id
+        assert fetched['direction'] == Direction.EAST
+        assert fetched['held_entity'] == block.id
+        assert fetched['location'] == Location(6, 4)
+        assert fetched['scent'] == 37
+        assert fetched['vision'] == []
 
     def test_create_block(self):
         entity = WorldEntity.block(0, 0, 0)

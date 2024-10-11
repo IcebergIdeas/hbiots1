@@ -1,5 +1,3 @@
-import pytest
-
 from block import Block
 from direct_connection import DirectConnection
 from direction import Direction
@@ -53,7 +51,7 @@ class TestConnection:
         world_block = world.map.at_id(block_id)
         world_bot.receive(world_block)
         assert len(world.map.contents.keys()) == 2
-        connection.drop(client_bot, client_block)
+        connection.drop(client_bot, client_block.id)
         assert len(world.map.contents.keys()) == 2
         assert not world_bot.has(world_block)
         assert not world.is_empty(Location(6, 5))
@@ -64,7 +62,7 @@ class TestConnection:
         bot = connection.add_bot(5, 5)
         assert bot.location == Location(5, 5)
 
-    @pytest.mark.skip("must be made to run before we're split")
+    # @pytest.mark.skip("must be made to run before we're split")
     def test_connection_does_not_hold_world_entity(self):
         world = World(10, 10)
         bot_id = world.add_bot(5, 5)

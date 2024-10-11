@@ -18,8 +18,9 @@ class Knowledge:
         self._energy = self.energy_threshold
 
     def as_dictionary(self):
+        held = 0 if not self._held_entity else self._held_entity.id
         return {'direction': self._direction,
-                'held_entity': self._held_entity,
+                'held_entity': held,
                 'id': self._id,
                 'location': self._location,
                 'scent': self._scent,
@@ -83,7 +84,7 @@ class Knowledge:
 
     @property
     def has_block(self):
-        return self._held_entity and self._held_entity.name == 'B'
+        return self._held_entity  # and self._held_entity.name == 'B'
 
     @property
     def can_take(self):

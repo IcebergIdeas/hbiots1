@@ -171,9 +171,25 @@ class TestBot:
 
     def test_bot_cannot_drop_off_world_west(self):
         world = World(10, 10)
-        bot = DirectConnection(world).add_bot(0, 5)
-        block = Block(4, 4)
-        bot.receive(block)
-        bot.direction = Direction.WEST
-        world.drop_forward(bot, block)
-        assert bot.has(block), 'drop should not happen'
+        connection = DirectConnection(world)
+        client_bot = connection.add_bot(0, 5)
+        world.add_block(1 , 5)
+        connection.take(client_bot)
+        assert client_bot.has_block()
+        connection.set_direction(client_bot, 'WEST')
+        connection.drop(client_bot, client_bot.holding)
+        assert client_bot.has_block(), 'drop should not happen'
+
+    def test_bot_drops_and_world_receives(self):
+        world = World(10, 10)
+        connection = DirectConnection(world)
+        client_bot = connection.add_bot(5, 5)
+        world.add_block(6, 5)
+        block = world.map.at_xy(6, 5)
+        assert isinstance(block, WorldEntity)
+        connection.take(client_bot)
+        assert client_bot.has_block()
+        assert not world.map.at_xy(6, 5)
+        connection.drop(client_bot, client_bot.holding)
+        test_block = world.map.at_xy(6, 5)
+        assert isinstance(test_block, WorldEntity)

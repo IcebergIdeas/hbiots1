@@ -102,7 +102,13 @@ class WorldEntity:
         self._dict['held_entity'] = value
 
     def as_dictionary(self):
-        return self._dict
+        held = 0 if not self.holding else self.holding.id
+        return {'direction': self.direction,
+                'held_entity': held,
+                'eid': self.id,
+                'location': self.location,
+                'scent': self.scent,
+                'vision': self.vision}
 
     def forward_location(self):
         return self.location + self.direction
