@@ -144,7 +144,7 @@ class TestBot:
 
     def test_bot_cannot_drop_off_world_north(self):
         world = World(10, 10)
-        bot = DirectConnection(world).add_bot(5, 0)
+        bot: Bot = DirectConnection(world).add_bot(5, 0)
         block = Block(4, 4)
         bot.receive(block)
         bot.direction = Direction.NORTH

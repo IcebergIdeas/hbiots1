@@ -86,3 +86,13 @@ class World:
     def update_client_for_test(self, client_bot):
         result_dict = self.fetch(client_bot.id)
         client_bot._knowledge.update(result_dict)
+
+    def process(self, world_input):
+        from test_world_batch import WorldOutput
+        output = WorldOutput()
+        for request in world_input:
+            requestor_id = request.identifier
+            for operation in request.operations:
+                self.command(operation.action, requestor_id, operation.paraneter)
+            output.append(self.fetch(requestor_id))
+        return WorldOutput()

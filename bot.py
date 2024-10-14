@@ -72,8 +72,8 @@ class Bot:
     def has(self, entity):
         return self._knowledge.has(entity)
 
-    def receive(self, entity):
-        self._knowledge.receive(entity)
+    def receive(self, entity_id: int):
+        self._knowledge.receive(entity_id)
 
     def remove(self, entity):
         self._knowledge.remove(entity)
