@@ -95,4 +95,4 @@ class World:
             for action in request:
                 self.command(action.action, requestor_id, action.parameter)
             output.append(self.fetch(requestor_id))
-        return WorldOutput()
+        return output

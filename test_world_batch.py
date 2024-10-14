@@ -1,6 +1,7 @@
 from collections import namedtuple
 
 from direction import Direction
+from location import Location
 from world import World
 
 EntityAction = namedtuple("EntityAction", "action parameter")
@@ -33,11 +34,14 @@ class WorldInput:
 
 
 class WorldOutput:
+    def __init__(self):
+        self.results = []
+
     def is_empty(self):
-        return True
+        return self.results == []
 
     def append(self, fetch_result):
-        pass
+        self.results.append(fetch_result)
 
 
 class TestWorldBatch:
@@ -58,3 +62,6 @@ class TestWorldBatch:
         batch_in.add_request(request)
         batch_out = world.process(batch_in)
         assert isinstance(batch_out, WorldOutput)
+        # invasive just to see how we did
+        result = batch_out.results[0]
+        assert result['location'] == Location(6, 5)
