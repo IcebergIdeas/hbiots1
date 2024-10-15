@@ -39,7 +39,7 @@ class World:
         elif action == 'turn':
             self.set_direction(world_bot, parameter)
         else:
-            raise Exception('Unknown command')
+            raise Exception(f'Unknown command {action}')
 
     def fetch(self, entity_id):
         return self.map.at_id(entity_id).as_dictionary()

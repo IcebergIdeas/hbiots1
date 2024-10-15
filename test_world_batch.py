@@ -7,12 +7,20 @@ from world import World
 EntityAction = namedtuple("EntityAction", "action parameter")
 
 class EntityRequest:
-    def __init__(self, entity_identifier):
+    def __init__(self, entity_identifier, world_input=None):
+        self.world_input = world_input
         self.entity_identifier = entity_identifier
         self.actions = []
 
     def add_action(self, action: EntityAction):
         self.actions.append(action)
+
+    def action(self, action_word, parameter=None):
+        self.add_action(EntityAction(action_word, parameter))
+        return self
+
+    def finish(self):
+        return self.world_input
 
     @property
     def identifier(self):
@@ -32,6 +40,10 @@ class WorldInput:
     def add_request(self, request: EntityRequest):
         self.requests.append(request)
 
+    def request(self, identifier):
+        rq = EntityRequest(identifier, self)
+        self.add_request(rq)
+        return rq
 
 class WorldOutput:
     def __init__(self):
@@ -81,6 +93,44 @@ class TestWorldBatch:
         batch_out = world.process(batch_in)
         result = batch_out.results[0]
         assert result['location'] == Location(5, 7)
+        item = world.map.at_xy(5, 8)
+        assert item.id == block_id
+
+    def test_imaginary_syntax(self):
+        world = World(10, 10)
+        block_id = world.add_block(6, 5)
+        batch_in = WorldInput() \
+          .request(world.add_bot(5, 5)) \
+              .action('take') \
+              .action('turn','SOUTH') \
+              .action('step') \
+              .action('step') \
+              .action('drop', block_id) \
+              .finish() \
+          .request(world.add_bot(7, 7)) \
+              .action('step') \
+              .action('step') \
+              .finish()
+
+    def test_new_syntax(self):
+        world = World(10, 10)
+        block_id = world.add_block(6, 5)
+        batch_in = WorldInput() \
+            .request(world.add_bot(5, 5, direction=Direction.EAST)) \
+                .action('take', None) \
+                .action('turn', 'SOUTH') \
+                .action('step', None) \
+                .action('step', None) \
+                .action('drop', block_id) \
+                .finish() \
+            .request(world.add_bot(7, 7)) \
+                .action('step') \
+                .finish()
+        batch_out = world.process(batch_in)
+        result = batch_out.results[0]
+        assert result['location'] == Location(5, 7)
+        result = batch_out.results[1]
+        assert result['location'] == Location(8, 7)
         item = world.map.at_xy(5, 8)
         assert item.id == block_id
 
