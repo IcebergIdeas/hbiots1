@@ -2,6 +2,7 @@ from collections import namedtuple
 
 from direction import Direction
 from location import Location
+from test_world_input_factory import InputBuilder
 from world import World
 
 EntityAction = namedtuple("EntityAction", "action parameter")
@@ -14,13 +15,6 @@ class EntityRequest:
 
     def add_action(self, action: EntityAction):
         self.actions.append(action)
-
-    def action(self, action_word, parameter=None):
-        self.add_action(EntityAction(action_word, parameter))
-        return self
-
-    def finish(self):
-        return self.world_input
 
     @property
     def identifier(self):
@@ -39,11 +33,6 @@ class WorldInput:
 
     def add_request(self, request: EntityRequest):
         self.requests.append(request)
-
-    def request(self, identifier):
-        rq = EntityRequest(identifier, self)
-        self.add_request(rq)
-        return rq
 
 class WorldOutput:
     def __init__(self):
@@ -99,33 +88,31 @@ class TestWorldBatch:
     def test_imaginary_syntax(self):
         world = World(10, 10)
         block_id = world.add_block(6, 5)
-        batch_in = WorldInput() \
-          .request(world.add_bot(5, 5)) \
-              .action('take') \
-              .action('turn','SOUTH') \
-              .action('step') \
-              .action('step') \
-              .action('drop', block_id) \
-              .finish() \
-          .request(world.add_bot(7, 7)) \
-              .action('step') \
-              .action('step') \
-              .finish()
+        batch_in = InputBuilder(world) \
+            .request(world.add_bot(5, 5)) \
+                .action('take') \
+                .action('turn','SOUTH') \
+                .action('step') \
+                .action('step') \
+                .action('drop', block_id) \
+            .request(world.add_bot(7, 7)) \
+                .action('step') \
+                .action('step') \
+            .result()
 
     def test_new_syntax(self):
         world = World(10, 10)
         block_id = world.add_block(6, 5)
-        batch_in = WorldInput() \
+        batch_in = InputBuilder(world) \
             .request(world.add_bot(5, 5, direction=Direction.EAST)) \
                 .action('take', None) \
                 .action('turn', 'SOUTH') \
                 .action('step', None) \
                 .action('step', None) \
                 .action('drop', block_id) \
-                .finish() \
             .request(world.add_bot(7, 7)) \
                 .action('step') \
-                .finish()
+            .result()
         batch_out = world.process(batch_in)
         result = batch_out.results[0]
         assert result['location'] == Location(5, 7)
