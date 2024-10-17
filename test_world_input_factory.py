@@ -39,4 +39,4 @@ class TestWorldInputFactory:
                 .action('step') \
                 .action('step') \
             .result()
-        assert len(world_input.requests) == 2
+        assert len(world_input._requests) == 2

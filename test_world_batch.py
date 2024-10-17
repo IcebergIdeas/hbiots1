@@ -9,30 +9,30 @@ EntityAction = namedtuple("EntityAction", "action parameter")
 
 class EntityRequest:
     def __init__(self, entity_identifier, world_input=None):
-        self.world_input = world_input
-        self.entity_identifier = entity_identifier
-        self.actions = []
+        self._world_input = world_input
+        self._entity_identifier = entity_identifier
+        self._actions = []
 
     def add_action(self, action: EntityAction):
-        self.actions.append(action)
+        self._actions.append(action)
 
     @property
     def identifier(self):
-        return self.entity_identifier
+        return self._entity_identifier
 
     def __iter__(self):
-        return iter(self.actions)
+        return iter(self._actions)
 
 
 class WorldInput:
     def __init__(self):
-        self.requests = []
+        self._requests = []
 
     def __iter__(self):
-        return iter(self.requests)
+        return iter(self._requests)
 
     def add_request(self, request: EntityRequest):
-        self.requests.append(request)
+        self._requests.append(request)
 
 class WorldOutput:
     def __init__(self):
