@@ -104,7 +104,6 @@ class Bot:
                     assert 0, f'no case {action}'
 
     def update_for_state_machine(self):
-        self._knowledge.gain_energy()
         if self.location == self._old_location:
             return self.change_direction()
         else:

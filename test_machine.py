@@ -81,6 +81,15 @@ class TestMachine:
         knowledge = FakeKnowledge()
         assert state.action(knowledge) == []
 
+    def test_can_walk_off_loss_of_energy(self):
+        state = Walking()
+        knowledge = FakeKnowledge(energy=0, has_block=False)
+        for _ in range(Knowledge.energy_threshold-1):
+            new_state = state.update(knowledge)
+            assert isinstance(new_state, Walking)
+        new_state = state.update(knowledge)
+        assert isinstance(new_state, Looking)
+
     def test_walking_tired_without_block_keeps_walking(self):
         state = Walking()
         knowledge = FakeKnowledge(energy=0, has_block=False)

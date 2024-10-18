@@ -4,6 +4,7 @@ class Walking:
         return []
 
     def update(self, knowledge):
+        knowledge.gain_energy()
         if knowledge.has_energy():
             if knowledge.has_block:
                 return Laden()
