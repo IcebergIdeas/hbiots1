@@ -26,7 +26,6 @@ class Looking:
             return Looking()
 
 
-
 class Laden:
     def action(self, knowledge):
         if knowledge.has_energy():
@@ -35,9 +34,9 @@ class Laden:
         return []
 
     def update(self, knowledge):
-        if not knowledge.has_block:
+        if knowledge.has_block:
+            return Laden()
+        else:
             knowledge.use_energy()
             return Walking()
-        else:
-            return Laden()
 
