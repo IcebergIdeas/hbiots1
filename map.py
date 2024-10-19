@@ -1,6 +1,7 @@
 from direction import Direction
 from location import Location
-from map_entity import MapEntity
+from map_test_entity import MapTestEntity
+from world_entity import WorldEntity
 
 
 class Map:
@@ -31,16 +32,16 @@ class Map:
             return False
 
     def place(self, entity):
-        # assert isinstance(entity, WorldEntity)
+        assert isinstance(entity, WorldEntity)
         self.contents[entity.id] = entity
 
-    def map_is_OK(self, other: [MapEntity]):
+    def map_is_OK(self, other: [MapTestEntity]):
         other_entities = other.get_entities()
         if not self.check_all_other_entities_are_valid(other_entities):
             return False
         return len(self.contents) == len(other_entities)
 
-    def check_all_other_entities_are_valid(self, other_contents: [MapEntity]):
+    def check_all_other_entities_are_valid(self, other_contents: [MapTestEntity]):
         other_entities_are_all_valid = True
         for map_entity in other_contents:
             if self.at_xy(map_entity.x, map_entity.y).name != map_entity.name:
