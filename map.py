@@ -31,6 +31,7 @@ class Map:
             return False
 
     def place(self, entity):
+        # assert isinstance(entity, WorldEntity)
         self.contents[entity.id] = entity
 
     def map_is_OK(self, other: [MapEntity]):

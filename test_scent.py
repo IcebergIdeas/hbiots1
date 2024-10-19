@@ -1,4 +1,3 @@
-from bot import Bot
 from direct_connection import DirectConnection
 from location import Location
 from map import Map
@@ -41,13 +40,12 @@ class TestScent:
         assert scent ==  40
 
     def test_bots_dont_smell(self):
-        map = Map(10, 10)
-        for x in range(11):
-            for y in range(11):
-                block = Bot(x, y)
-                block.id = 11*x + y
-                map.place(block)
-        scent = map.scent_at(Location(5, 5), 0)
+        world = World(10, 10)
+        world.add_bot(5, 5)
+        bot_entity = world.map.at_xy(5, 5)
+        bot_entity.aroma = 5
+        map = world.map
+        scent = map.scent_at(Location(5, 5), 5)
         assert scent ==  0
 
     def test_we_get_scent(self):
