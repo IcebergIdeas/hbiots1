@@ -46,15 +46,6 @@ class Knowledge:
     def id(self, id):
         self._id = id
 
-    def has_energy(self):
-        return self._energy >= self.energy_threshold
-
-    def use_energy(self):
-        self._energy = 0
-
-    def gain_energy(self):
-        self._energy += 1
-
     @property
     def vision(self) -> Vision:
         return self._vision
@@ -79,9 +70,6 @@ class Knowledge:
     def location(self, location):
         self._location = location
 
-    def has(self, entity):
-        return entity == self._held_entity
-
     @property
     def has_block(self):
         return self._held_entity  # and self._held_entity.name == 'B'
@@ -96,6 +84,18 @@ class Knowledge:
         vision_ok = self.vision.match_forward_and_one_side('_', 'B')
         scent_ok = self._scent >= self.drop_threshold
         return vision_ok and scent_ok
+
+    def has(self, entity):
+        return entity == self._held_entity
+
+    def has_energy(self):
+        return self._energy >= self.energy_threshold
+
+    def use_energy(self):
+        self._energy = 0
+
+    def gain_energy(self):
+        self._energy += 1
 
     def receive(self, entity):
         self._held_entity = entity
