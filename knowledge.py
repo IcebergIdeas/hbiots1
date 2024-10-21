@@ -17,15 +17,6 @@ class Knowledge:
         # local Bot client-side info
         self._energy = self.energy_threshold
 
-    def as_dictionary(self):
-        held = 0 if not self._held_entity else self._held_entity.id
-        return {'direction': self._direction,
-                'held_entity': held,
-                'id': self._id,
-                'location': self._location,
-                'scent': self._scent,
-                'vision': self._vision}
-
     def update(self, update_dictionary):
         self.direction = update_dictionary['direction']
         self.receive(update_dictionary['held_entity'])
