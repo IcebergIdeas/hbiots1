@@ -57,7 +57,7 @@ Direction.NORTH_WEST = Direction(-1, -1)
 Direction.NORTH_EAST = Direction(1, -1)
 Direction.SOUTH_WEST = Direction(-1, 1)
 Direction.SOUTH_EAST = Direction(1, 1)
-Direction.ALL = [Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST]
-Direction.EVERY = [Direction.NORTH_WEST, Direction.NORTH, Direction.NORTH_EAST,
+Direction.ALL = (Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST)
+Direction.EVERY = (Direction.NORTH_WEST, Direction.NORTH, Direction.NORTH_EAST,
                    Direction.WEST, Direction.CENTER, Direction.EAST,
-                   Direction.SOUTH_WEST, Direction.SOUTH, Direction.SOUTH_EAST]
+                   Direction.SOUTH_WEST, Direction.SOUTH, Direction.SOUTH_EAST)
