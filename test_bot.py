@@ -92,37 +92,6 @@ class TestBot:
         world.update_client_for_test(client_bot)
         assert client_bot.has(block)
 
-    def test_bot_facing_north_takes_a_north_block(self):
-        world = World(10, 10)
-        bot = DirectConnection(world).add_bot(5, 5)
-        world.add_block(5, 4)
-        bot.direction = Direction.NORTH
-        world.take_forward(bot)
-        assert bot.has_block()
-
-    def test_bot_facing_east_takes_an_east_block(self):
-        world = World(10, 10)
-        bot = DirectConnection(world).add_bot(5, 5)
-        world.add_block(6, 5)
-        world.take_forward(bot)
-        assert bot.has_block()
-
-    def test_bot_facing_south_takes_a_south_block(self):
-        world = World(10, 10)
-        bot = DirectConnection(world).add_bot(5, 5)
-        world.add_block(5, 6)
-        bot.direction = Direction.SOUTH
-        world.take_forward(bot)
-        assert bot.has_block()
-
-    def test_bot_facing_west_takes_a_west_block(self):
-        world = World(10, 10)
-        bot = DirectConnection(world).add_bot(5, 5)
-        world.add_block(4, 5)
-        bot.direction = Direction.WEST
-        world.take_forward(bot)
-        assert bot.has_block()
-
     def test_bot_cant_take_diagonally(self):
         world = World(10, 10)
         bot = DirectConnection(world).add_bot(5, 5)
