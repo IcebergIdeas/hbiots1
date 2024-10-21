@@ -10,8 +10,8 @@ class Knowledge:
         # world write / client read only
         self.direction = direction
         self._held_entity = None
-        self._id = None
-        self._location = location
+        self.id = None
+        self.location = location
         self._scent = 0
         self._vision = Vision([], self.location, self.direction)
         # local Bot client-side info
@@ -30,28 +30,12 @@ class Knowledge:
         return self._held_entity
 
     @property
-    def id(self):
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        self._id = id
-
-    @property
     def vision(self) -> Vision:
         return self._vision
 
     @vision.setter
     def vision(self, vision_list):
         self._vision = Vision(vision_list, self.location, self.direction)
-
-    @property
-    def location(self):
-        return self._location
-
-    @location.setter
-    def location(self, location):
-        self._location = location
 
     @property
     def has_block(self):
