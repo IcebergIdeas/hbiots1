@@ -1,3 +1,6 @@
+from random import choice
+
+from direction import Direction
 from vision import Vision
 
 
@@ -58,6 +61,10 @@ class Knowledge:
     def has_energy(self):
         return self._energy >= self.energy_threshold
 
+    def new_direction(self):
+        possibles = [d for d in Direction.ALL if d != self.direction]
+        return choice(possibles)
+
     def use_energy(self):
         self._energy = 0
 
@@ -70,4 +77,3 @@ class Knowledge:
     def remove(self, entity):
         if self._held_entity == entity:
             self._held_entity = None
-

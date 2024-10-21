@@ -111,10 +111,7 @@ class Bot:
         return self.vision.match_forward_and_one_side('_', 'B')
 
     def change_direction(self):
-        direction = self.direction
-        while direction == self.direction:
-            direction = random.choice(Direction.ALL)
-        return [direction.name()]
+        return [self._knowledge.new_direction().name()]
 
     def forward_location(self):
         return self.location + self.direction

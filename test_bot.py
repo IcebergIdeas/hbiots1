@@ -94,10 +94,11 @@ class TestBot:
 
     def test_take_a_block(self):
         world = World(10, 10)
-        client_bot = DirectConnection(world).add_bot(5, 5)
+        connection = DirectConnection(world)
+        client_bot = connection.add_bot(5, 5)
         world.add_block(6, 5)
         assert not world.is_empty(Location(6, 5))
-        world.take_forward(client_bot)
+        connection.take(client_bot)
         assert client_bot.has_block()
         assert world.is_empty(Location(6, 5))
 
