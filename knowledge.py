@@ -8,7 +8,7 @@ class Knowledge:
 
     def __init__(self, location, direction):
         # world write / client read only
-        self._direction = direction
+        self.direction = direction
         self._held_entity = None
         self._id = None
         self._location = location
@@ -44,14 +44,6 @@ class Knowledge:
     @vision.setter
     def vision(self, vision_list):
         self._vision = Vision(vision_list, self.location, self.direction)
-
-    @property
-    def direction(self):
-        return self._direction
-
-    @direction.setter
-    def direction(self, direction):
-        self._direction = direction
 
     @property
     def location(self):
