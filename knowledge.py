@@ -9,9 +9,9 @@ class Knowledge:
     def __init__(self, location, direction):
         # world write / client read only
         self.direction = direction
-        self._held_entity = None
         self.id = None
         self.location = location
+        self._held_entity = None
         self._scent = 0
         self._vision = Vision([], self.location, self.direction)
         # local Bot client-side info
@@ -19,15 +19,11 @@ class Knowledge:
 
     def update(self, update_dictionary):
         self.direction = update_dictionary['direction']
-        self.receive(update_dictionary['held_entity'])
         self.id = update_dictionary['eid']
         self.location = update_dictionary['location']
+        self.receive(update_dictionary['held_entity'])
         self._scent = update_dictionary['scent']
         self.vision = update_dictionary['vision']
-
-    @property
-    def holding(self):
-        return self._held_entity
 
     @property
     def vision(self) -> Vision:
@@ -36,6 +32,10 @@ class Knowledge:
     @vision.setter
     def vision(self, vision_list):
         self._vision = Vision(vision_list, self.location, self.direction)
+
+    @property
+    def holding(self):
+        return self._held_entity
 
     @property
     def has_block(self):
