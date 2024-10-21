@@ -21,7 +21,7 @@ class Direction:
         return self.x == other.x and self.y == other.y
 
     def __repr__(self):
-        return f'({self.x}, {self.y})'
+        return f'Direction({self.x}, {self.y})'
 
     def left(self):
         x, y = self.x, self.y
