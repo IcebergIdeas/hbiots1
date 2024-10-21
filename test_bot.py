@@ -92,16 +92,6 @@ class TestBot:
         world.update_client_for_test(client_bot)
         assert client_bot.has(block)
 
-    def test_take_a_block(self):
-        world = World(10, 10)
-        connection = DirectConnection(world)
-        client_bot = connection.add_bot(5, 5)
-        world.add_block(6, 5)
-        assert not world.is_empty(Location(6, 5))
-        connection.take(client_bot)
-        assert client_bot.has_block()
-        assert world.is_empty(Location(6, 5))
-
     def test_bot_facing_north_takes_a_north_block(self):
         world = World(10, 10)
         bot = DirectConnection(world).add_bot(5, 5)

@@ -28,21 +28,24 @@ class World:
         return returned_client_entity
 
     def command(self, action, bot_id, parameter=None):
-        world_bot = self.map.at_id(bot_id)
+        world_bot = self.entity_from_id(bot_id)
         if action == 'step':
             self.step(world_bot)
         elif action == 'take':
             self.take_forward(world_bot)
         elif action == 'drop':
-            block = self.map.at_id(parameter)
+            block = self.entity_from_id(parameter)
             self.drop_forward(world_bot, block)
         elif action == 'turn':
             self.set_direction(world_bot, parameter)
         else:
             raise Exception(f'Unknown command {action}')
 
+    def entity_from_id(self, bot_id):
+        return self.map.at_id(bot_id)
+
     def fetch(self, entity_id):
-        return self.map.at_id(entity_id).as_dictionary()
+        return self.entity_from_id(entity_id).as_dictionary()
 
     def set_direction(self, world_bot, direction_name):
         match direction_name:
