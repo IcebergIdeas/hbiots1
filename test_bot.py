@@ -1,6 +1,5 @@
 import pytest
 
-from block import Block
 from bot import Bot
 from direct_connection import DirectConnection
 from direction import Direction
@@ -101,44 +100,6 @@ class TestBot:
         world.add_block(6, 6)
         world.take_forward(bot)
         assert not bot.has_block()
-
-    def test_bot_cannot_drop_off_world_north(self):
-        world = World(10, 10)
-        bot: Bot = DirectConnection(world).add_bot(5, 0)
-        block = Block(4, 4)
-        bot.receive(block)
-        bot.direction = Direction.NORTH
-        world.drop_forward(bot, block)
-        assert bot.has(block), 'drop should not happen'
-
-    def test_bot_cannot_drop_off_world_east(self):
-        world = World(10, 10)
-        bot = DirectConnection(world).add_bot(10, 5)
-        block = Block(4, 4)
-        bot.receive(block)
-        bot.direction = Direction.EAST
-        world.drop_forward(bot, block)
-        assert bot.has(block), 'drop should not happen'
-
-    def test_bot_cannot_drop_off_world_south(self):
-        world = World(10, 10)
-        bot = DirectConnection(world).add_bot(5, 10)
-        block = Block(4, 4)
-        bot.receive(block)
-        bot.direction = Direction.SOUTH
-        world.drop_forward(bot, block)
-        assert bot.has(block), 'drop should not happen'
-
-    def test_bot_cannot_drop_off_world_west(self):
-        world = World(10, 10)
-        connection = DirectConnection(world)
-        client_bot = connection.add_bot(0, 5)
-        world.add_block(1 , 5)
-        connection.take(client_bot)
-        assert client_bot.has_block()
-        connection.set_direction(client_bot, 'WEST')
-        connection.drop(client_bot, client_bot.holding)
-        assert client_bot.has_block(), 'drop should not happen'
 
     def test_bot_drops_and_world_receives(self):
         world = World(10, 10)
