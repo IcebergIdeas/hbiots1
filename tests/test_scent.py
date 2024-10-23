@@ -1,8 +1,8 @@
-from direct_connection import DirectConnection
-from location import Location
-from map import Map
-from world import World
-from world_entity import WorldEntity
+from server.map import Map
+from server.world import World
+from server.world_entity import WorldEntity
+from shared.direct_connection import DirectConnection
+from shared.location import Location
 
 
 class TestScent:

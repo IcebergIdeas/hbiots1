@@ -1,7 +1,7 @@
-from direction import Direction
-from location import Location
-from map_test_entity import MapTestEntity
-from world_entity import WorldEntity
+from server.map_test_entity import MapTestEntity
+from server.world_entity import WorldEntity
+from shared.direction import Direction
+from shared.location import Location
 
 
 class Map:

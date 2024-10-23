@@ -1,5 +1,5 @@
-from bot import Bot
-from direction import Direction
+from client.bot import Bot
+from shared.direction import Direction
 
 
 class DirectConnection:

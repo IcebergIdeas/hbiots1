@@ -1,6 +1,6 @@
 import pytest
 
-from direction import Direction
+from shared.direction import Direction
 
 
 class TestDirection:

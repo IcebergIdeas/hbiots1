@@ -1,4 +1,4 @@
-from world import World
+from server.world import World
 
 
 class InputBuilder:

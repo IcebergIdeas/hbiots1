@@ -1,8 +1,8 @@
-from bot import Bot
-from direction import Direction
-from knowledge import Knowledge
-from location import Location
-from world_entity import WorldEntity
+from client.bot import Bot
+from client.knowledge import Knowledge
+from server.world_entity import WorldEntity
+from shared.direction import Direction
+from shared.location import Location
 
 
 class TestKnowledge:

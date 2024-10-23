@@ -1,8 +1,8 @@
 import random
 
-from direction import Direction
-from entity_kind import EntityKind
-from location import Location
+from server.entity_kind import EntityKind
+from shared.direction import Direction
+from shared.location import Location
 
 
 class WorldEntity:

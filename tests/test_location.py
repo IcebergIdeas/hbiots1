@@ -1,5 +1,5 @@
-from direction import Direction
-from location import Location
+from shared.direction import Direction
+from shared.location import Location
 
 
 class TestLocation:

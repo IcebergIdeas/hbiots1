@@ -1,5 +1,5 @@
-from knowledge import Knowledge
-from machine import Looking, Laden, Walking
+from client.knowledge import Knowledge
+from client.machine import Looking, Laden, Walking
 
 
 class FakeKnowledge():

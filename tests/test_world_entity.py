@@ -1,7 +1,7 @@
-from direction import Direction
-from entity_kind import EntityKind
-from location import Location
-from world_entity import WorldEntity
+from server.entity_kind import EntityKind
+from server.world_entity import WorldEntity
+from shared.direction import Direction
+from shared.location import Location
 
 
 class TestWorldEntity:

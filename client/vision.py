@@ -1,7 +1,4 @@
-from typing import Union
-
-from direction import Direction
-from location import Location
+from shared.location import Location
 
 
 class Vision:

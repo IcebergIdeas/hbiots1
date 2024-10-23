@@ -2,9 +2,9 @@ import random
 
 import pygame
 
-from constants import MAGENTA, DARK_GREY, BASE_FONT, WHITE, BLACK, RED, GREEN, BLUE, GRID_LINE
-from direct_connection import DirectConnection
-from world import World
+from server.world import World
+from shared.constants import MAGENTA, DARK_GREY, BASE_FONT, WHITE, BLACK, RED, GREEN, BLUE, GRID_LINE
+from shared.direct_connection import DirectConnection
 
 
 class Game:

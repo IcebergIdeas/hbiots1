@@ -1,7 +1,7 @@
 from random import choice
 
-from direction import Direction
-from vision import Vision
+from client.vision import Vision
+from shared.direction import Direction
 
 
 class Knowledge:

@@ -1,9 +1,9 @@
 import random
 
-from direction import Direction
-from knowledge import Knowledge
-from location import Location
-from machine import Walking
+from client.knowledge import Knowledge
+from client.machine import Walking
+from shared.direction import Direction
+from shared.location import Location
 
 
 class Bot:

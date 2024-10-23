@@ -1,13 +1,13 @@
 import pytest
 
-from bot import Bot
-from direct_connection import DirectConnection
-from direction import Direction
-from knowledge import Knowledge
-from location import Location
-from machine import Looking
-from world import World
-from world_entity import WorldEntity
+from client.bot import Bot
+from client.knowledge import Knowledge
+from client.machine import Looking
+from server.world import World
+from server.world_entity import WorldEntity
+from shared.direct_connection import DirectConnection
+from shared.direction import Direction
+from shared.location import Location
 
 
 class TestBot:

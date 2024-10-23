@@ -1,6 +1,6 @@
-from direct_connection import DirectConnection
-from location import Location
-from world import World
+from server.world import World
+from shared.direct_connection import DirectConnection
+from shared.location import Location
 
 
 class TestVision:
