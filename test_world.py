@@ -56,3 +56,36 @@ class TestWorld:
         bot.receive(block)
         world.drop_forward(bot, block)
         assert bot.has(block), 'drop should not happen'
+
+    def test_bot_can_drop_on_empty_space(self):
+        world = World(10, 10)
+        bot_id = world.add_bot(5, 5, Direction.NORTH)
+        bot = world.entity_from_id(bot_id)
+        block = WorldEntity.block(4, 4)
+        bot.receive(block)
+        assert bot.has(block)
+        world.drop_forward(bot, block)
+        assert not bot.has(block)
+        assert world.map.at_xy(5, 4) is block
+
+    def test_bot_cannot_drop_on_used_space(self):
+        world = World(10, 10)
+        bot_id = world.add_bot(5, 5, Direction.NORTH)
+        bot = world.entity_from_id(bot_id)
+        blocker_id = world.add_bot(5, 4)
+        blocker = world.entity_from_id(blocker_id)
+        block = WorldEntity.block(4, 4)
+        bot.receive(block)
+        assert bot.has(block)
+        world.drop_forward(bot, block)
+        assert bot.has(block)
+        assert world.map.at_xy(5, 4) is blocker
+
+    def test_remove_does_not_forget(self):
+        world = World(10, 10)
+        block_id = world.add_block(5, 5)
+        block = world.entity_from_id(block_id)
+        assert world.map.at_xy(5, 5) is block
+        world.map.remove(block_id)
+        assert world.map.at_xy(5, 5) is None
+        assert world.map.at_id(block_id) is block
