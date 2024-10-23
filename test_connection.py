@@ -44,7 +44,6 @@ class TestConnection:
         bot = connection.add_bot(5, 5)
         assert bot.location == Location(5, 5)
 
-    # @pytest.mark.skip("must be made to run before we're split")
     def test_connection_does_not_hold_world_entity(self):
         world = World(10, 10)
         bot_id = world.add_bot(5, 5)
