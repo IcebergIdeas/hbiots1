@@ -1,8 +1,8 @@
-from block import Block
 from bot import Bot
 from direction import Direction
 from knowledge import Knowledge
 from location import Location
+from world_entity import WorldEntity
 
 
 class TestKnowledge:
@@ -37,7 +37,7 @@ class TestKnowledge:
     def test_has_block(self):
         knowledge = Knowledge(None, None)
         assert not knowledge.has_block
-        block = Block(3, 3)
+        block = WorldEntity.block(3, 3)
         knowledge.receive(block)
         assert knowledge.has_block
         knowledge.remove(block)
@@ -45,7 +45,7 @@ class TestKnowledge:
 
     def test_bot_uses_knowledge_inventory(self):
         bot = Bot(5, 5)
-        block = Block(3, 3)
+        block = WorldEntity.block(3, 3)
         bot.receive(block)
         assert bot._knowledge.has_block
 
