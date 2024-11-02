@@ -1,3 +1,4 @@
+from client.bot import Cohort
 from server.world import World
 from server.world_entity import WorldEntity
 from shared.direct_connection import DirectConnection
@@ -14,7 +15,7 @@ class TestConnection:
         world = World(20, 20)
         connection = DirectConnection(world)
         bot = connection.add_bot(10, 10)
-        connection.step(bot)
+        connection.step(Cohort(bot), bot.id)
         assert bot.location == Location(11, 10)
         assert world.map.at_xy(11, 10).id == bot.id
 
@@ -23,7 +24,7 @@ class TestConnection:
         connection = DirectConnection(world)
         client_bot = connection.add_bot(5, 5, Direction.NORTH)
         location = client_bot.location
-        connection.step(client_bot)
+        connection.step(Cohort(client_bot), client_bot.id)
         assert client_bot.location == location + Direction.NORTH
 
     def test_take_a_block(self):
