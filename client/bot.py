@@ -6,6 +6,14 @@ from shared.direction import Direction
 from shared.location import Location
 
 
+class Cohort:
+    def __init__(self, bot):
+        self._bot = bot
+
+    def update(self, result_dict):
+        self._bot._knowledge.update(result_dict)
+
+
 class Bot:
     def __init__(self, x, y, direction=Direction.EAST):
         self.name = 'R'
@@ -86,7 +94,8 @@ class Bot:
                     connection.drop(self, self.holding)
                 case 'step':
                     self._old_location = self.location
-                    connection.step(self)
+                    cohort = Cohort(self)
+                    connection.new_step(cohort, self.id)
                 case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
                     connection.set_direction(self, action)
                 case _:

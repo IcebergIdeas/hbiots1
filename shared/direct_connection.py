@@ -25,6 +25,11 @@ class DirectConnection:
         self.world.command('step', client_bot.id)
         self.update_client(client_bot)
 
+    def new_step(self, cohort, client_bot_id):
+        self.world.command('step', client_bot_id)
+        result_dict = self.world.fetch(client_bot_id)
+        cohort.update(result_dict)
+
     def take(self, client_bot):
         self.world.command('take', client_bot.id)
         self.update_client(client_bot)
