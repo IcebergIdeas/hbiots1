@@ -52,7 +52,10 @@ class World:
             self.execute_action(entity, action)
 
     def execute_action(self, entity, action):
-        self.step(entity)
+        verb = action["verb"]
+        match verb:
+            case 'step':
+                self.step(entity)
 
     def fetch(self, entity_id):
         return self.entity_from_id(entity_id).as_dictionary()
