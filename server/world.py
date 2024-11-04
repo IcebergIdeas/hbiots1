@@ -44,6 +44,11 @@ class World:
     def entity_from_id(self, bot_id):
         return self.map.at_id(bot_id)
 
+    def execute(self, request):
+        id = request["entity"]
+        entity = self.entity_from_id(id)
+        self.step(entity)
+
     def fetch(self, entity_id):
         return self.entity_from_id(entity_id).as_dictionary()
 
