@@ -22,11 +22,6 @@ class DirectConnection:
         client_bot._knowledge.update(result_dict)
 
     def step(self, cohort, client_bot_id):
-        self.world.command('step', client_bot_id)
-        result_dict = self.world.fetch(client_bot_id)
-        cohort.update(result_dict)
-
-    def step(self, cohort, client_bot_id):
         rq = dict()
         rq['entity'] = client_bot_id
         step_action = {'verb': 'step'}
