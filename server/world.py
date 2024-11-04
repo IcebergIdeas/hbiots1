@@ -47,6 +47,11 @@ class World:
     def execute(self, request):
         id = request["entity"]
         entity = self.entity_from_id(id)
+        actions = request["actions"]
+        for action in actions:
+            self.execute_action(entity, action)
+
+    def execute_action(self, entity, action):
         self.step(entity)
 
     def fetch(self, entity_id):
