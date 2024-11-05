@@ -56,6 +56,10 @@ class World:
         match verb:
             case 'step':
                 self.step(entity)
+            case 'take':
+                self.take_forward(entity)
+            case _:
+                raise Exception(f'Unknown action {action}')
 
     def fetch(self, entity_id):
         return self.entity_from_id(entity_id).as_dictionary()

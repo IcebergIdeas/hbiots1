@@ -34,7 +34,8 @@ class TestConnection:
         bot_id = client_bot.id
         world.add_block(6, 5)
         assert not world.is_empty(Location(6, 5))
-        connection.take(client_bot)
+        cohort = Cohort(client_bot)
+        connection.take(cohort, client_bot.id)
         world_bot = world.map.at_id(bot_id)
         assert world_bot.has_block()
         assert world.is_empty(Location(6, 5))

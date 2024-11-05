@@ -1,6 +1,6 @@
 import pytest
 
-from client.bot import Bot
+from client.bot import Bot, Cohort
 from client.knowledge import Knowledge
 from client.machine import Looking
 from server.world import World
@@ -108,7 +108,8 @@ class TestBot:
         world.add_block(6, 5)
         block = world.map.at_xy(6, 5)
         assert isinstance(block, WorldEntity)
-        connection.take(client_bot)
+        cohort = Cohort(client_bot)
+        connection.take(cohort, client_bot.id)
         assert client_bot.has_block()
         assert not world.map.at_xy(6, 5)
         connection.drop(client_bot, client_bot.holding)

@@ -89,7 +89,8 @@ class Bot:
         for action in actions:
             match action:
                 case 'take':
-                    connection.take(self)
+                    cohort = Cohort(self)
+                    connection.take(cohort, self.id)
                 case 'drop':
                     connection.drop(self, self.holding)
                 case 'step':
