@@ -39,6 +39,11 @@ class DirectConnection:
         result_dict = self.world.fetch(client_bot_id)
         cohort.update(result_dict)
 
-    def drop(self, client_bot, block_id):
-        self.world.command('drop', client_bot.id, block_id)
-        self.update_client(client_bot)
+    def drop(self, cohort, client_bot_id, holding_id):
+        rq = dict()
+        rq['entity'] = client_bot_id
+        drop_action = {'verb': 'drop', 'param1': holding_id}
+        rq['actions'] = [drop_action,]
+        self.world.execute(rq)
+        result_dict = self.world.fetch(client_bot_id)
+        cohort.update(result_dict)

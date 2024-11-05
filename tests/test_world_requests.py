@@ -50,7 +50,7 @@ class TestWorldRequests:
         rq = {
             'entity': bot_id,
             'actions': [
-                {'verb': 'drop', 'param1': block}
+                {'verb': 'drop', 'param1': block_id}
             ]
         }
         world.execute(rq)

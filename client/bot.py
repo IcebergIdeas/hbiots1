@@ -86,16 +86,16 @@ class Bot:
         self.perform_actions(actions, connection)
 
     def perform_actions(self, actions, connection):
+        cohort = Cohort(self)
         for action in actions:
             match action:
                 case 'take':
-                    cohort = Cohort(self)
                     connection.take(cohort, self.id)
                 case 'drop':
-                    connection.drop(self, self.holding)
+                    # self.holding is an id
+                    connection.drop(cohort, self.id, self.holding)
                 case 'step':
                     self._old_location = self.location
-                    cohort = Cohort(self)
                     connection.step(cohort, self.id)
                 case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
                     connection.set_direction(self, action)

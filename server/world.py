@@ -59,8 +59,9 @@ class World:
             case 'take':
                 self.take_forward(entity)
             case 'drop':
-                param1 = action["param1"]
-                self.drop_forward(entity, param1)
+                holding_id = action["param1"]
+                holding = self.entity_from_id(holding_id)
+                self.drop_forward(entity, holding)
             case _:
                 raise Exception(f'Unknown action {action}')
 
