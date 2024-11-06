@@ -6,13 +6,13 @@ from shared.location import Location
 
 class RequestBuilder:
     def __init__(self):
-        self.requests = []
+        self._requests = []
         self._current_request = None
         self._current_actions = None
 
     def request(self, identifier):
         self._current_request = { 'entity': identifier }
-        self.requests.append(self._current_request)
+        self._requests.append(self._current_request)
         self._current_actions = list()
         self._current_request['actions'] = self._current_actions
         return self
@@ -23,7 +23,7 @@ class RequestBuilder:
         return self
 
     def result(self):
-        return self.requests
+        return self._requests
 
 
 class TestRequestBuilder:
