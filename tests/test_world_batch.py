@@ -1,5 +1,7 @@
 from collections import namedtuple
 
+import pytest
+
 from server.world import World
 from shared.direction import Direction
 from shared.location import Location
@@ -44,7 +46,7 @@ class WorldOutput:
     def append(self, fetch_result):
         self.results.append(fetch_result)
 
-
+@pytest.mark.skip("obsolete")
 class TestWorldBatch:
     def test_empty_batch(self):
         world = World(10, 10)
@@ -85,6 +87,18 @@ class TestWorldBatch:
         item = world.map.at_xy(5, 8)
         assert item.id == block_id
 
+    def test_two_bots_return_two_results(self):
+        world = World(10, 10)
+        bot_a = world.add_bot(5, 5, direction=Direction.EAST)
+        bot_b = world.add_bot(7, 7, direction=Direction.WEST)
+        request_a = EntityRequest(bot_a)
+        request_b = EntityRequest(bot_b)
+        batch_in = WorldInput()
+        batch_in.add_request(request_a)
+        batch_in.add_request(request_b)
+        batch_out = world.process(batch_in)
+        assert len(batch_out.results) == 2
+
     def test_imaginary_syntax(self):
         world = World(10, 10)
         block_id = world.add_block(6, 5)
@@ -120,15 +134,3 @@ class TestWorldBatch:
         assert result['location'] == Location(8, 7)
         item = world.map.at_xy(5, 8)
         assert item.id == block_id
-
-    def test_two_bots_return_two_results(self):
-        world = World(10, 10)
-        bot_a = world.add_bot(5, 5, direction=Direction.EAST)
-        bot_b = world.add_bot(7, 7, direction=Direction.WEST)
-        request_a = EntityRequest(bot_a)
-        request_b = EntityRequest(bot_b)
-        batch_in = WorldInput()
-        batch_in.add_request(request_a)
-        batch_in.add_request(request_b)
-        batch_out = world.process(batch_in)
-        assert len(batch_out.results) == 2

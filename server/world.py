@@ -115,11 +115,9 @@ class World:
         client_bot._knowledge.update(result_dict)
 
     def process(self, world_input):
-        from tests.test_world_batch import WorldOutput
-        output = WorldOutput()
+        output = []
         for request in world_input:
-            requestor_id = request.identifier
-            for action in request:
-                self.command(action.action, requestor_id, action.parameter)
+            requestor_id = request['entity']
+            self.execute(request)
             output.append(self.fetch(requestor_id))
         return output
