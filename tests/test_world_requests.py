@@ -1,4 +1,5 @@
 from server.world import World
+from shared.direction import Direction
 from shared.location import Location
 
 
@@ -55,4 +56,19 @@ class TestWorldRequests:
         }
         world.execute(rq)
         assert world.map.at_xy(6, 5) == block
+
+    def test_bot_turns(self):
+        world = World(10, 10)
+        bot_id = world.add_bot(5, 5)
+        bot = world.entity_from_id(bot_id)
+        assert bot.direction == Direction.EAST
+        rq = {
+            'entity': bot_id,
+            'actions': [
+                {'verb': 'turn', 'param1': 'NORTH'}
+            ]
+        }
+        world.execute(rq)
+        assert bot.direction == Direction.NORTH
+
 

@@ -62,6 +62,9 @@ class World:
                 holding_id = action["param1"]
                 holding = self.entity_from_id(holding_id)
                 self.drop_forward(entity, holding)
+            case 'turn':
+                direction = action["param1"]
+                self.set_direction(entity, direction)
             case _:
                 raise Exception(f'Unknown action {action}')
 
