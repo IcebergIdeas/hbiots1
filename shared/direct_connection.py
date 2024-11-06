@@ -13,10 +13,6 @@ class DirectConnection:
         client_bot._knowledge.update(result_dict)
         return client_bot
 
-    def set_direction(self, client_bot, direction_string):
-        self.world.command('turn', client_bot.id, direction_string)
-        self.update_client(client_bot)
-
     def update_client(self, client_bot):
         result_dict = self.world.fetch(client_bot.id)
         client_bot._knowledge.update(result_dict)
