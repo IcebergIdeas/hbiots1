@@ -47,3 +47,12 @@ class DirectConnection:
         self.world.execute(rq)
         result_dict = self.world.fetch(client_bot_id)
         cohort.update(result_dict)
+
+    def turn(self, cohort, client_bot_id, direction_string):
+        rq = dict()
+        rq['entity'] = client_bot_id
+        turn_action = {'verb': 'turn', 'param1': direction_string}
+        rq['actions'] = [turn_action,]
+        self.world.execute(rq)
+        result_dict = self.world.fetch(client_bot_id)
+        cohort.update(result_dict)
