@@ -1,6 +1,5 @@
 from server.map import Map
 from server.world_entity import WorldEntity
-from server.world_requests import WorldOutput
 from shared.direction import Direction
 
 
@@ -116,6 +115,7 @@ class World:
         client_bot._knowledge.update(result_dict)
 
     def process(self, world_input):
+        from tests.test_world_batch import WorldOutput
         output = WorldOutput()
         for request in world_input:
             requestor_id = request.identifier
