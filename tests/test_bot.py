@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from client.bot import Bot, Cohort
@@ -116,3 +118,17 @@ class TestBot:
         connection.drop(cohort, client_bot.id, block_id)
         test_block = world.map.at_xy(6, 5)
         assert isinstance(test_block, WorldEntity)
+
+    def test_json(self):
+        s = json.dumps('3')
+        assert s == '"3"'
+        s = json.dumps([1, 2, 3])
+        assert s == '[1, 2, 3]'
+        t = json.loads(s)
+        assert t == [1, 2, 3]
+        d = { 'a': {
+            'x': "hello",
+            'y': 37
+        }}
+        s = json.dumps(d)
+        assert s == '{"a": {"x": "hello", "y": 37}}'
