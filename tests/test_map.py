@@ -45,9 +45,10 @@ class TestMap:
         map.attempt_move(bot.id, Location(10, 11))
         assert bot.location == Location(5, 5)
 
-    def test_map_rejects_bot_location(self):
+    def test_map_recognizes_open_location(self):
         map = Map(10, 10)
+        location = Location(5, 5)
+        assert map.location_is_open((location))
         block = WorldEntity.block(5, 5)
         map.place(block)
-        result = map.location_is_open(Location(5, 5))
-        assert result is False
+        assert not map.location_is_open(location)
