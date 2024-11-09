@@ -20,9 +20,9 @@ class DirectConnection:
     def step(self, cohort, client_bot_id):
         rq = dict()
         rq['entity'] = client_bot_id
-        step_action = {'verb': 'step'}
-        rq['actions'] = [step_action,]
-        self.world.execute(rq)
+        rq['verb'] = 'step'
+        rq_list = [rq]
+        self.world.execute_list(rq_list)
         result_dict = self.world.fetch(client_bot_id)
         cohort.update(result_dict)
 
