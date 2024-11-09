@@ -33,24 +33,14 @@ class TestWorldRequests:
         world = World(10, 10)
         bot_id = world.add_bot(5, 5)
         block_id = world.add_block(6, 5)
-        rq = {
-            'entity': bot_id,
-            'actions': [
-                {'verb': 'take'}
-            ]
-        }
-        world.execute_old_style_dictionary(rq)
+        rq = [ {'entity': bot_id, 'verb': 'take'}]
+        world.execute(rq)
         world_bot = world.entity_from_id(bot_id)
         assert world_bot.holding.id == block_id
         assert world.map.at_xy(6, 5) is None
         block = world.entity_from_id(block_id)
-        rq = {
-            'entity': bot_id,
-            'actions': [
-                {'verb': 'drop', 'param1': block_id}
-            ]
-        }
-        world.execute_old_style_dictionary(rq)
+        rq = [ { 'entity': bot_id, 'verb': 'drop', 'param1': block_id } ]
+        world.execute(rq)
         assert world.map.at_xy(6, 5) == block
 
     def test_bot_turns(self):
@@ -58,13 +48,8 @@ class TestWorldRequests:
         bot_id = world.add_bot(5, 5)
         bot = world.entity_from_id(bot_id)
         assert bot.direction == Direction.EAST
-        rq = {
-            'entity': bot_id,
-            'actions': [
-                {'verb': 'turn', 'param1': 'NORTH'}
-            ]
-        }
-        world.execute_old_style_dictionary(rq)
+        rq = [ { 'entity': bot_id, 'verb': 'turn', 'param1': 'NORTH'}]
+        world.execute(rq)
         assert bot.direction == Direction.NORTH
 
 
