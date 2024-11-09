@@ -19,24 +19,24 @@ class DirectConnection:
 
     def step(self, cohort, client_bot_id):
         rq = [{'entity': client_bot_id, 'verb': 'step'}]
-        self.world.execute_list(rq)
+        self.world.execute(rq)
         result_dict = self.world.fetch(client_bot_id)
         cohort.update(result_dict)
 
     def take(self, cohort, client_bot_id):
         rq = [ {'entity': client_bot_id, 'verb': 'take'}]
-        self.world.execute_list(rq)
+        self.world.execute(rq)
         result_dict = self.world.fetch(client_bot_id)
         cohort.update(result_dict)
 
     def drop(self, cohort, client_bot_id, holding_id):
         rq = [ {'entity': client_bot_id, 'verb': 'drop', 'param1': holding_id}]
-        self.world.execute_list(rq)
+        self.world.execute(rq)
         result_dict = self.world.fetch(client_bot_id)
         cohort.update(result_dict)
 
     def turn(self, cohort, client_bot_id, direction_string):
         rq = [ { 'entity': client_bot_id, 'verb': 'turn', 'param1': direction_string}]
-        self.world.execute_list(rq)
+        self.world.execute(rq)
         result_dict = self.world.fetch(client_bot_id)
         cohort.update(result_dict)

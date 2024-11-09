@@ -25,7 +25,7 @@ class TestWorldRequests:
         bot_id = world.add_bot(5, 5)
         rq = { 'entity': bot_id, 'verb': 'step' }
         rq_list = [rq]
-        world.execute_list(rq_list)
+        world.execute(rq_list)
         world_bot = world.entity_from_id(bot_id)
         assert world_bot.location == Location(6, 5)
 
@@ -39,7 +39,7 @@ class TestWorldRequests:
                 {'verb': 'take'}
             ]
         }
-        world.execute(rq)
+        world.execute_old_style_dictionary(rq)
         world_bot = world.entity_from_id(bot_id)
         assert world_bot.holding.id == block_id
         assert world.map.at_xy(6, 5) is None
@@ -50,7 +50,7 @@ class TestWorldRequests:
                 {'verb': 'drop', 'param1': block_id}
             ]
         }
-        world.execute(rq)
+        world.execute_old_style_dictionary(rq)
         assert world.map.at_xy(6, 5) == block
 
     def test_bot_turns(self):
@@ -64,7 +64,7 @@ class TestWorldRequests:
                 {'verb': 'turn', 'param1': 'NORTH'}
             ]
         }
-        world.execute(rq)
+        world.execute_old_style_dictionary(rq)
         assert bot.direction == Direction.NORTH
 
 

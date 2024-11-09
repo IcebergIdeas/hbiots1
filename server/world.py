@@ -44,7 +44,7 @@ class World:
     def entity_from_id(self, bot_id):
         return self.map.at_id(bot_id)
 
-    def execute_list(self, actions_list):
+    def execute(self, actions_list):
         for action in actions_list:
             id = action['entity']
             entity = self.entity_from_id(id)
@@ -55,7 +55,7 @@ class World:
                 param1 = None
             self.execute_action(entity, verb, param1)
 
-    def execute(self, request):
+    def execute_old_style_dictionary(self, request):
         id = request["entity"]
         entity = self.entity_from_id(id)
         actions = request["actions"]
@@ -133,6 +133,6 @@ class World:
         output = []
         for request in world_input:
             requestor_id = request['entity']
-            self.execute(request)
+            self.execute_old_style_dictionary(request)
             output.append(self.fetch(requestor_id))
         return output
