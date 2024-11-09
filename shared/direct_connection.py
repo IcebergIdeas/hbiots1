@@ -18,14 +18,14 @@ class DirectConnection:
         client_bot._knowledge.update(result_dict)
 
     def step(self, cohort, client_bot_id):
-        rq_list = [{'entity': client_bot_id, 'verb': 'step'}]
-        self.world.execute_list(rq_list)
+        rq = [{'entity': client_bot_id, 'verb': 'step'}]
+        self.world.execute_list(rq)
         result_dict = self.world.fetch(client_bot_id)
         cohort.update(result_dict)
 
     def take(self, cohort, client_bot_id):
-        rq_list = [ {'entity': client_bot_id, 'verb': 'take'}]
-        self.world.execute_list(rq_list)
+        rq = [ {'entity': client_bot_id, 'verb': 'take'}]
+        self.world.execute_list(rq)
         result_dict = self.world.fetch(client_bot_id)
         cohort.update(result_dict)
 
