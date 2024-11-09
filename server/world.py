@@ -49,24 +49,28 @@ class World:
         entity = self.entity_from_id(id)
         actions = request["actions"]
         for action in actions:
-            self.execute_action(entity, action)
+            verb = action["verb"]
+            try:
+                param1 = action["param1"]
+            except KeyError:
+                param1 = None
+            self.execute_action(entity, verb, param1)
 
-    def execute_action(self, entity, action):
-        verb = action["verb"]
+    def execute_action(self, entity, verb, param1):
         match verb:
             case 'step':
                 self.step(entity)
             case 'take':
                 self.take_forward(entity)
             case 'drop':
-                holding_id = action["param1"]
+                holding_id = param1
                 holding = self.entity_from_id(holding_id)
                 self.drop_forward(entity, holding)
             case 'turn':
-                direction = action["param1"]
+                direction = param1
                 self.set_direction(entity, direction)
             case _:
-                raise Exception(f'Unknown action {action}')
+                raise Exception(f'Unknown action {verb}')
 
     def fetch(self, entity_id):
         return self.entity_from_id(entity_id).as_dictionary()
