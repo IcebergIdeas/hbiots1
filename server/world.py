@@ -44,6 +44,17 @@ class World:
     def entity_from_id(self, bot_id):
         return self.map.at_id(bot_id)
 
+    def execute_list(self, actions_list):
+        for action in actions_list:
+            id = action['entity']
+            entity = self.entity_from_id(id)
+            verb = action['verb']
+            try:
+                param1 = action["param1"]
+            except KeyError:
+                param1 = None
+            self.execute_action(entity, verb, param1)
+
     def execute(self, request):
         id = request["entity"]
         entity = self.entity_from_id(id)

@@ -23,13 +23,9 @@ class TestWorldRequests:
     def test_one_step(self):
         world = World(10, 10)
         bot_id = world.add_bot(5, 5)
-        rq = {
-            'entity': bot_id,
-            'actions': [
-                {'verb': 'step'}
-            ]
-        }
-        world.execute(rq)
+        rq = { 'entity': bot_id, 'verb': 'step' }
+        rq_list = [rq]
+        world.execute_list(rq_list)
         world_bot = world.entity_from_id(bot_id)
         assert world_bot.location == Location(6, 5)
 
