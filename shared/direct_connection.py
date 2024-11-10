@@ -34,6 +34,5 @@ class DirectConnection:
         self.run_request(cohort, client_bot_id, rq)
 
     def run_request(self, cohort, client_bot_id, rq):
-        self.world.execute(rq)
-        result_dict = self.world.fetch(client_bot_id)
-        cohort.update(result_dict)
+        results = self.world.execute(rq)
+        cohort.update(results)

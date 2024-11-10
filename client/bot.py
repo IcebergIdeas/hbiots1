@@ -10,8 +10,9 @@ class Cohort:
     def __init__(self, bot):
         self._bot = bot
 
-    def update(self, result_dict):
-        self._bot._knowledge.update(result_dict)
+    def update(self, results):
+        for result_dict in results:
+            self._bot._knowledge.update(result_dict)
 
 
 class Bot:
