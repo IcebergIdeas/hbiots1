@@ -1,4 +1,5 @@
 from server.world import World
+from server.world_entity import WorldEntity
 from shared.direction import Direction
 from shared.location import Location
 
@@ -37,6 +38,7 @@ class TestWorldRequests:
         assert bot.direction == Direction.NORTH
 
     def test_returns_results(self):
+        WorldEntity.next_id = 100
         world = World(10, 10)
         bot_1_id = world.add_bot(5, 5)
         bot_2_id = world.add_bot(7, 7, Direction.NORTH)
@@ -48,6 +50,13 @@ class TestWorldRequests:
         ]
         result = world.execute(rq)
         assert len(result) == 2
+        for d in result:
+            print(d)
+            match d['eid']:
+                case 101:
+                    assert d['location'] == Location(5, 4)
+                case 102:
+                    assert d['location'] == Location(7, 5)
 
 
 
