@@ -18,25 +18,22 @@ class DirectConnection:
         client_bot._knowledge.update(result_dict)
 
     def step(self, cohort, client_bot_id):
-        rq = [{'entity': client_bot_id, 'verb': 'step'}]
-        self.world.execute(rq)
-        result_dict = self.world.fetch(client_bot_id)
-        cohort.update(result_dict)
+        rq = [ {'entity': client_bot_id, 'verb': 'step', 'param1': None}]
+        self.run_request(cohort, client_bot_id, rq)
 
     def take(self, cohort, client_bot_id):
-        rq = [ {'entity': client_bot_id, 'verb': 'take'}]
-        self.world.execute(rq)
-        result_dict = self.world.fetch(client_bot_id)
-        cohort.update(result_dict)
+        rq = [ {'entity': client_bot_id, 'verb': 'take', 'param1': None}]
+        self.run_request(cohort, client_bot_id, rq)
 
     def drop(self, cohort, client_bot_id, holding_id):
         rq = [ {'entity': client_bot_id, 'verb': 'drop', 'param1': holding_id}]
-        self.world.execute(rq)
-        result_dict = self.world.fetch(client_bot_id)
-        cohort.update(result_dict)
+        self.run_request(cohort, client_bot_id, rq)
 
     def turn(self, cohort, client_bot_id, direction_string):
         rq = [ { 'entity': client_bot_id, 'verb': 'turn', 'param1': direction_string}]
+        self.run_request(cohort, client_bot_id, rq)
+
+    def run_request(self, cohort, client_bot_id, rq):
         self.world.execute(rq)
         result_dict = self.world.fetch(client_bot_id)
         cohort.update(result_dict)
