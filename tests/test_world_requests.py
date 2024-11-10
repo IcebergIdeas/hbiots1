@@ -36,4 +36,19 @@ class TestWorldRequests:
         world.execute(rq)
         assert bot.direction == Direction.NORTH
 
+    def test_returns_results(self):
+        world = World(10, 10)
+        bot_1_id = world.add_bot(5, 5)
+        bot_2_id = world.add_bot(7, 7, Direction.NORTH)
+        rq =  [
+            { 'entity': bot_1_id, 'verb': 'turn', 'param1': 'NORTH'},
+            { 'entity': bot_1_id, 'verb': 'step'},
+            { 'entity': bot_2_id, 'verb': 'step'},
+            { 'entity': bot_2_id, 'verb': 'step'},
+        ]
+        result = world.execute(rq)
+        assert len(result) == 2
+
+
+
 

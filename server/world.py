@@ -45,8 +45,10 @@ class World:
         return self.map.at_id(bot_id)
 
     def execute(self, actions_list):
+        ids_used = set()
         for action in actions_list:
             id = action['entity']
+            ids_used.add(id)
             entity = self.entity_from_id(id)
             verb = action['verb']
             try:
@@ -54,6 +56,7 @@ class World:
             except KeyError:
                 param1 = None
             self.execute_action(entity, verb, param1)
+        return [ self.fetch(bot_id) for bot_id in ids_used ]
 
     def execute_action(self, entity, verb, param1):
         match verb:
