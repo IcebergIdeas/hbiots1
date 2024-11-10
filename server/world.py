@@ -55,18 +55,6 @@ class World:
                 param1 = None
             self.execute_action(entity, verb, param1)
 
-    def execute_old_style_dictionary(self, request):
-        id = request["entity"]
-        entity = self.entity_from_id(id)
-        actions = request["actions"]
-        for action in actions:
-            verb = action["verb"]
-            try:
-                param1 = action["param1"]
-            except KeyError:
-                param1 = None
-            self.execute_action(entity, verb, param1)
-
     def execute_action(self, entity, verb, param1):
         match verb:
             case 'step':
@@ -128,11 +116,3 @@ class World:
     def update_client_for_test(self, client_bot):
         result_dict = self.fetch(client_bot.id)
         client_bot._knowledge.update(result_dict)
-
-    def process(self, world_input):
-        output = []
-        for request in world_input:
-            requestor_id = request['entity']
-            self.execute_old_style_dictionary(request)
-            output.append(self.fetch(requestor_id))
-        return output
