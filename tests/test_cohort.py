@@ -41,4 +41,15 @@ class TestCohort:
         assert message[1] == {'verb': 'take', 'entity': 101}
         assert message[2] == {'verb': 'drop', 'entity': 101, 'param1': 666}
 
+    def test_bot_turning(self):
+        bot = FakeBot(101)
+        bot.do(['NORTH', 'EAST', 'SOUTH', 'WEST'])
+        cohort = Cohort(bot)
+        message = cohort.create_message()
+        assert len(message) == 4
+        assert message[0] == {'verb': 'turn', 'param1':'NORTH', 'entity': 101}
+        assert message[1] == {'verb': 'turn', 'param1':'EAST', 'entity': 101}
+        assert message[2] == {'verb': 'turn', 'param1':'SOUTH', 'entity': 101}
+        assert message[3] == {'verb': 'turn', 'param1':'WEST', 'entity': 101}
+
 

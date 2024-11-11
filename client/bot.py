@@ -27,6 +27,8 @@ class Cohort:
         match verb:
             case 'drop':
                 return {'entity': bot.id, 'verb': verb, 'param1': bot.holding}
+            case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
+                return {'entity': bot.id, 'verb': 'turn', 'param1': direction}
             case _:
                 return {'entity': bot.id, 'verb': verb}
 
