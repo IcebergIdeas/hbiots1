@@ -17,12 +17,18 @@ class Cohort:
     def create_message(self):
         message = []
         for bot in self.bots:
-            bot_id = bot.id
             actions = bot.do_something(None)
             for verb in actions:
-                action = {'entity': bot_id, 'verb': verb }
+                action = self.create_action(bot, verb)
                 message.append(action)
         return message
+
+    def create_action(self, bot, verb):
+        match verb:
+            case 'drop':
+                return {'entity': bot.id, 'verb': verb, 'param1': bot.holding}
+            case _:
+                return {'entity': bot.id, 'verb': verb}
 
     def update(self, results):
         for result_dict in results:
