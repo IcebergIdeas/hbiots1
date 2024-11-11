@@ -64,11 +64,15 @@ class TestBot:
         connection = DirectConnection(world)
         client_bot = connection.add_bot(9, 5)
         client_bot.direction_change_chance = 0
-        client_bot.do_something(connection)
+        actions = client_bot.do_something(connection)
+        assert actions == ['step']
         assert client_bot.location == Location(10, 5)
-        client_bot.do_something(connection)
+        actions = client_bot.do_something(connection)
+        assert actions == ['step']
         assert client_bot.location == Location(10, 5)
-        client_bot.do_something(connection)
+        actions = client_bot.do_something(connection)
+        assert actions[0] in ["NORTH", "SOUTH", "EAST", "WEST"]
+        assert actions[1] == 'step'
         assert client_bot.location != Location(10, 5)
 
 # Some of these are redundant, moved from another file

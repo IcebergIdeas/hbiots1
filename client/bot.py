@@ -85,6 +85,7 @@ class Bot:
             actions += self.change_direction()
         actions += ['step']
         self.perform_actions(actions, connection)
+        return actions
 
     def perform_actions(self, actions, connection):
         cohort = Cohort(self)
