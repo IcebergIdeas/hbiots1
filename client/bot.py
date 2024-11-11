@@ -10,6 +10,20 @@ class Cohort:
     def __init__(self, bot):
         self._bot = bot
 
+    @property
+    def bots(self):
+        return [self._bot]
+
+    def create_message(self):
+        message = []
+        for bot in self.bots:
+            bot_id = bot.id
+            actions = bot.do_something(None)
+            for verb in actions:
+                action = {'entity': bot_id, 'verb': verb }
+                message.append(action)
+        return message
+
     def update(self, results):
         for result_dict in results:
             self._bot._knowledge.update(result_dict)
@@ -84,7 +98,8 @@ class Bot:
         if random.random() < self.direction_change_chance:
             actions += self.change_direction()
         actions += ['step']
-        self.perform_actions(actions, connection)
+        if connection:
+            self.perform_actions(actions, connection)
         return actions
 
     def perform_actions(self, actions, connection):
