@@ -70,12 +70,12 @@ class Bot:
 
     def do_something_only_for_tests(self, connection):
         actions = self.get_actions()
-        self.perform_actions(actions, connection)
+        self.perform_actions_only_for_tests(actions, connection)
         return actions
 
     def get_actions(self):
         actions = []
-        actions += self.update_for_state_machine()
+        actions += self.turn_if_we_didnt_move()
         self.state = self.state.update(self._knowledge)
         actions += self.state.action(self._knowledge)
         if random.random() < self.direction_change_chance:
@@ -83,7 +83,7 @@ class Bot:
         actions += ['step']
         return actions
 
-    def perform_actions(self, actions, connection):
+    def perform_actions_only_for_tests(self, actions, connection):
         cohort = Cohort(self)
         for action in actions:
             match action:
@@ -103,7 +103,7 @@ class Bot:
     def update(self, result_dict):
         self._knowledge.update(result_dict)
 
-    def update_for_state_machine(self):
+    def turn_if_we_didnt_move(self):
         if self.location == self._old_location:
             return self.change_direction()
         else:

@@ -57,7 +57,7 @@ class TestBot:
     def test_requests_direction_change_if_stuck(self):
         bot = Bot(10, 10)
         bot._old_location = Location(10, 10)
-        actions = bot.update_for_state_machine()
+        actions = bot.turn_if_we_didnt_move()
         assert actions[0] in ["NORTH", "SOUTH", "WEST"]
 
     def test_stop_at_edge(self):
