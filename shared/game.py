@@ -104,7 +104,7 @@ class Game:
     def run_one_bot_cycle(self):
         for client_bot in self.client_bots:
             connection = DirectConnection(world)
-            client_bot.do_something(connection)
+            client_bot.do_something_only_for_tests(connection)
 
     @staticmethod
     def on_cleanup():

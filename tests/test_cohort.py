@@ -13,7 +13,7 @@ class FakeBot:
     def holding(self):
         return 666
 
-    def do_something(self, _connection):
+    def get_actions(self):
         return self.actions
 
 

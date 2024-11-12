@@ -17,7 +17,7 @@ class Cohort:
     def create_message(self):
         message = []
         for bot in self.bots:
-            actions = bot.do_something(None)
+            actions = bot.get_actions()
             for verb in actions:
                 action = self.create_action(bot, verb)
                 message.append(action)
@@ -98,7 +98,12 @@ class Bot:
     def remove(self, entity):
         self._knowledge.remove(entity)
 
-    def do_something(self, connection):
+    def do_something_only_for_tests(self, connection):
+        actions = self.get_actions()
+        self.perform_actions(actions, connection)
+        return actions
+
+    def get_actions(self):
         actions = []
         actions += self.update_for_state_machine()
         self.state = self.state.update(self._knowledge)
@@ -106,8 +111,6 @@ class Bot:
         if random.random() < self.direction_change_chance:
             actions += self.change_direction()
         actions += ['step']
-        if connection:
-            self.perform_actions(actions, connection)
         return actions
 
     def perform_actions(self, actions, connection):

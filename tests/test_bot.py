@@ -33,7 +33,7 @@ class TestBot:
         world = World(10, 10)
         connection = DirectConnection(world)
         client_bot = connection.add_bot(5, 5)
-        client_bot.do_something(connection)
+        client_bot.do_something_only_for_tests(connection)
         loc = client_bot.location
         assert loc != Location(5, 5)
 
@@ -42,12 +42,12 @@ class TestBot:
         connection = DirectConnection(world)
         client_bot = connection.add_bot(9, 5)
         client_bot.direction_change_chance = 0.0
-        client_bot.do_something(connection)
+        client_bot.do_something_only_for_tests(connection)
         assert client_bot.location == Location(10, 5)
         assert client_bot.direction == Direction.EAST
-        client_bot.do_something(connection)
+        client_bot.do_something_only_for_tests(connection)
         assert client_bot.location == Location(10, 5)
-        client_bot.do_something(connection)
+        client_bot.do_something_only_for_tests(connection)
         assert client_bot.location != Location(10, 5)
         world_bot = world.map.at_id(client_bot.id)
         assert world_bot.direction != Direction.EAST
@@ -64,13 +64,13 @@ class TestBot:
         connection = DirectConnection(world)
         client_bot = connection.add_bot(9, 5)
         client_bot.direction_change_chance = 0
-        actions = client_bot.do_something(connection)
+        actions = client_bot.do_something_only_for_tests(connection)
         assert actions == ['step']
         assert client_bot.location == Location(10, 5)
-        actions = client_bot.do_something(connection)
+        actions = client_bot.do_something_only_for_tests(connection)
         assert actions == ['step']
         assert client_bot.location == Location(10, 5)
-        actions = client_bot.do_something(connection)
+        actions = client_bot.do_something_only_for_tests(connection)
         assert actions[0] in ["NORTH", "SOUTH", "EAST", "WEST"]
         assert actions[1] == 'step'
         assert client_bot.location != Location(10, 5)
@@ -90,10 +90,10 @@ class TestBot:
         world.set_bot_vision(real_bot)
         world.set_bot_scent(client_bot)
         world.set_bot_scent(real_bot)
-        client_bot.do_something(DirectConnection(world))
+        client_bot.do_something_only_for_tests(DirectConnection(world))
         world.update_client_for_test(client_bot)
         assert isinstance(client_bot.state, Looking)
-        client_bot.do_something(DirectConnection(world))
+        client_bot.do_something_only_for_tests(DirectConnection(world))
         world.update_client_for_test(client_bot)
         assert client_bot.has(block)
 

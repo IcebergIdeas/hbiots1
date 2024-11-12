@@ -14,7 +14,7 @@ class TestVision:
         client_bot.direction_change_chance = 0.0
         real_bot.direction_change_chance = 0.0
         client_bot.vision = []
-        client_bot.do_something(DirectConnection(world))
+        client_bot.do_something_only_for_tests(DirectConnection(world))
         world.update_client_for_test(client_bot)
         assert client_bot.location == Location(6, 5)
         vision = client_bot.vision

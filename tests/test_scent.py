@@ -53,5 +53,5 @@ class TestScent:
         world.add_block(5, 5)  # comment?
         client_bot = DirectConnection(world).add_bot(4, 6)
         client_bot.direction_change_chance = 0.0
-        client_bot.do_something(DirectConnection(world))
+        client_bot.do_something_only_for_tests(DirectConnection(world))
         assert client_bot._knowledge._scent == 3
