@@ -1,40 +1,10 @@
 import random
 
+from client.cohort import Cohort
 from client.knowledge import Knowledge
 from client.machine import Walking
 from shared.direction import Direction
 from shared.location import Location
-
-
-class Cohort:
-    def __init__(self, bot):
-        self._bot = bot
-
-    @property
-    def bots(self):
-        return [self._bot]
-
-    def create_message(self):
-        message = []
-        for bot in self.bots:
-            actions = bot.get_actions()
-            for verb in actions:
-                action = self.create_action(bot, verb)
-                message.append(action)
-        return message
-
-    def create_action(self, bot, verb):
-        match verb:
-            case 'drop':
-                return {'entity': bot.id, 'verb': verb, 'param1': bot.holding}
-            case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
-                return {'entity': bot.id, 'verb': 'turn', 'param1': direction}
-            case _:
-                return {'entity': bot.id, 'verb': verb}
-
-    def update(self, results):
-        for result_dict in results:
-            self._bot._knowledge.update(result_dict)
 
 
 class Bot:

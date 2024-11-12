@@ -1,4 +1,7 @@
-from client.bot import Bot, Cohort
+from client.bot import Bot
+from client.cohort import Cohort
+from server.world_entity import WorldEntity
+from shared.direction import Direction
 
 
 class FakeBot:
@@ -52,4 +55,13 @@ class TestCohort:
         assert message[2] == {'verb': 'turn', 'param1':'SOUTH', 'entity': 101}
         assert message[3] == {'verb': 'turn', 'param1':'WEST', 'entity': 101}
 
+    def test_adding_via_surprise_knowledge(self):
+        cohort = Cohort()
+        WorldEntity.next_id = 100
+        new_bot = WorldEntity.bot(5, 6, Direction.EAST)
+        dict = new_bot.as_dictionary()
+        cohort.update([ dict ])
+        client_bot = cohort.bots[new_bot.id]
+        assert client_bot.x == 5
+        assert client_bot.y == 6
 

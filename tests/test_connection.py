@@ -1,4 +1,4 @@
-from client.bot import Cohort
+from client.cohort import Cohort
 from server.world import World
 from server.world_entity import WorldEntity
 from shared.direct_connection import DirectConnection

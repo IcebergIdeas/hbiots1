@@ -2,7 +2,8 @@ import json
 
 import pytest
 
-from client.bot import Bot, Cohort
+from client.bot import Bot
+from client.cohort import Cohort
 from client.knowledge import Knowledge
 from client.machine import Looking
 from server.world import World
