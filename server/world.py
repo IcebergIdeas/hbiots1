@@ -22,12 +22,6 @@ class World:
         self.map.place(entity)
         return entity.id
 
-    def add_and_return_client_entity(self, entity, returned_client_entity):
-        self.map.place(entity)
-        id = entity.id
-        returned_client_entity.id = id
-        return returned_client_entity
-
     def entity_from_id(self, bot_id):
         return self.map.at_id(bot_id)
 
