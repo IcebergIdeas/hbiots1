@@ -100,6 +100,9 @@ class Bot:
                 case _:
                     assert 0, f'no case {action}'
 
+    def update(self, result_dict):
+        self._knowledge.update(result_dict)
+
     def update_for_state_machine(self):
         if self.location == self._old_location:
             return self.change_direction()

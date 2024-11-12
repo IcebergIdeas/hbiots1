@@ -28,7 +28,7 @@ class Cohort:
         for result_dict in results:
             bot_id = result_dict['eid']
             bot = self.by_id(bot_id)
-            bot._knowledge.update(result_dict)
+            bot.update(result_dict)
 
     def by_id(self, bot_id):
         try:
