@@ -10,6 +10,7 @@ class World:
         self.width = max_x
         self.height = max_y
         self.map = Map(max_x, max_y)
+        self.ids_used = set()
 
     def add_block(self, x, y, aroma=0):
         entity = WorldEntity.block(x, y, aroma)
@@ -45,31 +46,33 @@ class World:
         return self.map.at_id(bot_id)
 
     def execute(self, actions_list):
-        ids_used = set()
+        self.ids_used = set()
         for action in actions_list:
             id = action['entity']
-            ids_used.add(id)
-            entity = self.entity_from_id(id)
+            if id:
+                self.ids_used.add(id)
+                entity = self.entity_from_id(id)
+            else:
+                entity = None
             verb = action['verb']
-            try:
-                param1 = action["param1"]
-            except KeyError:
-                param1 = None
-            self.execute_action(entity, verb, param1)
-        return [ self.fetch(bot_id) for bot_id in ids_used ]
+            self.execute_action(entity, verb, action)
+        return [ self.fetch(bot_id) for bot_id in self.ids_used ]
 
-    def execute_action(self, entity, verb, param1):
+    def execute_action(self, entity, verb, action):
         match verb:
+            case 'add_bot':
+                bot_id = self.add_bot(action['x'], action['y'], action['direction'])
+                self.ids_used.add(bot_id)
             case 'step':
                 self.step(entity)
             case 'take':
                 self.take_forward(entity)
             case 'drop':
-                holding_id = param1
+                holding_id = action['param1']
                 holding = self.entity_from_id(holding_id)
                 self.drop_forward(entity, holding)
             case 'turn':
-                direction = param1
+                direction = action['param1']
                 self.set_direction(entity, direction)
             case _:
                 raise Exception(f'Unknown action {verb}')
