@@ -95,8 +95,9 @@ class Bot:
                 case 'step':
                     self._old_location = self.location
                     connection.step(cohort, self.id)
-                case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
-                    connection.turn(cohort, self.id, action)
+                case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
+                    rq = [ {'entity': self.id, 'verb': direction} ]
+                    connection.run_request(cohort, None, rq)
                 case _:
                     assert 0, f'no case {action}'
 
