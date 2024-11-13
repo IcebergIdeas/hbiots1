@@ -88,13 +88,16 @@ class Bot:
         for action in actions:
             match action:
                 case 'take':
-                    connection.take(cohort, self.id)
+                    rq = [ { 'entity': self.id, 'verb': 'take'}]
+                    connection.run_request(cohort, None, rq)
                 case 'drop':
                     # self.holding is an id
-                    connection.drop(cohort, self.id, self.holding)
+                    rq = [ { 'entity': self.id, 'verb': 'drop', 'holding': self.holding}]
+                    connection.run_request(cohort, None, rq)
                 case 'step':
                     self._old_location = self.location
-                    connection.step(cohort, self.id)
+                    rq = [ { 'entity': self.id, 'verb': 'step'}]
+                    connection.run_request(cohort, None, rq)
                 case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
                     rq = [ {'entity': self.id, 'verb': direction} ]
                     connection.run_request(cohort, None, rq)
