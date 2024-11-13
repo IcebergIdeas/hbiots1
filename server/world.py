@@ -48,11 +48,11 @@ class World:
             case 'take':
                 self.take_forward(entity)
             case 'drop':
-                holding_id = action['param1']
+                holding_id = action['holding']
                 holding = self.entity_from_id(holding_id)
                 self.drop_forward(entity, holding)
             case 'turn':
-                direction = action['param1']
+                direction = action['direction']
                 self.set_direction(entity, direction)
             case _:
                 raise Exception(f'Unknown action {verb}')

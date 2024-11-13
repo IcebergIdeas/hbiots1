@@ -18,9 +18,9 @@ class Cohort:
     def create_action(self, bot, verb):
         match verb:
             case 'drop':
-                return {'entity': bot.id, 'verb': verb, 'param1': bot.holding}
+                return {'entity': bot.id, 'verb': verb, 'holding': bot.holding}
             case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
-                return {'entity': bot.id, 'verb': 'turn', 'param1': direction}
+                return {'entity': bot.id, 'verb': 'turn', 'direction': direction}
             case _:
                 return {'entity': bot.id, 'verb': verb}
 

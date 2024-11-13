@@ -24,7 +24,7 @@ class TestWorldRequests:
         assert world_bot.holding.id == block_id
         assert world.map.at_xy(6, 5) is None
         block = world.entity_from_id(block_id)
-        rq = [ { 'entity': bot_id, 'verb': 'drop', 'param1': block_id } ]
+        rq = [ { 'entity': bot_id, 'verb': 'drop', 'holding': block_id } ]
         world.execute(rq)
         assert world.map.at_xy(6, 5) == block
 
@@ -33,7 +33,7 @@ class TestWorldRequests:
         bot_id = world.add_bot(5, 5)
         bot = world.entity_from_id(bot_id)
         assert bot.direction == Direction.EAST
-        rq = [ { 'entity': bot_id, 'verb': 'turn', 'param1': 'NORTH'}]
+        rq = [ { 'entity': bot_id, 'verb': 'turn', 'direction': 'NORTH'}]
         world.execute(rq)
         assert bot.direction == Direction.NORTH
 
@@ -56,7 +56,7 @@ class TestWorldRequests:
         bot_1_id = world.add_bot(5, 5)
         bot_2_id = world.add_bot(7, 7, Direction.NORTH)
         rq =  [
-            { 'entity': bot_1_id, 'verb': 'turn', 'param1': 'NORTH'},
+            { 'entity': bot_1_id, 'verb': 'turn', 'direction': 'NORTH'},
             { 'entity': bot_1_id, 'verb': 'step'},
             { 'entity': bot_2_id, 'verb': 'step'},
             { 'entity': bot_2_id, 'verb': 'step'},

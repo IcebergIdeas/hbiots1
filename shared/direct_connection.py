@@ -14,19 +14,19 @@ class DirectConnection:
         return client_bot
 
     def step(self, cohort, client_bot_id):
-        rq = [ {'entity': client_bot_id, 'verb': 'step', 'param1': None}]
+        rq = [ {'entity': client_bot_id, 'verb': 'step'}]
         self.run_request(cohort, client_bot_id, rq)
 
     def take(self, cohort, client_bot_id):
-        rq = [ {'entity': client_bot_id, 'verb': 'take', 'param1': None}]
+        rq = [ {'entity': client_bot_id, 'verb': 'take'}]
         self.run_request(cohort, client_bot_id, rq)
 
     def drop(self, cohort, client_bot_id, holding_id):
-        rq = [ {'entity': client_bot_id, 'verb': 'drop', 'param1': holding_id}]
+        rq = [ {'entity': client_bot_id, 'verb': 'drop', 'holding': holding_id}]
         self.run_request(cohort, client_bot_id, rq)
 
     def turn(self, cohort, client_bot_id, direction_string):
-        rq = [ { 'entity': client_bot_id, 'verb': 'turn', 'param1': direction_string}]
+        rq = [ { 'entity': client_bot_id, 'verb': 'turn', 'direction': direction_string}]
         self.run_request(cohort, client_bot_id, rq)
 
     def run_request(self, cohort, client_bot_id, rq):
