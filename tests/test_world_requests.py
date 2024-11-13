@@ -41,7 +41,10 @@ class TestWorldRequests:
         world = World(10, 10)
         bot_id = world.add_bot(5, 5)
         bot = world.entity_from_id(bot_id)
-        choices = [ ('NORTH', Direction.NORTH),]
+        choices = [ ('NORTH', Direction.NORTH),
+                    ('EAST', Direction.EAST),
+                    ('SOUTH', Direction.SOUTH),
+                    ('WEST', Direction.WEST) ]
         for verb, result in choices:
             rq = [ { 'entity': bot_id, 'verb': verb } ]
             world.execute(rq)
