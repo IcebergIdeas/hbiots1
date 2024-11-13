@@ -88,15 +88,10 @@ class Bot:
         cohort = Cohort(self)
         for action in actions:
             match action:
-                case 'take':
-                    rq = [ { 'entity': self.id, 'verb': 'take'}]
                 case 'drop':
-                    # self.holding is an id
                     rq = [ { 'entity': self.id, 'verb': 'drop', 'holding': self.holding}]
-                case 'step':
-                    rq = [ { 'entity': self.id, 'verb': 'step'}]
-                case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
-                    rq = [ {'entity': self.id, 'verb': direction} ]
+                case 'step' | 'take' | 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as verb:
+                    rq = [ {'entity': self.id, 'verb': verb} ]
                 case _:
                     assert 0, f'no case {action}'
             connection.run_request(cohort, None, rq)
