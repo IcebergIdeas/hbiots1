@@ -50,10 +50,10 @@ class TestCohort:
         cohort = Cohort(bot)
         message = cohort.create_message()
         assert len(message) == 4
-        assert message[0] == {'verb': 'turn', 'direction':'NORTH', 'entity': 101}
-        assert message[1] == {'verb': 'turn', 'direction':'EAST', 'entity': 101}
-        assert message[2] == {'verb': 'turn', 'direction':'SOUTH', 'entity': 101}
-        assert message[3] == {'verb': 'turn', 'direction':'WEST', 'entity': 101}
+        assert message[0] == {'verb': 'NORTH', 'entity': 101}
+        assert message[1] == {'verb': 'EAST', 'entity': 101}
+        assert message[2] == {'verb': 'SOUTH', 'entity': 101}
+        assert message[3] == {'verb': 'WEST', 'entity': 101}
 
     def test_adding_via_surprise_knowledge(self):
         cohort = Cohort()
