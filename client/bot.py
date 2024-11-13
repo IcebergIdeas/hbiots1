@@ -80,6 +80,7 @@ class Bot:
         actions += self.state.action(self._knowledge)
         if random.random() < self.direction_change_chance:
             actions += self.change_direction()
+        self._old_location = self.location
         actions += ['step']
         return actions
 
@@ -89,20 +90,16 @@ class Bot:
             match action:
                 case 'take':
                     rq = [ { 'entity': self.id, 'verb': 'take'}]
-                    connection.run_request(cohort, None, rq)
                 case 'drop':
                     # self.holding is an id
                     rq = [ { 'entity': self.id, 'verb': 'drop', 'holding': self.holding}]
-                    connection.run_request(cohort, None, rq)
                 case 'step':
-                    self._old_location = self.location
                     rq = [ { 'entity': self.id, 'verb': 'step'}]
-                    connection.run_request(cohort, None, rq)
                 case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
                     rq = [ {'entity': self.id, 'verb': direction} ]
-                    connection.run_request(cohort, None, rq)
                 case _:
                     assert 0, f'no case {action}'
+            connection.run_request(cohort, None, rq)
 
     def update(self, result_dict):
         self._knowledge.update(result_dict)
