@@ -51,6 +51,8 @@ class World:
                 holding_id = action['holding']
                 holding = self.entity_from_id(holding_id)
                 self.drop_forward(entity, holding)
+            case 'NORTH' as direction:
+                self.set_direction(entity, direction)
             case 'turn':
                 direction = action['direction']
                 self.set_direction(entity, direction)

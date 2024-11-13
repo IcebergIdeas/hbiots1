@@ -37,6 +37,16 @@ class TestWorldRequests:
         world.execute(rq)
         assert bot.direction == Direction.NORTH
 
+    def test_bot_direction_verbs(self):
+        world = World(10, 10)
+        bot_id = world.add_bot(5, 5)
+        bot = world.entity_from_id(bot_id)
+        choices = [ ('NORTH', Direction.NORTH),]
+        for verb, result in choices:
+            rq = [ { 'entity': bot_id, 'verb': verb } ]
+            world.execute(rq)
+            assert bot.direction == result
+
     def test_add_bot(self):
         WorldEntity.next_id = 100
         world = World(10, 10)
