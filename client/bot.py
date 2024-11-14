@@ -75,20 +75,20 @@ class Bot:
 
     def get_actions(self):
         actions = []
-        actions += self.deal_with_failed_intentions()
+        actions += self.check_expectations()
         self.state = self.state.update(self._knowledge)
         actions += self.state.action(self._knowledge)
         if random.random() < self.direction_change_chance:
             actions += self.change_direction()
         actions += ['step']
-        self.record_intentions(actions)
+        self.record_expectations(actions)
         return actions
 
-    def record_intentions(self, actions):
+    def record_expectations(self, actions):
         if 'step' in actions:
             self._old_location = self.location
 
-    def deal_with_failed_intentions(self):
+    def check_expectations(self):
         if self.location == self._old_location:
             return self.change_direction()
         else:
