@@ -76,13 +76,21 @@ class Bot:
     def get_actions(self):
         actions = []
         actions += self.check_expectations()
-        self.state = self.state.update(self._knowledge)
-        actions += self.state.action(self._knowledge)
-        if random.random() < self.direction_change_chance:
-            actions += self.change_direction()
+        actions += self.updated_state_action()
+        actions += self.possibly_change_direction()
         actions += ['step']
         self.record_expectations(actions)
         return actions
+
+    def updated_state_action(self):
+        self.state = self.state.update(self._knowledge)
+        return self.state.action(self._knowledge)
+
+    def possibly_change_direction(self):
+        if random.random() < self.direction_change_chance:
+            return self.change_direction()
+        else:
+            return []
 
     def record_expectations(self, actions):
         if 'step' in actions:
