@@ -57,7 +57,7 @@ class TestBot:
     def test_requests_direction_change_if_stuck(self):
         bot = Bot(10, 10)
         bot._old_location = Location(10, 10)
-        actions = bot.turn_if_we_didnt_move()
+        actions = bot.deal_with_failed_intentions()
         assert actions[0] in ["NORTH", "SOUTH", "WEST"]
 
     def test_stop_at_edge(self):
@@ -123,6 +123,13 @@ class TestBot:
         connection.drop(cohort, client_bot.id, block_id)
         test_block = world.map.at_xy(6, 5)
         assert isinstance(test_block, WorldEntity)
+
+    def test_bot_sets_old_location(self):
+        bot = Bot(10, 10)
+        assert bot._old_location is None
+        actions = bot.get_actions()
+        assert 'step' in actions
+        assert bot._old_location == Location(10, 10)
 
     def test_json(self):
         s = json.dumps('3')

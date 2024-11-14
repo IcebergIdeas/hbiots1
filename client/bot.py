@@ -75,14 +75,24 @@ class Bot:
 
     def get_actions(self):
         actions = []
-        actions += self.turn_if_we_didnt_move()
+        actions += self.deal_with_failed_intentions()
         self.state = self.state.update(self._knowledge)
         actions += self.state.action(self._knowledge)
         if random.random() < self.direction_change_chance:
             actions += self.change_direction()
-        self._old_location = self.location
         actions += ['step']
+        self.record_intentions(actions)
         return actions
+
+    def record_intentions(self, actions):
+        if 'step' in actions:
+            self._old_location = self.location
+
+    def deal_with_failed_intentions(self):
+        if self.location == self._old_location:
+            return self.change_direction()
+        else:
+            return []
 
     def perform_actions_only_for_tests(self, actions, connection):
         cohort = Cohort(self)
@@ -98,12 +108,6 @@ class Bot:
 
     def update(self, result_dict):
         self._knowledge.update(result_dict)
-
-    def turn_if_we_didnt_move(self):
-        if self.location == self._old_location:
-            return self.change_direction()
-        else:
-            return []
 
     def has_block(self):
         return self._knowledge.has_block
