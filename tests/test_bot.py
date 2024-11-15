@@ -112,18 +112,25 @@ class TestBot:
         world = World(10, 10)
         connection = DirectConnection(world)
         client_bot = connection.add_bot(5, 5)
-        block_id = world.add_block(6, 5)
-        block = world.map.at_xy(6, 5)
-        assert isinstance(block, WorldEntity)
         cohort = Cohort(client_bot)
-        rq1 = [{'entity': client_bot.id, 'verb': 'take'}]
-        connection.run_request(cohort, client_bot.id, rq1)
+
+        block_id = world.add_block(6, 5)
+        assert (block := world.map.at_xy(6, 5)) is not None
+
+        self.do_take(cohort, connection, client_bot)
         assert client_bot.has_block()
-        assert not world.map.at_xy(6, 5)
+        assert world.map.at_xy(6, 5) is None
+
+        self.do_drop(cohort, connection, client_bot, block_id)
+        assert world.map.at_xy(6, 5) is block
+
+    def do_drop(self, cohort, connection, client_bot, block_id):
         rq = [{'entity': client_bot.id, 'verb': 'drop', 'holding': block_id}]
         connection.run_request(cohort, client_bot.id, rq)
-        test_block = world.map.at_xy(6, 5)
-        assert isinstance(test_block, WorldEntity)
+
+    def do_take(self, cohort, connection, client_bot):
+        rq1 = [{'entity': client_bot.id, 'verb': 'take'}]
+        connection.run_request(cohort, client_bot.id, rq1)
 
     def test_bot_sets_old_location(self):
         bot = Bot(10, 10)

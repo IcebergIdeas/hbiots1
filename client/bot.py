@@ -124,9 +124,6 @@ class Bot:
     def has_block(self):
         return self._knowledge.has_block
 
-    def has_no_block(self):
-        return not self.has_block()
-
     def can_take(self):
         return self._knowledge.can_take
 
