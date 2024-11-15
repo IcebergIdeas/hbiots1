@@ -17,7 +17,7 @@ class TestConnection:
         bot = connection.add_bot(10, 10)
         cohort = Cohort(bot)
         rq = [{'entity': bot.id, 'verb': 'step'}]
-        connection.run_request(cohort, bot.id, rq)
+        connection.run_request(cohort, rq)
         assert bot.location == Location(11, 10)
         assert world.map.at_xy(11, 10).id == bot.id
 
@@ -28,7 +28,7 @@ class TestConnection:
         location = client_bot.location
         cohort = Cohort(client_bot)
         rq = [{'entity': client_bot.id, 'verb': 'step'}]
-        connection.run_request(cohort, client_bot.id, rq)
+        connection.run_request(cohort, rq)
         assert client_bot.location == location + Direction.NORTH
 
     def test_take_a_block(self):
@@ -40,7 +40,7 @@ class TestConnection:
         assert not world.is_empty(Location(6, 5))
         cohort = Cohort(client_bot)
         rq = [{'entity': client_bot.id, 'verb': 'take'}]
-        connection.run_request(cohort, client_bot.id, rq)
+        connection.run_request(cohort, rq)
         world_bot = world.map.at_id(bot_id)
         assert world_bot.has_block()
         assert world.is_empty(Location(6, 5))

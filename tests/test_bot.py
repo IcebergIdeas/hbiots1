@@ -126,11 +126,11 @@ class TestBot:
 
     def do_drop(self, cohort, connection, client_bot, block_id):
         rq = [{'entity': client_bot.id, 'verb': 'drop', 'holding': block_id}]
-        connection.run_request(cohort, client_bot.id, rq)
+        connection.run_request(cohort, rq)
 
     def do_take(self, cohort, connection, client_bot):
         rq1 = [{'entity': client_bot.id, 'verb': 'take'}]
-        connection.run_request(cohort, client_bot.id, rq1)
+        connection.run_request(cohort, rq1)
 
     def test_bot_sets_old_location(self):
         bot = Bot(10, 10)

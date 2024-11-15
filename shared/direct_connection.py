@@ -13,6 +13,6 @@ class DirectConnection:
         client_bot._knowledge.update(result_dict)
         return client_bot
 
-    def run_request(self, cohort, client_bot_id, rq):
+    def run_request(self, cohort, rq):
         results = self.world.execute(rq)
         cohort.update(results)

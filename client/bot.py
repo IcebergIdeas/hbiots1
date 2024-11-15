@@ -116,7 +116,7 @@ class Bot:
                     rq = [ {'entity': self.id, 'verb': verb} ]
                 case _:
                     assert 0, f'no case {action}'
-            connection.run_request(cohort, None, rq)
+            connection.run_request(cohort, rq)
 
     def update(self, result_dict):
         self._knowledge.update(result_dict)
