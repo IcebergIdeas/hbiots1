@@ -74,12 +74,16 @@ class Bot:
         return actions
 
     def get_actions(self):
+        actions = self.get_intended_actions()
+        self.record_expectations(actions)
+        return actions
+
+    def get_intended_actions(self):
         actions = []
         actions += self.check_expectations()
         actions += self.updated_state_action()
         actions += self.possibly_change_direction()
         actions += ['step']
-        self.record_expectations(actions)
         return actions
 
     def updated_state_action(self):
