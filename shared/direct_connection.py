@@ -13,10 +13,6 @@ class DirectConnection:
         client_bot._knowledge.update(result_dict)
         return client_bot
 
-    def step(self, cohort, client_bot_id):
-        rq = [ {'entity': client_bot_id, 'verb': 'step'}]
-        self.run_request(cohort, client_bot_id, rq)
-
     def run_request(self, cohort, client_bot_id, rq):
         results = self.world.execute(rq)
         cohort.update(results)
