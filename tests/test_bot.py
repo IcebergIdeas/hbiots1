@@ -116,7 +116,8 @@ class TestBot:
         block = world.map.at_xy(6, 5)
         assert isinstance(block, WorldEntity)
         cohort = Cohort(client_bot)
-        connection.take(cohort, client_bot.id)
+        rq1 = [{'entity': client_bot.id, 'verb': 'take'}]
+        connection.run_request(cohort, client_bot.id, rq1)
         assert client_bot.has_block()
         assert not world.map.at_xy(6, 5)
         rq = [{'entity': client_bot.id, 'verb': 'drop', 'holding': block_id}]

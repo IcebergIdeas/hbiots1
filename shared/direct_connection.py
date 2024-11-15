@@ -17,10 +17,6 @@ class DirectConnection:
         rq = [ {'entity': client_bot_id, 'verb': 'step'}]
         self.run_request(cohort, client_bot_id, rq)
 
-    def take(self, cohort, client_bot_id):
-        rq = [ {'entity': client_bot_id, 'verb': 'take'}]
-        self.run_request(cohort, client_bot_id, rq)
-
     def run_request(self, cohort, client_bot_id, rq):
         results = self.world.execute(rq)
         cohort.update(results)
