@@ -32,9 +32,9 @@ class Cohort:
         try:
             return self.bots[bot_id]
         except KeyError:
-            return self.create_new_bot(bot_id)
+            return self._create_new_bot(bot_id)
 
-    def create_new_bot(self, bot_id):
+    def _create_new_bot(self, bot_id):
         from client.bot import Bot
         new_bot = Bot(0, 0)
         new_bot.id = bot_id
