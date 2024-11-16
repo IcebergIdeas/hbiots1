@@ -65,3 +65,13 @@ class TestCohort:
         assert client_bot.x == 5
         assert client_bot.y == 6
 
+    def test_adding_bots(self):
+        cohort = Cohort()
+        cohort.add_bots(5)
+        message = cohort.create_message()
+        assert len(message) == 5
+        for msg in message:
+            assert msg['verb'] == 'add_bot'
+        assert cohort._bots_to_add == 0
+
+

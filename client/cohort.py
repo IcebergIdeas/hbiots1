@@ -5,9 +5,17 @@ class Cohort:
         self.bots = {}
         if bot:
             self.bots[bot.id] = bot
+        self._bots_to_add = 0
+
+    def add_bots(self, number):
+        self._bots_to_add += number
 
     def create_message(self):
         message = []
+        for _ in range(self._bots_to_add):
+            action = {'entity': 0, 'verb': 'add_bot'}
+            message.append(action)
+        self._bots_to_add = 0
         for bot in self.bots.values():
             actions = bot.get_actions()
             for verb in actions:
