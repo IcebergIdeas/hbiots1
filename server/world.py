@@ -41,7 +41,8 @@ class World:
     def execute_action(self, entity, verb, action):
         match verb:
             case 'add_bot':
-                bot_id = self.add_bot(action['x'], action['y'], action['direction'])
+                # bot_id = self.add_bot(action['x'], action['y'], action['direction'])
+                bot_id = self.add_bot(10, 20)
                 self.ids_used.add(bot_id)
             case 'step':
                 self.step(entity)

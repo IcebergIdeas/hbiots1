@@ -2,6 +2,7 @@ import random
 
 import pygame
 
+from client.cohort import Cohort
 from server.world import World
 from shared.constants import MAGENTA, DARK_GREY, BASE_FONT, WHITE, BLACK, RED, GREEN, BLUE, GRID_LINE
 from shared.direct_connection import DirectConnection
@@ -102,9 +103,8 @@ class Game:
         self.on_cleanup()
 
     def run_one_bot_cycle(self):
-        for client_bot in self.client_bots:
-            connection = DirectConnection(world)
-            client_bot.do_something_only_for_tests(connection)
+        message = cohort.create_message()
+        connection.run_request(cohort, message)
 
     @staticmethod
     def on_cleanup():
@@ -137,7 +137,6 @@ if __name__ == "__main__":
 
     game = Game(world)
     connection = DirectConnection(world)
-    for _ in range(20):
-        client_bot =  connection.add_bot(10, 20)
-        game.add_bot(client_bot)
+    cohort = Cohort()
+    cohort.add_bots(20)
     game.on_execute()
