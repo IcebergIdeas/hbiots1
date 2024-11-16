@@ -12,16 +12,22 @@ class Cohort:
 
     def create_message(self):
         message = []
+        self.add_desired_bots(message)
+        self.get_existing_bot_actions(message)
+        return message
+
+    def add_desired_bots(self, message):
         for _ in range(self._bots_to_add):
             action = {'entity': 0, 'verb': 'add_bot'}
             message.append(action)
         self._bots_to_add = 0
+
+    def get_existing_bot_actions(self, message):
         for bot in self.bots.values():
             actions = bot.get_actions()
             for verb in actions:
                 action = self.create_action(bot, verb)
                 message.append(action)
-        return message
 
     def create_action(self, bot, verb):
         match verb:
