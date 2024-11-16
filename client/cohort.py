@@ -18,7 +18,12 @@ class Cohort:
 
     def add_desired_bots(self, message):
         for _ in range(self._bots_to_add):
-            action = {'entity': 0, 'verb': 'add_bot'}
+            action = {'entity': 0,
+                      'verb': 'add_bot',
+                      'x': 10,
+                      'y': 20,
+                      'direction': 'EAST'
+                      }
             message.append(action)
         self._bots_to_add = 0
 
