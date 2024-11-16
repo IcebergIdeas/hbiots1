@@ -41,8 +41,9 @@ class World:
     def execute_action(self, entity, verb, action):
         match verb:
             case 'add_bot':
-                # bot_id = self.add_bot(action['x'], action['y'], action['direction'])
-                bot_id = self.add_bot(10, 20)
+                direction_string = action['direction']
+                direction = Direction.from_name(direction_string)
+                bot_id = self.add_bot(action['x'], action['y'], direction)
                 self.ids_used.add(bot_id)
             case 'step':
                 self.step(entity)
@@ -64,17 +65,9 @@ class World:
         return self.entity_from_id(entity_id).as_dictionary()
 
     def set_direction(self, world_bot, direction_name):
-        match direction_name:
-            case 'NORTH':
-                world_bot.direction = Direction.NORTH
-            case 'EAST':
-                world_bot.direction = Direction.EAST
-            case 'WEST':
-                world_bot.direction = Direction.WEST
-            case 'SOUTH':
-                world_bot.direction = Direction.SOUTH
-            case _:
-                pass
+        # no change on unrecognized name
+        if direction_name in ['NORTH', 'EAST', 'SOUTH', 'WEST']:
+            world_bot.direction = Direction.from_name(direction_name)
 
     def step(self, bot):
         self.map.attempt_move(bot.id, bot.forward_location())  # changes world version

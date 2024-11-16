@@ -11,6 +11,20 @@ class Direction:
         self.x = x
         self.y = y
 
+    @classmethod
+    def from_name(cls, string):
+        match string:
+            case 'NORTH':
+                return cls.NORTH
+            case 'EAST':
+                return cls.EAST
+            case 'SOUTH':
+                return cls.SOUTH
+            case 'WEST':
+                return cls.WEST
+            case _:
+                return cls.EAST
+
     def __add__(self, other):
         if isinstance(other, Direction):
             return Direction(self.x + other.x, self.y + other.y)
