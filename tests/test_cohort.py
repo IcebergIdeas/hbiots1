@@ -66,12 +66,25 @@ class TestCohort:
         assert client_bot.y == 6
 
     def test_adding_bots(self):
+        def callback(i, n):
+            return bot_values[i]
+
+        bot_values =  [
+            (5, 10, 'EAST'),
+            (10, 17, 'NORTH'),
+            (31, 93, 'WEST'),
+            (73, 87, 'WEST'),
+            (37, 23, 'SOUTH'),
+        ]
         cohort = Cohort()
-        cohort.add_bots(5)
+        cohort.add_bots(5, callback)
         message = cohort.create_message()
         assert len(message) == 5
-        for msg in message:
+        for index, msg in enumerate(message):
             assert msg['verb'] == 'add_bot'
+            assert msg['x'] == bot_values[index][0]
+            assert msg['y'] == bot_values[index][1]
+            assert msg['direction'] == bot_values[index][2]
         assert cohort._bots_to_add == 0
 
 

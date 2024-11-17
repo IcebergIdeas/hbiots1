@@ -138,5 +138,5 @@ if __name__ == "__main__":
     game = Game(world)
     connection = DirectConnection(world)
     cohort = Cohort()
-    cohort.add_bots(20)
+    cohort.add_bots(20, lambda i,n: (10, 20, 'EAST'))
     game.on_execute()

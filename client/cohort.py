@@ -1,14 +1,17 @@
+from typing import Callable
 
 
 class Cohort:
     def __init__(self, bot=None):
         self.bots = {}
+        self._callback = None
         if bot:
             self.bots[bot.id] = bot
         self._bots_to_add = 0
 
-    def add_bots(self, number):
+    def add_bots(self, number, callback: Callable[[int, int], tuple[int, int, str]]):
         self._bots_to_add += number
+        self._callback = callback
 
     def create_message(self):
         message = []
@@ -17,15 +20,17 @@ class Cohort:
         return message
 
     def add_desired_bots(self, message):
-        for _ in range(self._bots_to_add):
+        for i in range(self._bots_to_add):
+            x, y, d = self._callback(i, self._callback)
             action = {'entity': 0,
                       'verb': 'add_bot',
-                      'x': 10,
-                      'y': 20,
-                      'direction': 'EAST'
+                      'x': x,
+                      'y': y,
+                      'direction': d
                       }
             message.append(action)
         self._bots_to_add = 0
+        self._callback = None
 
     def get_existing_bot_actions(self, message):
         for bot in self.bots.values():
