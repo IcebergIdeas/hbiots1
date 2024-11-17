@@ -4,10 +4,14 @@ from typing import Callable
 class Cohort:
     def __init__(self, bot=None):
         self.bots = {}
-        self._callback = None
         if bot:
             self.bots[bot.id] = bot
+        self.clear_bot_creation()
+
+    # noinspection PyAttributeOutsideInit
+    def clear_bot_creation(self):
         self._bots_to_add = 0
+        self._callback = None
 
     def add_bots(self, number, callback: Callable[[int, int], tuple[int, int, str]]):
         self._bots_to_add += number
@@ -29,8 +33,7 @@ class Cohort:
                       'direction': d
                       }
             message.append(action)
-        self._bots_to_add = 0
-        self._callback = None
+        self.clear_bot_creation()
 
     def get_existing_bot_actions(self, message):
         for bot in self.bots.values():
