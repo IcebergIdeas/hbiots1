@@ -1,3 +1,5 @@
+import pytest
+
 from client.bot import Bot
 from client.cohort import Cohort
 from server.world_entity import WorldEntity
@@ -86,5 +88,11 @@ class TestCohort:
             assert msg['y'] == bot_values[index][1]
             assert msg['direction'] == bot_values[index][2]
         assert cohort._bots_to_add == 0
+
+    def test_add_error_wrong_return(self):
+        cohort = Cohort()
+        cohort.add_bots(5, lambda i, n:( 5, 6))
+        with pytest.raises(ValueError):
+            message = cohort.create_message()
 
 
