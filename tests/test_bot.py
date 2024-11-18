@@ -139,6 +139,11 @@ class TestBot:
         assert 'step' in actions
         assert bot._old_location == Location(10, 10)
 
+    def test_cannot_set_into_knowledge(self):
+        bot = Bot(10, 10)
+        with pytest.raises(KeyError):
+            bot.id = 101
+
     def test_json(self):
         s = json.dumps('3')
         assert s == '"3"'

@@ -28,7 +28,7 @@ class TestCohort:
 
     def test_cohort(self):
         bot = Bot(5, 5)
-        bot.directiooops, left a test brokenn_change_chance = 0
+        bot.direction_change_chance = 0
         cohort = Cohort(bot)
         message = cohort.create_message()
         assert len(message) == 1
