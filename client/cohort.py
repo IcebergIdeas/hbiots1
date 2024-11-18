@@ -64,6 +64,5 @@ class Cohort:
     def _create_new_bot(self, bot_id):
         from client.bot import Bot
         new_bot = Bot(0, 0)
-        new_bot.id = bot_id
         self.bots[bot_id] = new_bot
         return new_bot

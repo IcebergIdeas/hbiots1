@@ -6,7 +6,7 @@ from client.machine import Walking
 from shared.direction import Direction
 from shared.location import Location
 
-FORWARDS = ['direction', 'id',]
+FORWARDS = ['direction', 'holding', 'id', 'location', 'vision']
 class Bot:
     def __init__(self, x, y, direction=Direction.EAST):
         self.name = 'R'
@@ -23,29 +23,9 @@ class Bot:
 
     def __setattr__(self, key, value):
         if key in FORWARDS:
-            setattr(self._knowledge, key, value)
+            raise KeyError(f"cannot set _knowledge attribute '{key}'")
         else:
             super().__setattr__(key, value)
-
-    @property
-    def holding(self):
-        return self._knowledge.holding
-
-    @property
-    def location(self):
-        return self._knowledge.location
-
-    @location.setter
-    def location(self, location):
-        self._knowledge.location = location
-
-    @property
-    def vision(self):
-        return self._knowledge.vision
-
-    @vision.setter
-    def vision(self, vision):
-        self._knowledge.vision = vision
 
     @property
     def x(self):

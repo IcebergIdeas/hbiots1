@@ -34,7 +34,7 @@ class TestCohort:
         message = cohort.create_message()
         assert len(message) == 1
         assert message[0]['verb'] == 'step'
-        assert message[0]['entity'] == 101
+        assert message[0]['entity'] == bot.id
 
     def test_really_tricky_bot(self):
         bot = FakeBot(101)
