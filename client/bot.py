@@ -6,7 +6,7 @@ from client.machine import Walking
 from shared.direction import Direction
 from shared.location import Location
 
-
+FORWARDS = ['direction', 'id',]
 class Bot:
     def __init__(self, x, y, direction=Direction.EAST):
         self.name = 'R'
@@ -15,21 +15,17 @@ class Bot:
         self.state = Walking()
         self._old_location = None
 
-    @property
-    def id(self):
-        return self._knowledge.id
+    def __getattr__(self, key):
+        if key in FORWARDS:
+            return getattr(self._knowledge, key)
+        else:
+            return super().__getattribute__(key)
 
-    @id.setter
-    def id(self, id):
-        self._knowledge.id = id
-
-    @property
-    def direction(self):
-        return self._knowledge.direction
-
-    @direction.setter
-    def direction(self, direction):
-        self._knowledge.direction = direction
+    def __setattr__(self, key, value):
+        if key in FORWARDS:
+            setattr(self._knowledge, key, value)
+        else:
+            super().__setattr__(key, value)
 
     @property
     def holding(self):
