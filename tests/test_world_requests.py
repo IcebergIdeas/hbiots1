@@ -77,7 +77,7 @@ class TestWorldRequests:
         result = world.execute(rq)
         assert len(result) == 2
         for d in result:
-            print(d)
+            # print(d)
             match d['eid']:
                 case 101:
                     assert d['location'] == Location(5, 4)
