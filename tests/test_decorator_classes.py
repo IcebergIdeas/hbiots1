@@ -48,5 +48,29 @@ class TestDecoratorClasses:
         print("create")
         d = Decorated()
         print("created")
+        print(help(d))
         assert d.foo == 42
         assert d.bar() == "mumble"
+
+# class DecoratorWithArguments:
+#     def __init__(self, arg1, arg2):
+#         self.arg1 = arg1
+#         self.arg2 = arg2
+#
+#     def __call__(self, func):
+#         def wrapper(*args, **kwargs):
+#             print(f"Decorator arguments: {self.arg1}, {self.arg2}")
+#             print("Before function call")
+#             result = func(*args, **kwargs)
+#             print("After function call")
+#             return result
+#         return wrapper
+#
+# @DecoratorWithArguments("Hello", "World")
+# def my_function(a, b):
+#     print(f"Inside my_function with {a}, {b}")
+#     return a + b
+#
+# result = my_function(1, 2)
+# print("Result:", result)
+
