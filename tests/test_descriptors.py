@@ -1,6 +1,22 @@
 
 
 class TestDescriptors:
+    def test_default_values(self):
+        class DefaultValues:
+            value1 = 5
+            value2 = 71
+
+        dv = DefaultValues()
+        assert dv.value1 == 5
+        assert dv.value2 == 71
+        assert 'value1' not in dv.__dict__
+        assert 'value2' not in dv.__dict__
+        dv.value1 = 6
+        assert dv.value1 == 6
+        assert dv.value2 == 71
+        assert 'value1' in dv.__dict__
+        assert 'value2' not in dv.__dict__
+
     def test_realpython_idea(self):
         class EvenNumber:
             def __set_name__(self, owner, name):
@@ -24,18 +40,3 @@ class TestDescriptors:
         assert oe.value1 == 4
         assert oe.value2 == 0
 
-    def test_default_values(self):
-        class DefaultValues:
-            value1 = 5
-            value2 = 71
-
-        dv = DefaultValues()
-        assert dv.value1 == 5
-        assert dv.value2 == 71
-        assert 'value1' not in dv.__dict__
-        assert 'value2' not in dv.__dict__
-        dv.value1 = 6
-        assert dv.value1 == 6
-        assert dv.value2 == 71
-        assert 'value1' in dv.__dict__
-        assert 'value2' not in dv.__dict__
