@@ -141,8 +141,9 @@ class TestBot:
 
     def test_cannot_set_into_knowledge(self):
         bot = Bot(10, 10)
-        with pytest.raises(KeyError):
+        with pytest.raises(AttributeError) as error:
             bot.id = 101
+        assert str(error.value) == "cannot set 'id'"
 
     def test_json(self):
         s = json.dumps('3')

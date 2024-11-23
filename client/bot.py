@@ -1,31 +1,26 @@
 import random
 
 from client.cohort import Cohort
+from client.forwarder import Forwarder
 from client.knowledge import Knowledge
 from client.machine import Walking
 from shared.direction import Direction
 from shared.location import Location
 
-FORWARDS = ['direction', 'holding', 'id', 'location', 'vision']
+
 class Bot:
+    direction = Forwarder('_knowledge')
+    holding = Forwarder('_knowledge')
+    id = Forwarder('_knowledge')
+    location = Forwarder('_knowledge')
+    vision = Forwarder('_knowledge')
+
     def __init__(self, x, y, direction=Direction.EAST):
         self.name = 'R'
         self.direction_change_chance = 0.2
         self._knowledge = Knowledge(Location(x, y), direction)
         self.state = Walking()
         self._old_location = None
-
-    def __getattr__(self, key):
-        if key in FORWARDS:
-            return getattr(self._knowledge, key)
-        else:
-            return super().__getattribute__(key)
-
-    def __setattr__(self, key, value):
-        if key in FORWARDS:
-            raise KeyError(f"cannot set _knowledge attribute '{key}'")
-        else:
-            super().__setattr__(key, value)
 
     @property
     def x(self):
