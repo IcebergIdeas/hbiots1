@@ -40,3 +40,22 @@ class TestDescriptors:
         assert oe.value1 == 4
         assert oe.value2 == 0
 
+    def test_forwarding(self):
+        needy = NeedsInfo()
+        assert needy.info == "info"
+
+
+class InfoHolder:
+    def __init__(self):
+        self.info = "info"
+
+class NeedsInfo:
+    def __init__(self):
+        self.holder = InfoHolder()
+
+    @property
+    def info(self):
+        return self.holder.info
+
+
+
