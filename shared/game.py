@@ -96,7 +96,7 @@ class Game:
                 self.on_event(event)
             self.clear_screen()
             self.draw_grid()
-            for _ in range(1):
+            for _ in range(20):
                 self.run_one_bot_cycle()
             self.draw_world()
             pygame.display.update()

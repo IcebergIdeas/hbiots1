@@ -3,6 +3,27 @@ import pytest
 from client.forwarder import Forwarder
 
 
+class InfoHolder:
+    def __init__(self):
+        self.info = "info from InfoHolder"
+        self._held_entity = "held"
+
+    @property
+    def holding(self):
+        return self._held_entity
+
+    def square(self, number):
+        return number * number
+
+class NeedsInfo:
+    info = Forwarder('extra_data')
+    holding = Forwarder('extra_data')
+    square = Forwarder('extra_data')
+
+    def __init__(self):
+        self.extra_data = InfoHolder()
+
+
 class TestDescriptors:
     def test_default_values(self):
         class DefaultValues:
@@ -53,16 +74,15 @@ class TestDescriptors:
             needy.info = "cannot do this"
         assert str(error.value) == "cannot set 'info'"
 
+    def test_property(self):
+        needy = NeedsInfo()
+        assert needy.info == "info from InfoHolder"
+        assert needy.holding == 'held'
 
-class InfoHolder:
-    def __init__(self):
-        self.info = "info from InfoHolder"
+    def test_method(self):
+        needy = NeedsInfo()
+        assert needy.square(2) == 4
 
-class NeedsInfo:
-    info = Forwarder('extra_data')
-
-    def __init__(self):
-        self.extra_data = InfoHolder()
 
 
 
