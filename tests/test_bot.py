@@ -100,13 +100,16 @@ class TestBot:
 
     def test_bot_cant_take_diagonally(self):
         world = World(10, 10)
-        bot = DirectConnection(world).add_bot(5, 5)
+        client_bot = DirectConnection(world).add_bot(5, 5)
+        world_bot = world.map.at_id(client_bot.id)
         world.add_block(4, 4)
         world.add_block(6, 4)
         world.add_block(4, 6)
         world.add_block(6, 6)
-        world.take_forward(bot)
-        assert not bot.has_block()
+        # world.add_block(6, 5)  # uncomment to see test fail
+        world.take_forward(world_bot)
+        world.update_client_for_test(client_bot)
+        assert not client_bot.has_block()
 
     def test_bot_drops_and_world_receives(self):
         world = World(10, 10)

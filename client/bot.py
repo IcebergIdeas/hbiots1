@@ -95,14 +95,5 @@ class Bot:
     def has_block(self):
         return self._knowledge.has_block
 
-    def can_take(self):
-        return self._knowledge.can_take
-
-    def can_drop(self):
-        return self.vision.match_forward_and_one_side('_', 'B')
-
     def change_direction(self):
         return [self._knowledge.new_direction().name()]
-
-    def forward_location(self):
-        return self.location + self.direction

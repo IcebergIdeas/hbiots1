@@ -53,7 +53,6 @@ class Deco3:
 class TestDecorators:
     def test_deco1_class(self):
         d1 = Deco1()
-        print(dir(d1))
         assert d1.bar() == 42
         assert d1.mumble() == "mumbling"
 

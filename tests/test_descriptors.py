@@ -47,7 +47,6 @@ class TestDescriptors:
                 self.name = name
 
             def __get__(self, instance, type=None):
-                print(f'{type=}')
                 return instance.__dict__.get(self.name) or 0
 
             def __set__(self, instance, value):
