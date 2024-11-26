@@ -22,6 +22,15 @@ class Bot:
         self.state = Walking()
         self._old_location = None
 
+    def change_direction(self):
+        return [self._knowledge.new_direction().name()]
+
+    def check_expectations(self):
+        if self.location == self._old_location:
+            return self.change_direction()
+        else:
+            return []
+
     def do_something_only_for_tests(self, connection):
         actions = self.get_actions()
         self.perform_actions_only_for_tests(actions, connection)
@@ -40,10 +49,6 @@ class Bot:
         actions += ['step']
         return actions
 
-    def updated_state_action(self):
-        self.state = self.state.update(self._knowledge)
-        return self.state.action(self._knowledge)
-
     def possibly_change_direction(self):
         if random.random() < self.direction_change_chance:
             return self.change_direction()
@@ -53,12 +58,6 @@ class Bot:
     def record_expectations(self, actions):
         if 'step' in actions:
             self._old_location = self.location
-
-    def check_expectations(self):
-        if self.location == self._old_location:
-            return self.change_direction()
-        else:
-            return []
 
     def perform_actions_only_for_tests(self, actions, connection):
         cohort = Cohort(self)
@@ -75,5 +74,6 @@ class Bot:
     def update(self, result_dict):
         self._knowledge.update(result_dict)
 
-    def change_direction(self):
-        return [self._knowledge.new_direction().name()]
+    def updated_state_action(self):
+        self.state = self.state.update(self._knowledge)
+        return self.state.action(self._knowledge)
