@@ -25,9 +25,6 @@ class Bot:
     def receive(self, entity_id: int):
         self._knowledge.receive(entity_id)
 
-    def remove(self, entity):
-        self._knowledge.remove(entity)
-
     def do_something_only_for_tests(self, connection):
         actions = self.get_actions()
         self.perform_actions_only_for_tests(actions, connection)
