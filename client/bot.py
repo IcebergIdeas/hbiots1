@@ -75,8 +75,5 @@ class Bot:
     def update(self, result_dict):
         self._knowledge.update(result_dict)
 
-    def has_block(self):
-        return self._knowledge.has_block
-
     def change_direction(self):
         return [self._knowledge.new_direction().name()]

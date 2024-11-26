@@ -85,8 +85,7 @@ class TestBot:
         world.add_block(6, 6)
         # world.add_block(6, 5)  # uncomment to see test fail
         world.take_forward(world_bot)
-        world.update_client_for_test(client_bot)
-        assert not client_bot.has_block()
+        assert not world_bot.has_block()
 
     def test_bot_drops_and_world_receives(self):
         world = World(10, 10)
@@ -98,7 +97,8 @@ class TestBot:
         assert (block := world.map.at_xy(6, 5)) is not None
 
         self.do_take(cohort, connection, client_bot)
-        assert client_bot.has_block()
+        world_bot = world.map.at_id(client_bot.id)
+        assert world_bot.has_block()
         assert world.map.at_xy(6, 5) is None
 
         self.do_drop(cohort, connection, client_bot, block_id)

@@ -117,7 +117,7 @@ class WorldEntity:
         return self.holding is entity
 
     def has_block(self):
-        return self.holding.kind is EntityKind.BLOCK
+        return self.holding and self.holding.kind is EntityKind.BLOCK
 
     def receive(self, entity):
         self.holding = entity
