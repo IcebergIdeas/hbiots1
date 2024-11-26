@@ -4,8 +4,6 @@ import pytest
 
 from client.bot import Bot
 from client.cohort import Cohort
-from client.knowledge import Knowledge
-from client.machine import Looking
 from server.world import World
 from server.world_entity import WorldEntity
 from shared.direct_connection import DirectConnection
@@ -77,27 +75,6 @@ class TestBot:
         assert client_bot.location != Location(10, 5)
 
 # Some of these are redundant, moved from another file
-    @pytest.mark.skip("too weird")
-    def test_bot_notices_a_block(self):
-        world = World(10, 10)
-        client_bot = DirectConnection(world).add_bot(5, 5)
-        client_bot.state._energy = Knowledge.energy_threshold
-        client_bot.direction_change_chance = 0
-        real_bot = world.map.at_id(client_bot.id)
-        real_bot.direction_change_chance = 0
-        real_bot.state._energy = Knowledge.energy_threshold
-        block = world.add_block(7, 5)
-        world.set_bot_vision(client_bot)
-        world.set_bot_vision(real_bot)
-        world.set_bot_scent(client_bot)
-        world.set_bot_scent(real_bot)
-        client_bot.do_something_only_for_tests(DirectConnection(world))
-        world.update_client_for_test(client_bot)
-        assert isinstance(client_bot.state, Looking)
-        client_bot.do_something_only_for_tests(DirectConnection(world))
-        world.update_client_for_test(client_bot)
-        assert client_bot.has(block)
-
     def test_bot_cant_take_diagonally(self):
         world = World(10, 10)
         client_bot = DirectConnection(world).add_bot(5, 5)

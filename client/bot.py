@@ -22,9 +22,6 @@ class Bot:
         self.state = Walking()
         self._old_location = None
 
-    def has(self, entity):
-        return self._knowledge.has(entity)
-
     def receive(self, entity_id: int):
         self._knowledge.receive(entity_id)
 
