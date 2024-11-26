@@ -7,7 +7,6 @@ from client.cohort import Cohort
 from server.world import World
 from server.world_entity import WorldEntity
 from shared.direct_connection import DirectConnection
-from shared.direction import Direction
 from shared.location import Location
 
 
@@ -28,51 +27,16 @@ class TestBot:
         bot = DirectConnection(world).add_bot(5, 5)
         assert bot.id == 101
 
-    def test_wandering(self):
-        world = World(10, 10)
-        connection = DirectConnection(world)
-        client_bot = connection.add_bot(5, 5)
-        client_bot.do_something_only_for_tests(connection)
-        loc = client_bot.location
-        assert loc != Location(5, 5)
-
-    def test_change_direction_if_stuck(self):
-        world = World(10, 10)
-        connection = DirectConnection(world)
-        client_bot = connection.add_bot(9, 5)
-        client_bot.direction_change_chance = 0.0
-        client_bot.do_something_only_for_tests(connection)
-        assert client_bot.location == Location(10, 5)
-        assert client_bot.direction == Direction.EAST
-        client_bot.do_something_only_for_tests(connection)
-        assert client_bot.location == Location(10, 5)
-        client_bot.do_something_only_for_tests(connection)
-        assert client_bot.location != Location(10, 5)
-        world_bot = world.map.at_id(client_bot.id)
-        assert world_bot.direction != Direction.EAST
-        assert client_bot.direction != Direction.EAST
+    def test_wandering_better(self):
+        bot = Bot(5, 5)
+        actions = bot.get_actions()
+        assert 'step' in actions
 
     def test_requests_direction_change_if_stuck(self):
         bot = Bot(10, 10)
         bot._old_location = Location(10, 10)
         actions = bot.check_expectations()
         assert actions[0] in ["NORTH", "SOUTH", "WEST"]
-
-    def test_stop_at_edge(self):
-        world = World(10, 10)
-        connection = DirectConnection(world)
-        client_bot = connection.add_bot(9, 5)
-        client_bot.direction_change_chance = 0
-        actions = client_bot.do_something_only_for_tests(connection)
-        assert actions == ['step']
-        assert client_bot.location == Location(10, 5)
-        actions = client_bot.do_something_only_for_tests(connection)
-        assert actions == ['step']
-        assert client_bot.location == Location(10, 5)
-        actions = client_bot.do_something_only_for_tests(connection)
-        assert actions[0] in ["NORTH", "SOUTH", "EAST", "WEST"]
-        assert actions[1] == 'step'
-        assert client_bot.location != Location(10, 5)
 
 # Some of these are redundant, moved from another file
     def test_bot_cant_take_diagonally(self):

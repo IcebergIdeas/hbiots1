@@ -52,3 +52,9 @@ class TestMap:
         block = WorldEntity.block(5, 5)
         map.place(block)
         assert not map.location_is_open(location)
+
+    def test_map_off_world_not_open(self):
+        map = Map(10,10)
+        for x,y in ((-1, 5), (5, -1), (11, 5), (5, 11)):
+            location = Location(x, y)
+            assert not map.location_is_open(location)
