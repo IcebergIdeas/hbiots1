@@ -85,4 +85,17 @@ class TestKnowledge:
         knowledge.vision = vision_list
         assert not knowledge.can_drop
 
+    def test_knowledge_update(self):
+        bot = WorldEntity.bot(5, 5, Direction.NORTH)
+        block = WorldEntity.block(3, 3)
+        bot.holding = block
+        bot.scent = 234
+        bot.vision = [('R', 5, 5)]
+        d = bot.as_dictionary()
+        k = Knowledge(bot.location, bot.direction)
+        k.update(d)
+        assert k._scent == 234
+        assert k.vision.vision_list == bot.vision
+
+
 

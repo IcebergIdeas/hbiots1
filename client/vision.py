@@ -10,6 +10,11 @@ class Vision:
     def __iter__(self):
         return iter(self.vision_list)
 
+    def __eq__(self, other):
+        return self.location == (other.location
+                 and self.direction == other.direction
+                 and self.vision_list == other.vision_list)
+
     def match_forward_and_one_side(self, center, side):
         return self.forward_name() == center and (self.forward_left_name() == side or self.forward_right_name() == side)
 

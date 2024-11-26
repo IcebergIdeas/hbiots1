@@ -1,6 +1,5 @@
 import random
 
-from client.cohort import Cohort
 from client.forwarder import Forwarder
 from client.knowledge import Knowledge
 from client.machine import Walking
@@ -31,11 +30,6 @@ class Bot:
         else:
             return []
 
-    def do_something_only_for_tests(self, connection):
-        actions = self.get_actions()
-        self.perform_actions_only_for_tests(actions, connection)
-        return actions
-
     def get_actions(self):
         actions = self.get_intended_actions()
         self.record_expectations(actions)
@@ -58,18 +52,6 @@ class Bot:
     def record_expectations(self, actions):
         if 'step' in actions:
             self._old_location = self.location
-
-    def perform_actions_only_for_tests(self, actions, connection):
-        cohort = Cohort(self)
-        for action in actions:
-            match action:
-                case 'drop':
-                    rq = [ { 'entity': self.id, 'verb': 'drop', 'holding': self.holding}]
-                case 'step' | 'take' | 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as verb:
-                    rq = [ {'entity': self.id, 'verb': verb} ]
-                case _:
-                    assert 0, f'no case {action}'
-            connection.run_request(cohort, rq)
 
     def update(self, result_dict):
         self._knowledge.update(result_dict)
