@@ -22,9 +22,6 @@ class Bot:
         self.state = Walking()
         self._old_location = None
 
-    def receive(self, entity_id: int):
-        self._knowledge.receive(entity_id)
-
     def do_something_only_for_tests(self, connection):
         actions = self.get_actions()
         self.perform_actions_only_for_tests(actions, connection)

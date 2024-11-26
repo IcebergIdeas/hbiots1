@@ -1,4 +1,3 @@
-from client.bot import Bot
 from client.knowledge import Knowledge
 from server.world_entity import WorldEntity
 from shared.direction import Direction
@@ -42,12 +41,6 @@ class TestKnowledge:
         assert knowledge.has_block
         knowledge.remove(block)
         assert not knowledge.has_block
-
-    def test_bot_uses_knowledge_inventory(self):
-        bot = Bot(5, 5)
-        block = WorldEntity.block(3, 3)
-        bot.receive(block)
-        assert bot._knowledge.has_block
 
     def test_knowledge_drop_decision(self):
         location = Location(5, 5)
