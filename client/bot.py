@@ -22,14 +22,6 @@ class Bot:
         self.state = Walking()
         self._old_location = None
 
-    @property
-    def x(self):
-        return self.location.x
-
-    @property
-    def y(self):
-        return self.location.y
-
     def has(self, entity):
         return self._knowledge.has(entity)
 

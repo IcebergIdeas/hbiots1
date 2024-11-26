@@ -4,6 +4,7 @@ from client.bot import Bot
 from client.cohort import Cohort
 from server.world_entity import WorldEntity
 from shared.direction import Direction
+from shared.location import Location
 
 
 class FakeBot:
@@ -63,8 +64,7 @@ class TestCohort:
         dict = new_bot.as_dictionary()
         cohort.update([ dict ])
         client_bot = cohort.bots[new_bot.id]
-        assert client_bot.x == 5
-        assert client_bot.y == 6
+        assert client_bot.location == Location(5, 6)
 
     def test_adding_bots(self):
         def callback(i, n):
