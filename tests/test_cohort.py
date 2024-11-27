@@ -91,8 +91,9 @@ class TestCohort:
     def test_add_error_wrong_return(self):
         cohort = Cohort()
         cohort.add_bots(5, lambda i, n:( 5, 6))
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError) as error:
             message = cohort.create_message()
+        assert str(error.value) == 'not enough values to unpack (expected 3, got 2)'
 
     def test_can_drop(self):
         # invasive to cover missing forwarder
