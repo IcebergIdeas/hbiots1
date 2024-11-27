@@ -10,6 +10,7 @@ from shared.location import Location
 class Bot:
     id = Forwarder('_knowledge')
     location = Forwarder('_knowledge')
+    new_direction_name = Forwarder('_knowledge')
 
     def __init__(self, x, y, direction=Direction.EAST):
         self.name = 'R'
@@ -19,7 +20,7 @@ class Bot:
         self._old_location = None
 
     def change_direction(self):
-        return [self._knowledge.new_direction_name()]
+        return [self.new_direction_name()]
 
     def check_expectations(self):
         if self.location == self._old_location:
