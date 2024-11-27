@@ -8,9 +8,11 @@ from shared.location import Location
 
 
 class Bot:
+    holding = Forwarder('_knowledge')
     id = Forwarder('_knowledge')
     location = Forwarder('_knowledge')
     new_direction_name = Forwarder('_knowledge')
+    update = Forwarder('_knowledge')
 
     def __init__(self, x, y, direction=Direction.EAST):
         self.name = 'R'
@@ -50,9 +52,6 @@ class Bot:
     def record_expectations(self, actions):
         if 'step' in actions:
             self._old_location = self.location
-
-    def update(self, result_dict):
-        self._knowledge.update(result_dict)
 
     def updated_state_action(self):
         self.state = self.state.update(self._knowledge)

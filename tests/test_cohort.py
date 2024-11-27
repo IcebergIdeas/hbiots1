@@ -94,4 +94,17 @@ class TestCohort:
         with pytest.raises(ValueError):
             message = cohort.create_message()
 
+    def test_can_drop(self):
+        # invasive to cover missing forwarder
+        cohort = Cohort()
+        test_bot = Bot(5, 5, Direction.EAST)
+        test_bot._knowledge.id = 101
+        test_bot._knowledge._held_entity = 666
+        action = cohort.create_action(test_bot, 'drop')
+        assert action['verb'] == 'drop'
+        assert action['entity'] == test_bot.id
+        assert action['holding'] == 666
+
+
+
 
