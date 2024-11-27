@@ -8,11 +8,8 @@ from shared.location import Location
 
 
 class Bot:
-    direction = Forwarder('_knowledge')
-    holding = Forwarder('_knowledge')
     id = Forwarder('_knowledge')
     location = Forwarder('_knowledge')
-    vision = Forwarder('_knowledge')
 
     def __init__(self, x, y, direction=Direction.EAST):
         self.name = 'R'
