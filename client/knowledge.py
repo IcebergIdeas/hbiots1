@@ -65,6 +65,9 @@ class Knowledge:
         possibles = [d for d in Direction.ALL if d != self.direction]
         return choice(possibles)
 
+    def new_direction_name(self):
+        return self.new_direction().name()
+
     def use_energy(self):
         self._energy = 0
 

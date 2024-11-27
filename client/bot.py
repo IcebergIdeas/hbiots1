@@ -19,7 +19,7 @@ class Bot:
         self._old_location = None
 
     def change_direction(self):
-        return [self._knowledge.new_direction().name()]
+        return [self._knowledge.new_direction_name()]
 
     def check_expectations(self):
         if self.location == self._old_location:
