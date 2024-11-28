@@ -39,10 +39,7 @@ class World:
     def execute_action(self, entity, verb, action):
         match verb:
             case 'add_bot':
-                direction_string = action['direction']
-                direction = Direction.from_name(direction_string)
-                bot_id = self.add_bot(action['x'], action['y'], direction)
-                self.ids_used.add(bot_id)
+                self.add_bot_action(**action)
             case 'step':
                 self.step(entity)
             case 'take':
@@ -58,6 +55,10 @@ class World:
                 self.set_direction(entity, direction)
             case _:
                 raise Exception(f'Unknown action {verb}')
+
+    def add_bot_action(self, x, y, direction, entity, verb):
+        bot_id = self.add_bot(x, y, Direction.from_name(direction))
+        self.ids_used.add(bot_id)
 
     def fetch(self, entity_id):
         return self.entity_from_id(entity_id).as_dictionary()
