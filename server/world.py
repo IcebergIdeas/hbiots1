@@ -4,8 +4,6 @@ from shared.direction import Direction
 
 
 class World:
-    next_id = 100
-
     def __init__(self, max_x, max_y):
         self.width = max_x
         self.height = max_y

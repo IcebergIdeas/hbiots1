@@ -29,14 +29,6 @@ class Knowledge:
         self.vision = update_dictionary['vision']
 
     @property
-    def vision(self) -> Vision:
-        return self._vision
-
-    @vision.setter
-    def vision(self, vision_list):
-        self._vision = Vision(vision_list, self.location, self.direction)
-
-    @property
     def holding(self):
         return self._held_entity
 
@@ -55,11 +47,25 @@ class Knowledge:
         scent_ok = self._scent >= self.drop_threshold
         return vision_ok and scent_ok
 
+    @property
+    def vision(self) -> Vision:
+        return self._vision
+
+    @vision.setter
+    def vision(self, vision_list):
+        self._vision = Vision(vision_list, self.location, self.direction)
+
     def has(self, entity):
         return entity == self._held_entity
 
+    def gain_energy(self):
+        self._energy += 1
+
     def has_energy(self):
         return self._energy >= self.energy_threshold
+
+    def use_energy(self):
+        self._energy = 0
 
     def new_direction(self):
         possibles = [d for d in Direction.ALL if d != self.direction]
@@ -67,12 +73,6 @@ class Knowledge:
 
     def new_direction_name(self):
         return self.new_direction().name()
-
-    def use_energy(self):
-        self._energy = 0
-
-    def gain_energy(self):
-        self._energy += 1
 
     def receive(self, entity):
         self._held_entity = entity
