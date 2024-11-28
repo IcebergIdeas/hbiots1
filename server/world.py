@@ -56,7 +56,7 @@ class World:
             case _:
                 raise Exception(f'Unknown action {verb}')
 
-    def add_bot_action(self, x, y, direction, entity, verb):
+    def add_bot_action(self, x, y, direction, **_):
         bot_id = self.add_bot(x, y, Direction.from_name(direction))
         self.ids_used.add(bot_id)
 
