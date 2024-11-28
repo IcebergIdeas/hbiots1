@@ -46,9 +46,7 @@ class World:
             case 'take':
                 self.take_forward(entity)
             case 'drop':
-                holding_id = parameters['holding']
-                holding = self.entity_from_id(holding_id)
-                self.drop_forward(entity, holding)
+                self.drop_forward_action(entity, parameters)
             case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
                 self.set_direction(entity, direction)
             case 'turn':
@@ -56,6 +54,11 @@ class World:
                 self.set_direction(entity, direction)
             case _:
                 raise Exception(f'Unknown action {verb}')
+
+    def drop_forward_action(self, entity, parameters):
+        holding_id = parameters['holding']
+        holding = self.entity_from_id(holding_id)
+        self.drop_forward(entity, holding)
 
     def add_bot_action(self, x, y, direction, **_):
         bot_id = self.add_bot(x, y, Direction.from_name(direction))
