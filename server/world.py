@@ -26,32 +26,33 @@ class World:
     def execute(self, actions_list):
         self.ids_used = set()
         for action in actions_list:
-            id = action['entity']
-            if id:
-                self.ids_used.add(id)
-                entity = self.entity_from_id(id)
-            else:
-                entity = None
-            verb = action['verb']
-            self.execute_action(entity, verb, action)
+            self.unpack_and_execute(**action)
         return [ self.fetch(bot_id) for bot_id in self.ids_used ]
 
-    def execute_action(self, entity, verb, action):
+    def unpack_and_execute(self, entity, verb, **parameters):
+        if entity:
+            self.ids_used.add(entity)
+            entity_object = self.entity_from_id(entity)
+        else:
+            entity_object = None
+        self.execute_action(entity_object, verb, parameters)
+
+    def execute_action(self, entity, verb, parameters):
         match verb:
             case 'add_bot':
-                self.add_bot_action(**action)
+                self.add_bot_action(**parameters)
             case 'step':
                 self.step(entity)
             case 'take':
                 self.take_forward(entity)
             case 'drop':
-                holding_id = action['holding']
+                holding_id = parameters['holding']
                 holding = self.entity_from_id(holding_id)
                 self.drop_forward(entity, holding)
             case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
                 self.set_direction(entity, direction)
             case 'turn':
-                direction = action['direction']
+                direction = parameters['direction']
                 self.set_direction(entity, direction)
             case _:
                 raise Exception(f'Unknown action {verb}')
