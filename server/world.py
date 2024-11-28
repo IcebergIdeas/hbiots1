@@ -25,9 +25,12 @@ class World:
 
     def execute(self, actions_list):
         self.ids_used = set()
+        self.execute_actions(actions_list)
+        return [ self.fetch(bot_id) for bot_id in self.ids_used ]
+
+    def execute_actions(self, actions_list):
         for action in actions_list:
             self.unpack_and_execute(**action)
-        return [ self.fetch(bot_id) for bot_id in self.ids_used ]
 
     def unpack_and_execute(self, entity, verb, **parameters):
         if entity:
