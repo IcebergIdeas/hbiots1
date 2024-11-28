@@ -11,12 +11,12 @@ class World:
         self.ids_used = set()
 
     def add_block(self, x, y, aroma=0):
-        entity = WorldEntity.block(x, y, aroma)
-        self.map.place(entity)
-        return entity.id
+        return self._add_entity(WorldEntity.block(x, y, aroma))
 
     def add_bot(self, x, y, direction = Direction.EAST):
-        entity = WorldEntity.bot(x, y, direction)
+        return self._add_entity(WorldEntity.bot(x, y, direction))
+
+    def _add_entity(self, entity):
         self.map.place(entity)
         return entity.id
 
