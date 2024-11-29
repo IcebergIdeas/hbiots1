@@ -32,36 +32,38 @@ class World:
         for action in actions_list:
             self.unpack_and_execute(**action)
 
-    def unpack_and_execute(self, entity, verb, **parameters):
+    def unpack_and_execute(self, entity, **parameters):
         if entity:
             self.ids_used.add(entity)
-            entity_object = self.entity_from_id(entity)
+            parameters['entity_object'] = self.entity_from_id(entity)
         else:
-            entity_object = None
-        self.execute_action(entity_object, verb, parameters)
+            parameters['entity_object'] = None
+        self.execute_action(**parameters)
 
-    def execute_action(self, entity, verb, parameters):
-        match verb:
-            case 'add_bot':
-                self.add_bot_action(**parameters)
-            case 'drop':
-                self.drop_forward_action(entity, **parameters)
-            case 'step':
-                self.step(entity)
-            case 'take':
-                self.take_forward(entity)
-            case 'turn':
-                self.turn(entity, parameters['direction'])
-            case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
-                self.turn(entity, direction)
+    def execute_action(self, entity_object, **action_dictionary):
+        action_dictionary['entity_object'] = entity_object
+        match action_dictionary:
+            case {'verb': 'add_bot', 'x': x, 'y': y, 'direction': direction}:
+                self.add_bot_action(x, y, direction)
+            case {'verb': 'drop', 'entity_object': entity_object, 'holding': holding}:
+                self.drop_forward_action(entity_object, holding)
+            case {'verb': 'step', 'entity_object': entity_object}:
+                self.step(entity_object)
+            case {'verb': 'take', 'entity_object': entity_object}:
+                self.take_forward(entity_object)
+            case {'verb': 'turn','entity_object': entity_object, 'direction': direction}:
+                self.turn(entity_object,direction)
+            case {'entity_object': entity_object,
+                  'verb': 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction}:
+                self.turn(entity_object, direction)
             case _:
-                raise Exception(f'Unknown action {verb}')
+                raise Exception(f'Unknown action {action_dictionary}')
 
-    def add_bot_action(self, x, y, direction, **_):
+    def add_bot_action(self, x, y, direction):
         bot_id = self.add_bot(x, y, Direction.from_name(direction))
         self.ids_used.add(bot_id)
 
-    def drop_forward_action(self, entity, holding, **_):
+    def drop_forward_action(self, entity, holding):
         self.drop_forward(entity, self.entity_from_id(holding))
 
     def drop_forward(self, bot, entity):
