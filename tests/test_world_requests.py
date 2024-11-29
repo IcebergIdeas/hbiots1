@@ -1,3 +1,5 @@
+import pytest
+
 from server.world import World
 from server.world_entity import WorldEntity
 from shared.direction import Direction
@@ -62,6 +64,15 @@ class TestWorldRequests:
         result = world.execute(rq)
         assert len(result) == 1
 
+    def test_zero_id(self):
+        WorldEntity.next_id = 100
+        world = World(10, 10)
+        command = {'entity': 0,
+                   'verb': 'step'}
+        rq = [ command ]
+        with pytest.raises(AttributeError) as error:
+            result = world.execute(rq)
+        assert str(error.value) == "'NoneType' object has no attribute 'id'"
 
     def test_returns_results(self):
         WorldEntity.next_id = 100

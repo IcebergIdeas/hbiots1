@@ -36,11 +36,9 @@ class World:
         if entity:
             self.ids_used.add(entity)
             parameters['entity_object'] = self.entity_from_id(entity)
-        else:
-            parameters['entity_object'] = None
         self.execute_action(**parameters)
 
-    def execute_action(self, entity_object, **action_dictionary):
+    def execute_action(self, entity_object=None, **action_dictionary):
         match action_dictionary:
             case {'verb': 'add_bot',
                   'x': x, 'y': y, 'direction': direction}:
