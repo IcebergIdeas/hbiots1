@@ -51,8 +51,10 @@ class World:
             case {'verb': 'take'}:
                 self.take_forward(entity_object)
             case {'verb': 'turn',
-                  'direction': direction}:
+                  'direction': 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction}:
                 self.turn(entity_object,direction)
+            case {'verb': 'turn', 'direction': bad_direction}:
+                raise AttributeError(f'unknown direction {bad_direction}')
             case {'verb': 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction}:
                 self.turn(entity_object, direction)
             case _:
