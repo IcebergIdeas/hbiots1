@@ -49,7 +49,7 @@ class World:
             case {'verb': 'step'}:
                 self.step_action(entity_object)
             case {'verb': 'take'}:
-                self.take_forward(entity_object)
+                self.take_forward_action(entity_object)
             case {'verb': 'turn',
                   'direction': 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction}:
                 self.turn(entity_object,direction)
@@ -76,7 +76,7 @@ class World:
         self.set_bot_vision(bot)
         self.set_bot_scent(bot)
 
-    def take_forward(self, bot):
+    def take_forward_action(self, bot):
         is_block = lambda e: e.name == 'B'
         if block := self.map.take_conditionally_at(bot.forward_location(), is_block):
             bot.receive(block)

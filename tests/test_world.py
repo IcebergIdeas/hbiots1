@@ -12,7 +12,7 @@ class TestWorld:
         world.add_block(6, 5)
         assert not world.is_empty(Location(6, 5))
         bot = world.entity_from_id(bot_id)
-        world.take_forward(bot)
+        world.take_forward_action(bot)
         assert bot.has_block()
         assert world.is_empty(Location(6, 5))
 
@@ -34,7 +34,7 @@ class TestWorld:
         bot_id = world.add_bot(5, 5, direction)
         bot = world.entity_from_id(bot_id)
         world.add_block(block_x, block_y)
-        world.take_forward(bot)
+        world.take_forward_action(bot)
         assert bot.has_block()
 
     def test_bot_cannot_drop_off_world_north(self):
