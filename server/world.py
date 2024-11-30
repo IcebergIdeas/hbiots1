@@ -52,11 +52,11 @@ class World:
                 self.take_forward_action(entity_object)
             case {'verb': 'turn',
                   'direction': 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction}:
-                self.turn(entity_object,direction)
+                self.turn_action(entity_object, direction)
             case {'verb': 'turn', 'direction': bad_direction}:
                 raise AttributeError(f'unknown direction {bad_direction}')
             case {'verb': 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction}:
-                self.turn(entity_object, direction)
+                self.turn_action(entity_object, direction)
             case _:
                 raise Exception(f'Unknown action {action_dictionary}')
 
@@ -81,7 +81,7 @@ class World:
         if block := self.map.take_conditionally_at(bot.forward_location(), is_block):
             bot.receive(block)
 
-    def turn(self, world_bot, direction_name):
+    def turn_action(self, world_bot, direction_name):
         # no change on unrecognized name
         if direction_name in ['NORTH', 'EAST', 'SOUTH', 'WEST']:
             world_bot.direction = Direction.from_name(direction_name)
