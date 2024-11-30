@@ -64,8 +64,8 @@ class World:
         bot_id = self.add_bot(x, y, Direction.from_name(direction))
         self.ids_used.add(bot_id)
 
-    def drop_forward_action(self, entity, holding):
-        self.drop_forward(entity, self.entity_from_id(holding))
+    def drop_forward_action(self, bot, holding):
+        self.drop_forward(bot, self.entity_from_id(holding))
 
     def drop_forward(self, bot, entity):
         if self.map.place_at(entity, bot.forward_location()):
