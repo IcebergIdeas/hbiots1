@@ -67,9 +67,9 @@ class World:
     def drop_forward_action(self, bot, holding):
         self.drop_forward(bot, self.entity_from_id(holding))
 
-    def drop_forward(self, bot, entity):
-        if self.map.place_at(entity, bot.forward_location()):
-            bot.remove(entity)
+    def drop_forward(self, bot, held_entity):
+        if self.map.place_at(held_entity, bot.forward_location()):
+            bot.remove(held_entity)
 
     def step(self, bot):
         self.map.attempt_move(bot.id, bot.forward_location())  # changes world version
