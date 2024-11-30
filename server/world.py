@@ -30,9 +30,9 @@ class World:
 
     def execute_actions(self, actions_list):
         for action in actions_list:
-            self.unpack_and_execute(**action)
+            self.execute_with_entity(**action)
 
-    def unpack_and_execute(self, entity, **parameters):
+    def execute_with_entity(self, entity, **parameters):
         if entity:
             self.ids_used.add(entity)
             parameters['entity_object'] = self.entity_from_id(entity)
