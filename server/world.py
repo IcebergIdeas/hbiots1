@@ -47,7 +47,7 @@ class World:
                   'holding': holding}:
                 self.drop_forward_action(entity_object, holding)
             case {'verb': 'step'}:
-                self.step(entity_object)
+                self.step_action(entity_object)
             case {'verb': 'take'}:
                 self.take_forward(entity_object)
             case {'verb': 'turn',
@@ -71,7 +71,7 @@ class World:
         if self.map.place_at(held_entity, bot.forward_location()):
             bot.remove(held_entity)
 
-    def step(self, bot):
+    def step_action(self, bot):
         self.map.attempt_move(bot.id, bot.forward_location())  # changes world version
         self.set_bot_vision(bot)
         self.set_bot_scent(bot)
