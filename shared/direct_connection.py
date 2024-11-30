@@ -14,5 +14,5 @@ class DirectConnection:
         return client_bot
 
     def run_request(self, cohort, rq):
-        results = self.world.execute(rq)
+        results = self.world.execute_requests(rq)
         cohort.update(results)

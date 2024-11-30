@@ -23,7 +23,7 @@ class World:
     def entity_from_id(self, bot_id):
         return self.map.at_id(bot_id)
 
-    def execute(self, actions_list):
+    def execute_requests(self, actions_list):
         self.ids_used = set()
         self.execute_actions(actions_list)
         return [ self.fetch(bot_id) for bot_id in self.ids_used ]

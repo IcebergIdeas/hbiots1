@@ -12,7 +12,7 @@ class TestWorldRequests:
         bot_id = world.add_bot(5, 5)
         rq = { 'entity': bot_id, 'verb': 'step' }
         rq_list = [rq]
-        world.execute(rq_list)
+        world.execute_requests(rq_list)
         world_bot = world.entity_from_id(bot_id)
         assert world_bot.location == Location(6, 5)
 
@@ -21,13 +21,13 @@ class TestWorldRequests:
         bot_id = world.add_bot(5, 5)
         block_id = world.add_block(6, 5)
         rq = [ {'entity': bot_id, 'verb': 'take'}]
-        world.execute(rq)
+        world.execute_requests(rq)
         world_bot = world.entity_from_id(bot_id)
         assert world_bot.holding.id == block_id
         assert world.map.at_xy(6, 5) is None
         block = world.entity_from_id(block_id)
         rq = [ { 'entity': bot_id, 'verb': 'drop', 'holding': block_id } ]
-        world.execute(rq)
+        world.execute_requests(rq)
         assert world.map.at_xy(6, 5) == block
 
     def test_bot_turns(self):
@@ -36,7 +36,7 @@ class TestWorldRequests:
         bot = world.entity_from_id(bot_id)
         assert bot.direction == Direction.EAST
         rq = [ { 'entity': bot_id, 'verb': 'turn', 'direction': 'NORTH'}]
-        world.execute(rq)
+        world.execute_requests(rq)
         assert bot.direction == Direction.NORTH
 
     def test_bot_direction_verbs(self):
@@ -49,7 +49,7 @@ class TestWorldRequests:
                     ('WEST', Direction.WEST) ]
         for verb, result in choices:
             rq = [ { 'entity': bot_id, 'verb': verb } ]
-            world.execute(rq)
+            world.execute_requests(rq)
             assert bot.direction == result
 
     def test_wrong_turn(self):
@@ -60,7 +60,7 @@ class TestWorldRequests:
                 'verb': 'turn',
                 'direction': 'AROUND'}]
         with pytest.raises(AttributeError) as error:
-            world.execute(rq)
+            world.execute_requests(rq)
         assert str(error.value) == 'unknown direction AROUND'
 
     def test_add_bot(self):
@@ -72,7 +72,7 @@ class TestWorldRequests:
                    'y': 6,
                    'direction': 'EAST'}
         rq = [ command ]
-        result = world.execute(rq)
+        result = world.execute_requests(rq)
         assert len(result) == 1
 
     def test_zero_id(self):
@@ -82,7 +82,7 @@ class TestWorldRequests:
                    'verb': 'step'}
         rq = [ command ]
         with pytest.raises(AttributeError) as error:
-            result = world.execute(rq)
+            result = world.execute_requests(rq)
         assert str(error.value) == "'NoneType' object has no attribute 'id'"
 
     def test_returns_results(self):
@@ -96,7 +96,7 @@ class TestWorldRequests:
             { 'entity': bot_2_id, 'verb': 'step'},
             { 'entity': bot_2_id, 'verb': 'step'},
         ]
-        result = world.execute(rq)
+        result = world.execute_requests(rq)
         assert len(result) == 2
         for d in result:
             # print(d)
