@@ -29,14 +29,20 @@ class World:
         self.ids_used = set()
         self.messages = []
         self.updates = []
+        self.execute_valid_list(actions_list)
+        return { 'updates': self.updates, 'messages': self.messages }
+
+    def execute_valid_list(self, actions_list):
         try:
             assert isinstance(actions_list, list)
         except AssertionError:
             self.messages.append('requests must be a list of actions')
         else:
-            self.execute_actions(actions_list)
-            self.updates = [ self.fetch(bot_id) for bot_id in self.ids_used ]
-        return { 'updates': self.updates, 'messages': self.messages }
+            self.get_updates(actions_list)
+
+    def get_updates(self, actions_list):
+        self.execute_actions(actions_list)
+        self.updates = [self.fetch(bot_id) for bot_id in self.ids_used]
 
     def execute_actions(self, actions_list):
         for action in actions_list:
