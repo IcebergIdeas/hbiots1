@@ -72,8 +72,11 @@ class TestWorldRequests:
                    'y': 6,
                    'direction': 'EAST'}
         rq = [ command ]
-        result = world.execute_requests(rq)
+        result = world.execute_requests(rq)['updates']
         assert len(result) == 1
+        bot_info = result[0]
+        assert bot_info['eid'] == WorldEntity.next_id
+        assert bot_info['location'] == Location(5, 6)
 
     def test_zero_id(self):
         WorldEntity.next_id = 100
