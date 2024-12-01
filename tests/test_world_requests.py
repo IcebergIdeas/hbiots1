@@ -96,7 +96,7 @@ class TestWorldRequests:
             { 'entity': bot_2_id, 'verb': 'step'},
             { 'entity': bot_2_id, 'verb': 'step'},
         ]
-        result = world.execute_requests(rq)
+        result = world.execute_requests(rq)['updates']
         assert len(result) == 2
         for d in result:
             # print(d)
