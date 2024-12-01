@@ -10,6 +10,7 @@ class World:
         self.map = Map(max_x, max_y)
         self.ids_used = set()
         self.messages = []
+        self.updates = []
 
     def add_block(self, x, y, aroma=0):
         return self._add_entity(WorldEntity.block(x, y, aroma))
@@ -27,9 +28,15 @@ class World:
     def execute_requests(self, actions_list):
         self.ids_used = set()
         self.messages = []
-        self.execute_actions(actions_list)
-        updates = [ self.fetch(bot_id) for bot_id in self.ids_used ]
-        return { 'updates': updates, 'messages': self.messages }
+        self.updates = []
+        try:
+            assert isinstance(actions_list, list)
+        except AssertionError:
+            self.messages.append('requests must be a list of actions')
+        else:
+            self.execute_actions(actions_list)
+            self.updates = [ self.fetch(bot_id) for bot_id in self.ids_used ]
+        return { 'updates': self.updates, 'messages': self.messages }
 
     def execute_actions(self, actions_list):
         for action in actions_list:
