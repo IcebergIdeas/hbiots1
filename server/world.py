@@ -22,6 +22,14 @@ class World:
         self.map.place(entity)
         return entity.id
 
+    def _add_message(self, msg):
+        message_dict = { 'message': msg}
+        self.messages.append(message_dict)
+
+    def _add_bot_message(self, bot, msg):
+        message_dict = { 'bot_id': bot.id, 'message': msg}
+        self.messages.append(message_dict)
+
     def entity_from_id(self, bot_id):
         return self.map.at_id(bot_id)
 
@@ -36,17 +44,9 @@ class World:
         try:
             assert isinstance(actions_list, list)
         except AssertionError:
-            self.add_message('requests must be a list of actions')
+            self._add_message('requests must be a list of actions')
         else:
             self.get_updates(actions_list)
-
-    def add_message(self, msg):
-        message_dict = { 'message': msg}
-        self.messages.append(message_dict)
-
-    def add_bot_message(self, bot, msg):
-        message_dict = { 'bot_id': bot.id, 'message': msg}
-        self.messages.append(message_dict)
 
     def get_updates(self, actions_list):
         self.execute_actions(actions_list)
@@ -95,7 +95,7 @@ class World:
         if self.map.place_at(held_entity, bot.forward_location()):
             bot.remove(held_entity)
         else:
-            self.add_bot_message(bot, 'drop location was not open')
+            self._add_bot_message(bot, 'drop location was not open')
 
     def step_action(self, bot):
         self.map.attempt_move(bot.id, bot.forward_location())  # changes world version
