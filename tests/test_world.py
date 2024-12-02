@@ -57,6 +57,11 @@ class TestWorld:
         bot.receive(block)
         world.drop_forward_action(bot, block_id)
         assert bot.has(block), 'drop should not happen'
+        messages = world.messages
+        assert len(messages) == 1
+        message = messages[0]
+        assert 'was not open' in message['message']
+        assert message['bot_id'] == bot_id
 
     def test_bot_can_drop_on_empty_space(self):
         world = World(10, 10)

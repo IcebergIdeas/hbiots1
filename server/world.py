@@ -44,6 +44,10 @@ class World:
         message_dict = { 'message': msg}
         self.messages.append(message_dict)
 
+    def add_bot_message(self, bot, msg):
+        message_dict = { 'bot_id': bot.id, 'message': msg}
+        self.messages.append(message_dict)
+
     def get_updates(self, actions_list):
         self.execute_actions(actions_list)
         self.updates = [self.fetch(bot_id) for bot_id in self.ids_used]
@@ -90,6 +94,8 @@ class World:
     def drop_forward(self, bot, held_entity):
         if self.map.place_at(held_entity, bot.forward_location()):
             bot.remove(held_entity)
+        else:
+            self.add_bot_message(bot, 'drop location was not open')
 
     def step_action(self, bot):
         self.map.attempt_move(bot.id, bot.forward_location())  # changes world version
