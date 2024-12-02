@@ -36,9 +36,13 @@ class World:
         try:
             assert isinstance(actions_list, list)
         except AssertionError:
-            self.messages.append('requests must be a list of actions')
+            self.add_message('requests must be a list of actions')
         else:
             self.get_updates(actions_list)
+
+    def add_message(self, msg):
+        message_dict = { 'message': msg}
+        self.messages.append(message_dict)
 
     def get_updates(self, actions_list):
         self.execute_actions(actions_list)

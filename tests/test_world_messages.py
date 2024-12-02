@@ -13,5 +13,5 @@ class TestWorldMessages:
         world = World(10, 10)
         requests = { 'entity': 0, 'verb': 'add_bot'}
         messages = world.execute_requests(requests)['messages']
-        assert any('must be a list' in message for message in messages)
+        assert any('must be a list' in message['message'] for message in messages)
 
