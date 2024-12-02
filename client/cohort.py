@@ -50,7 +50,7 @@ class Cohort:
                 return {'entity': bot.id, 'verb': verb}
 
     def update(self, results):
-        for result_dict in results:
+        for result_dict in results['updates']:
             bot_id = result_dict['eid']
             bot = self.by_id(bot_id)
             bot.update(result_dict)

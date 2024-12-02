@@ -62,7 +62,10 @@ class TestCohort:
         WorldEntity.next_id = 100
         new_bot = WorldEntity.bot(5, 6, Direction.EAST)
         dict = new_bot.as_dictionary()
-        cohort.update([ dict ])
+        updates = [ dict ]
+        messages = []
+        results = { 'messages': messages, 'updates': updates }
+        cohort.update(results)
         client_bot = cohort.bots[new_bot.id]
         assert client_bot.location == Location(5, 6)
 
