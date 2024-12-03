@@ -37,7 +37,8 @@ class World:
         self.ids_used = set()
         self.messages = []
         self.updates = []
-        self.execute_valid_list(actions_list)
+        valid_actions = self.execute_valid_list(actions_list)
+        self.get_updates(valid_actions)
         return { 'updates': self.updates, 'messages': self.messages }
 
     def execute_valid_list(self, actions_list):
@@ -47,7 +48,6 @@ class World:
             self._add_message('requests must be a list of actions')
             return []
         else:
-            self.get_updates(actions_list)
             return actions_list
 
     def get_updates(self, actions_list):
