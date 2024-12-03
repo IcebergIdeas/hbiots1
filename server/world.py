@@ -41,13 +41,11 @@ class World:
         return { 'updates': updates, 'messages': self.messages }
 
     def get_valid_list(self, actions_list):
-        try:
-            assert isinstance(actions_list, list)
-        except AssertionError:
+        if isinstance(actions_list, list):
+            return actions_list
+        else:
             self._add_message('requests must be a list of actions')
             return []
-        else:
-            return actions_list
 
     def execute_actions(self, actions_list):
         for action in actions_list:
