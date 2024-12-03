@@ -63,6 +63,7 @@ class World:
             self.ids_used.add(entity)
             parameters['entity_object'] = self.entity_from_id(entity)
         self.execute_action(**parameters)
+        return parameters
 
     def execute_action(self, entity_object=None, **action_dictionary):
         match action_dictionary:
