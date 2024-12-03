@@ -45,8 +45,10 @@ class World:
             assert isinstance(actions_list, list)
         except AssertionError:
             self._add_message('requests must be a list of actions')
+            return []
         else:
             self.get_updates(actions_list)
+            return actions_list
 
     def get_updates(self, actions_list):
         self.execute_actions(actions_list)
