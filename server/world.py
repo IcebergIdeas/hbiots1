@@ -56,13 +56,13 @@ class World:
 
     def execute_actions(self, actions_list):
         for action in actions_list:
-            self.execute_with_entity(**action)
+            parameters = self.execute_with_entity(**action)
+            self.execute_action(**parameters)
 
     def execute_with_entity(self, entity, **parameters):
         if entity:
             self.ids_used.add(entity)
             parameters['entity_object'] = self.entity_from_id(entity)
-        self.execute_action(**parameters)
         return parameters
 
     def execute_action(self, entity_object=None, **action_dictionary):
