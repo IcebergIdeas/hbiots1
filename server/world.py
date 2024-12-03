@@ -38,7 +38,8 @@ class World:
         self.messages = []
         self.updates = []
         valid_actions = self.get_valid_list(actions_list)
-        self.get_updates(valid_actions)
+        self.execute_actions(valid_actions)
+        self.updates = [self.fetch(bot_id) for bot_id in self.ids_used]
         return { 'updates': self.updates, 'messages': self.messages }
 
     def get_valid_list(self, actions_list):
@@ -49,10 +50,6 @@ class World:
             return []
         else:
             return actions_list
-
-    def get_updates(self, actions_list):
-        self.execute_actions(actions_list)
-        self.updates = [self.fetch(bot_id) for bot_id in self.ids_used]
 
     def execute_actions(self, actions_list):
         for action in actions_list:
