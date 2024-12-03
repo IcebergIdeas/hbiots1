@@ -10,7 +10,6 @@ class World:
         self.map = Map(max_x, max_y)
         self.ids_used = set()
         self.messages = []
-        self.updates = []
 
     def add_block(self, x, y, aroma=0):
         return self._add_entity(WorldEntity.block(x, y, aroma))
@@ -36,11 +35,10 @@ class World:
     def execute_requests(self, actions_list):
         self.ids_used = set()
         self.messages = []
-        self.updates = []
         valid_actions = self.get_valid_list(actions_list)
         self.execute_actions(valid_actions)
-        self.updates = [self.fetch(bot_id) for bot_id in self.ids_used]
-        return { 'updates': self.updates, 'messages': self.messages }
+        updates = [self.fetch(bot_id) for bot_id in self.ids_used]
+        return { 'updates': updates, 'messages': self.messages }
 
     def get_valid_list(self, actions_list):
         try:
