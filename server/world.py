@@ -5,8 +5,6 @@ from shared.direction import Direction
 
 class World:
     def __init__(self, max_x, max_y):
-        self.width = max_x
-        self.height = max_y
         self.map = Map(max_x, max_y)
         self.ids_used = set()
         self.messages = []
