@@ -50,8 +50,7 @@ class World:
             action_with_parameters = self.assign_parameters(**action)
             self.execute_action(**action_with_parameters)
 
-    def assign_parameters(self, **parameters):
-        entity = parameters.pop('entity', 0)
+    def assign_parameters(self, entity=None, **parameters):
         if entity:
             self.ids_used.add(entity)
             parameters['entity_object'] = self.entity_from_id(entity)
