@@ -87,11 +87,6 @@ class World:
             case _:
                 self._add_message(f'Unknown action {action_dictionary}')
 
-    def ensure_dictionary_has_entity_object(self, action_dictionary):
-        entity_object = action_dictionary.get('entity_object', None)
-        action_dictionary['entity_object'] = entity_object
-        return entity_object
-
     def add_bot_action(self, x, y, direction):
         bot_id = self.add_bot(x, y, Direction.from_name(direction))
         self.ids_used.add(bot_id)
