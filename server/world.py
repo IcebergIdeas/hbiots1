@@ -57,10 +57,14 @@ class World:
         return parameters
 
     def execute_action(self, entity_object=None, **action_dictionary):
+        action_dictionary['entity_object'] = entity_object
         match action_dictionary:
             case {'verb': 'add_bot',
                   'x': x, 'y': y, 'direction': direction}:
                 self.add_bot_action(x, y, direction)
+            case {'entity_object': None }:
+                verb = action_dictionary.get('verb', 'missing verb')
+                self._add_message(f'verb {verb} requires entity parameter {action_dictionary}')
             case {'verb': 'drop',
                   'holding': holding}:
                 self.drop_forward_action(entity_object, holding)

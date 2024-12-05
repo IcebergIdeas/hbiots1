@@ -84,9 +84,8 @@ class TestWorldRequests:
         command = {'entity': 0,
                    'verb': 'step'}
         rq = [ command ]
-        with pytest.raises(AttributeError) as error:
-            result = world.execute_requests(rq)
-        assert str(error.value) == "'NoneType' object has no attribute 'id'"
+        messages = world.execute_requests(rq)['messages']
+        assert 'requires entity parameter' in messages[0]['message']
 
     def test_returns_results(self):
         WorldEntity.next_id = 100

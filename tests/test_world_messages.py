@@ -17,6 +17,12 @@ class TestWorldMessages:
 
     def test_no_verb(self):
         world = World(10, 10)
-        requests = [{'vorb': 'add_bot'}]
+        requests = [{'entity_object': "fake", 'vorb': 'add_bot'}]
         messages = world.execute_requests(requests)['messages']
         assert 'Unknown action' in messages[0]['message']
+
+    def test_no_entity(self):
+        world = World(10, 10)
+        requests = [ {'verb': 'step'}]
+        messages = world.execute_requests(requests)['messages']
+        assert 'requires entity parameter' in messages[0]['message']
