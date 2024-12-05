@@ -15,3 +15,8 @@ class TestWorldMessages:
         messages = world.execute_requests(requests)['messages']
         assert any('must be a list' in message['message'] for message in messages)
 
+    def test_no_verb(self):
+        world = World(10, 10)
+        requests = [{'vorb': 'add_bot'}]
+        messages = world.execute_requests(requests)['messages']
+        assert 'Unknown action' in messages[0]['message']
