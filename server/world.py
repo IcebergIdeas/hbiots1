@@ -48,7 +48,7 @@ class World:
     def execute_actions(self, actions_list):
         for action in actions_list:
             action_with_parameters = self.assign_parameters(**action)
-            self.execute_action(**action_with_parameters)
+            self.execute_action(action_with_parameters)
 
     def assign_parameters(self, entity=None, **parameters):
         if entity:
@@ -56,12 +56,14 @@ class World:
             parameters['entity_object'] = self.entity_from_id(entity)
         return parameters
 
-    def execute_action(self, entity_object=None, **action_dictionary):
-        action_dictionary['entity_object'] = entity_object
+    def execute_action(self, action_dictionary):
+        entity_object = action_dictionary.get('entity_object', None)
         match action_dictionary:
             case {'verb': 'add_bot',
                   'x': x, 'y': y, 'direction': direction}:
                 self.add_bot_action(x, y, direction)
+            # -----------------------------------------------
+            # operations below here all require entity_object
             case {'entity_object': None }:
                 verb = action_dictionary.get('verb', 'missing verb')
                 self._add_message(f'verb {verb} requires entity parameter {action_dictionary}')
