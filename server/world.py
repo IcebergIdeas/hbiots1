@@ -57,8 +57,7 @@ class World:
         return parameters
 
     def execute_action(self, action_dictionary):
-        entity_object = action_dictionary.get('entity_object', None)
-        action_dictionary['entity_object'] = entity_object
+        entity_object = self.ensure_dictionary_has_entity_object(action_dictionary)
         match action_dictionary:
             case {'verb': 'add_bot',
                   'x': x, 'y': y, 'direction': direction}:
@@ -84,6 +83,11 @@ class World:
                 self.turn_action(entity_object, direction)
             case _:
                 self._add_message(f'Unknown action {action_dictionary}')
+
+    def ensure_dictionary_has_entity_object(self, action_dictionary):
+        entity_object = action_dictionary.get('entity_object', None)
+        action_dictionary['entity_object'] = entity_object
+        return entity_object
 
     def add_bot_action(self, x, y, direction):
         bot_id = self.add_bot(x, y, Direction.from_name(direction))
