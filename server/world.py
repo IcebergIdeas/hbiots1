@@ -58,6 +58,7 @@ class World:
 
     def execute_action(self, action_dictionary):
         entity_object = action_dictionary.get('entity_object', None)
+        action_dictionary['entity_object'] = entity_object
         match action_dictionary:
             case {'verb': 'add_bot',
                   'x': x, 'y': y, 'direction': direction}:
