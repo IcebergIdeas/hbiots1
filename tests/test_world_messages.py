@@ -26,3 +26,10 @@ class TestWorldMessages:
         requests = [ {'verb': 'step'}]
         messages = world.execute_requests(requests)['messages']
         assert 'requires entity parameter' in messages[0]['message']
+
+    def test_action_must_be_dict(self):
+        world = World(10, 10)
+        requests = [ {'verb', 'step'}]
+        messages = world.execute_requests(requests)['messages']
+        assert 'must be dictionary' in messages[0]['message']
+

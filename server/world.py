@@ -47,8 +47,11 @@ class World:
 
     def execute_actions(self, actions_list):
         for action in actions_list:
-            action_with_parameters = self.assign_parameters(**action)
-            self.execute_action(**action_with_parameters)
+            if isinstance(action, dict):
+                action_with_parameters = self.assign_parameters(**action)
+                self.execute_action(**action_with_parameters)
+            else:
+                self._add_message(f'action must be dictionary {action}')
 
     def assign_parameters(self, entity=None, **parameters):
         if entity:
