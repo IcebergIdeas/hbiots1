@@ -42,7 +42,7 @@ class TestWorldMessages:
     def test_invalid_turn_message(self):
         world = World(10, 10)
         bot_id = world.add_bot(5, 5)
-        requests = [{'verb': 'turn', 'direction': 'LEFT'}]
+        requests = [{'entity': bot_id, 'verb': 'turn', 'direction': 'LEFT'}]
         messages = world.execute_requests(requests)['messages']
         expected = 'unknown direction LEFT, should be NORTH, EAST, SOUTH, or WEST'
         assert expected in messages[0]['message']
