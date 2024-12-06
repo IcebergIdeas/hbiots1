@@ -1,5 +1,3 @@
-import pytest
-
 from server.world import World
 from server.world_entity import WorldEntity
 from shared.direction import Direction
@@ -51,17 +49,6 @@ class TestWorldRequests:
             rq = [ { 'entity': bot_id, 'verb': verb } ]
             world.execute_requests(rq)
             assert bot.direction == result
-
-    def test_wrong_turn(self):
-        world = World(10, 10)
-        bot_id = world.add_bot(5, 5)
-        bot = world.entity_from_id(bot_id)
-        rq = [ {'entity': bot_id,
-                'verb': 'turn',
-                'direction': 'AROUND'}]
-        with pytest.raises(AttributeError) as error:
-            world.execute_requests(rq)
-        assert str(error.value) == 'unknown direction AROUND'
 
     def test_add_bot(self):
         WorldEntity.next_id = 100

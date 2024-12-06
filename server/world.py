@@ -80,7 +80,7 @@ class World:
                 self.turn_action(entity_object, direction)
             case {'verb': 'turn',
                   'direction': bad_direction}:
-                raise AttributeError(f'unknown direction {bad_direction}')
+                self._add_message(f'unknown direction {bad_direction}, should be NORTH, EAST, SOUTH, or WEST')
             case {'verb': 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction,
                   'entity_object': entity_object}:
                 self.turn_action(entity_object, direction)
