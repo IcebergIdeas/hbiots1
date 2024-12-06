@@ -21,6 +21,12 @@ class TestWorldMessages:
         messages = world.execute_requests(requests)['messages']
         assert 'Unknown action' in messages[0]['message']
 
+    def test_bad_verb(self):
+        world = World(10, 10)
+        requests = [{'entity_object': "fake", 'verb': 'whatever'}]
+        messages = world.execute_requests(requests)['messages']
+        assert 'unknown verb: whatever' in messages[0]['message']
+
     def test_no_entity(self):
         world = World(10, 10)
         requests = [ {'verb': 'step'}]
@@ -40,5 +46,9 @@ class TestWorldMessages:
         messages = world.execute_requests(requests)['messages']
         expected = 'unknown direction LEFT, should be NORTH, EAST, SOUTH, or WEST'
         assert expected in messages[0]['message']
+
+    def test_not_in(self):
+        world = World(10, 10)
+        assert 'step' in world.all_verbs
 
 
