@@ -14,7 +14,7 @@ class Game:
         self._running = True
         self._display_surf = None
         self.scale = 20
-        self.size = (self.width, self.height) = ((world.width + 1) * self.scale, (world.height + 1) * self.scale)
+        self.size = (self.width, self.height) = ((world.map.width + 1) * self.scale, (world.map.height + 1) * self.scale)
         self.timer_event = None
         self.clock = 0
         self.client_bots = []
@@ -121,8 +121,8 @@ def build_block_square():
 def build_random_blocks():
     # global _, x, y, block
     for _ in range(150):
-        x = random.randint(0, world.width - 1)
-        y = random.randint(0, world.height - 1)
+        x = random.randint(0, world.map.width - 1)
+        y = random.randint(0, world.map.height - 1)
         world.add_block(x, y, None)
 
 
