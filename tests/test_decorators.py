@@ -1,6 +1,3 @@
-import pytest
-
-
 def deco1(cls):
     setattr(cls, 'mumble', my_mumble)
     return cls
@@ -61,17 +58,17 @@ class TestDecorators:
         assert d2.foo() == 42
         assert d2.fargle() == 666
 
-    @pytest.mark.xfail
-    # see test_decorators_2.
-    # parens mean that you have to define and return a wrapper
-    def test_deco2_with_parens(self):
-        @deco2()
-        class NoMatter:
-            pass
-        assert NoMatter().fargle() == 666
-
-    @pytest.mark.xfail
-    def test_not_a_class_method(self):
-        d3 = Deco3()
-        # I don't understand why this doesn't work
-        assert d3.fargle == 666
+    # @pytest.mark.xfail
+    # # see test_decorators_2.
+    # # parens mean that you have to define and return a wrapper
+    # def test_deco2_with_parens(self):
+    #     @deco2()
+    #     class NoMatter:
+    #         pass
+    #     assert NoMatter().fargle() == 666
+    #
+    # @pytest.mark.xfail
+    # def test_not_a_class_method(self):
+    #     d3 = Deco3()
+    #     # I don't understand why this doesn't work
+    #     assert d3.fargle == 666
