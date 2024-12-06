@@ -49,7 +49,7 @@ class World:
         for action in actions_list:
             if isinstance(action, dict):
                 action_with_parameters = self.assign_parameters(**action)
-                self.execute_action(**action_with_parameters)
+                self.execute_action(action_with_parameters)
             else:
                 self._add_message(f'action must be dictionary {action}')
 
@@ -59,31 +59,34 @@ class World:
             parameters['entity_object'] = self.entity_from_id(entity)
         return parameters
 
-    def execute_action(self, entity_object=None, **action_dictionary):
-        action_dictionary['entity_object'] = entity_object
+    def execute_action(self, action_dictionary):
         match action_dictionary:
             case {'verb': 'add_bot',
                   'x': x, 'y': y, 'direction': direction}:
                 self.add_bot_action(x, y, direction)
-            # -----------------------------------------------
-            # operations below here all require entity_object
-            case {'entity_object': None }:
-                verb = action_dictionary.get('verb', 'missing verb')
-                self._add_message(f'verb {verb} requires entity parameter {action_dictionary}')
             case {'verb': 'drop',
+                  'entity_object': entity_object,
                   'holding': holding}:
                 self.drop_forward_action(entity_object, holding)
-            case {'verb': 'step'}:
+            case {'verb': 'step',
+                  'entity_object': entity_object}:
                 self.step_action(entity_object)
-            case {'verb': 'take'}:
+            case {'verb': 'take',
+                  'entity_object': entity_object}:
                 self.take_forward_action(entity_object)
             case {'verb': 'turn',
+                  'entity_object': entity_object,
                   'direction': 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction}:
                 self.turn_action(entity_object, direction)
-            case {'verb': 'turn', 'direction': bad_direction}:
+            case {'verb': 'turn',
+                  'direction': bad_direction}:
                 raise AttributeError(f'unknown direction {bad_direction}')
-            case {'verb': 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction}:
+            case {'verb': 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction,
+                  'entity_object': entity_object}:
                 self.turn_action(entity_object, direction)
+
+            case { 'verb': verb} if verb not in ['add_bot',]:
+                self._add_message(f'verb {verb} requires entity parameter {action_dictionary}')
             case _:
                 self._add_message(f'Unknown action {action_dictionary}')
 
