@@ -105,7 +105,8 @@ class World:
             self._add_message('add_bot command requires x and y parameters')
             return False
         if direction not in ['NORTH' , 'EAST' , 'SOUTH' , 'WEST']:
-            self._add_message(f'unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST')
+            print('adding message')
+            self._add_message(f'add_bot has unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST')
             return False
         return True
 

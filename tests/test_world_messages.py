@@ -54,7 +54,7 @@ class TestWorldMessages:
                       'x': 5, 'y': 5,
                       'direction': 'WRONG'}]
         messages = world.execute_requests(requests)['messages']
-        expected = 'unknown direction WRONG, should be NORTH, EAST, SOUTH, or WEST'
-        assert expected in messages[0]['message']
+        expected = 'add_bot has unknown direction WRONG, should be NORTH, EAST, SOUTH, or WEST'
+        assert messages[0]['message'] == expected
 
 
