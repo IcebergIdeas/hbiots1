@@ -49,7 +49,7 @@ class World:
         for action in actions_list:
             if isinstance(action, dict):
                 action_with_parameters = self.assign_parameters(**action)
-                self.execute_action(action_with_parameters)
+                self.execute_action(**action_with_parameters)
             else:
                 self._add_message(f'action must be dictionary {action}')
 
@@ -59,28 +59,8 @@ class World:
             parameters['entity_object'] = self.entity_from_id(entity)
         return parameters
 
-    @property
-    def all_verbs(self):
-        return [
-            'add_bot',
-            'drop',
-            'step',
-            'take',
-            'turn',
-            'NORTH',
-            'EAST',
-            'SOUTH',
-            'WEST',
-        ]
-
-    def execute_action(self, action_dictionary):
-        if not self.execute_action_new(**action_dictionary):
-            self.execute_action_old(action_dictionary)
-
-    def execute_action_new(self, verb=None, entity_object=None, **action_dictionary):
+    def execute_action(self, verb=None, entity_object=None, **action_dictionary):
         if entity_object or verb == 'add_bot':
-            result = True
-            print(f'action new {verb}')
             match verb:
                 case 'add_bot': self.action_add_bot(**action_dictionary)
                 case 'step': self.step_action(entity_object)
@@ -89,14 +69,12 @@ class World:
                 case 'turn': self.action_turn(entity_object, **action_dictionary)
                 case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
                     self.turn_action(entity_object, direction)
-                case _: result = False
-            return result
+                case _:
+                    self._add_message(f'Unknown action {verb=} {action_dictionary=}')
         else:
             self._add_message(f'verb {verb} requires entity parameter {action_dictionary}')
-            return False
 
     def action_add_bot(self, x=None, y=None, direction=None):
-        print(f'action add bot {x}, {y}, {direction}')
         if self.check_add_parameters(x, y, direction):
             self.add_bot_action(x, y, direction)
 
@@ -105,7 +83,6 @@ class World:
             self._add_message('add_bot command requires x and y parameters')
             return False
         if direction not in ['NORTH' , 'EAST' , 'SOUTH' , 'WEST']:
-            print('adding message')
             self._add_message(f'add_bot has unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST')
             return False
         return True
@@ -120,20 +97,6 @@ class World:
 
     def action_drop(self, entity_object, holding=None, **action_dictionary):
         self.drop_forward_action(entity_object, holding)
-
-    def execute_action_old(self, action_dictionary):
-        match action_dictionary:
-            case {'verb': 'add_bot',
-                  'x': x, 'y': y, 'direction': direction}:
-                print('old', x, y, direction)
-                self.add_bot_action(x, y, direction)
-
-            case { 'verb': verb } if verb not in self.all_verbs:
-                self._add_message(f'unknown verb: {verb}')
-            case { 'verb': verb} if verb not in ['add_bot',]:
-                self._add_message(f'verb {verb} requires entity parameter {action_dictionary}')
-            case _:
-                self._add_message(f'Unknown action {action_dictionary}')
 
     def add_bot_action(self, x, y, direction):
         bot_id = self.add_bot(x, y, Direction.from_name(direction))
