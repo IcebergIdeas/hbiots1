@@ -20,6 +20,9 @@ class WorldEntity:
         self.scent = 0
         self.vision = []
 
+    def __repr__(self):
+        return f'WorldEntity({self.kind=}) {self.direction=}'
+
     @classmethod
     def bot(cls, x, y, direction):
         return cls(EntityKind.BOT, x, y, direction)

@@ -47,8 +47,14 @@ class TestWorldMessages:
         expected = 'unknown direction LEFT, should be NORTH, EAST, SOUTH, or WEST'
         assert expected in messages[0]['message']
 
-    def test_not_in(self):
+    def test_add_bot_bad_direction(self):
         world = World(10, 10)
-        assert 'step' in world.all_verbs
+        requests = [ {'verb': 'add_bot',
+                      'entity': 0,
+                      'x': 5, 'y': 5,
+                      'direction': 'WRONG'}]
+        messages = world.execute_requests(requests)['messages']
+        expected = 'unknown direction WRONG, should be NORTH, EAST, SOUTH, or WEST'
+        assert expected in messages[0]['message']
 
 
