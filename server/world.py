@@ -83,6 +83,7 @@ class World:
             match verb:
                 case 'step': self.step_action(entity_object)
                 case 'drop': self.action_drop(entity_object, **action_dictionary)
+                case 'take': self.take_forward_action(entity_object)
                 case 'turn': self.action_turn(entity_object, **action_dictionary)
                 case _: result = False
             return result
@@ -105,27 +106,6 @@ class World:
             case {'verb': 'add_bot',
                   'x': x, 'y': y, 'direction': direction}:
                 self.add_bot_action(x, y, direction)
-
-            case {'verb': 'drop',
-                  'entity_object': entity_object,
-                  'holding': holding}:
-                self.drop_forward_action(entity_object, holding)
-
-            case {'verb': 'step',
-                  'entity_object': entity_object}:
-                self.step_action(entity_object)
-
-            case {'verb': 'take',
-                  'entity_object': entity_object}:
-                self.take_forward_action(entity_object)
-
-            case {'verb': 'turn',
-                  'entity_object': entity_object,
-                  'direction': 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction}:
-                self.turn_action(entity_object, direction)
-            case {'verb': 'turn',
-                  'direction': bad_direction}:
-                self._add_message(f'unknown direction {bad_direction}, should be NORTH, EAST, SOUTH, or WEST')
 
             case {'verb': 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction,
                   'entity_object': entity_object}:
