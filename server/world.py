@@ -85,6 +85,8 @@ class World:
                 case 'drop': self.action_drop(entity_object, **action_dictionary)
                 case 'take': self.take_forward_action(entity_object)
                 case 'turn': self.action_turn(entity_object, **action_dictionary)
+                case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
+                    self.turn_action(entity_object, direction)
                 case _: result = False
             return result
         else:
@@ -106,10 +108,6 @@ class World:
             case {'verb': 'add_bot',
                   'x': x, 'y': y, 'direction': direction}:
                 self.add_bot_action(x, y, direction)
-
-            case {'verb': 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction,
-                  'entity_object': entity_object}:
-                self.turn_action(entity_object, direction)
 
             case { 'verb': verb } if verb not in self.all_verbs:
                 self._add_message(f'unknown verb: {verb}')
