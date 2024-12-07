@@ -74,6 +74,33 @@ class World:
         ]
 
     def execute_action(self, action_dictionary):
+        if not self.execute_action_new(**action_dictionary):
+            self.execute_action_old(action_dictionary)
+
+    def execute_action_new(self, verb=None, entity_object=None, **action_dictionary):
+        if entity_object:
+            result = True
+            match verb:
+                case 'step': self.step_action(entity_object)
+                case 'drop': self.action_drop(entity_object, **action_dictionary)
+                case 'turn': self.action_turn(entity_object, **action_dictionary)
+                case _: result = False
+            return result
+        else:
+            self._add_message(f'verb {verb} requires entity parameter {action_dictionary}')
+            return False
+
+    def action_turn(self, entity_object, direction=None, **action_dictionary):
+        match direction:
+            case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
+                self.turn_action(entity_object, direction)
+            case _:
+                self._add_message(f'unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST')
+
+    def action_drop(self, entity_object, holding=None, **action_dictionary):
+        self.drop_forward_action(entity_object, holding)
+
+    def execute_action_old(self, action_dictionary):
         match action_dictionary:
             case {'verb': 'add_bot',
                   'x': x, 'y': y, 'direction': direction}:
