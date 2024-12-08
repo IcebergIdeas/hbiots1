@@ -59,20 +59,20 @@ class World:
             parameters['entity_object'] = self.entity_from_id(entity)
         return parameters
 
-    def execute_action(self, verb=None, entity_object=None, **action_dictionary):
+    def execute_action(self, verb=None, entity_object=None, **details):
         if entity_object or verb == 'add_bot':
             match verb:
-                case 'add_bot': self.action_add_bot(**action_dictionary)
-                case 'step': self.step_action(entity_object)
-                case 'drop': self.action_drop(entity_object, **action_dictionary)
-                case 'take': self.take_forward_action(entity_object)
-                case 'turn': self.action_turn(entity_object, **action_dictionary)
+                case 'add_bot': self.action_add_bot(**details)
+                case 'step': self.step(entity_object)
+                case 'drop': self.action_drop(entity_object, **details)
+                case 'take': self.take_forward(entity_object)
+                case 'turn': self.action_turn(entity_object, **details)
                 case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
-                    self.turn_action(entity_object, direction)
+                    self.turn(entity_object, direction)
                 case _:
-                    self._add_message(f'Unknown action {verb=} {action_dictionary=}')
+                    self._add_message(f'Unknown action {verb=} {details=}')
         else:
-            self._add_message(f'verb {verb} requires entity parameter {action_dictionary}')
+            self._add_message(f'verb {verb} requires entity parameter {details}')
 
     def action_add_bot(self, x=None, y=None, direction=None):
         if self.check_add_parameters(x, y, direction):
@@ -88,10 +88,10 @@ class World:
         return True
 
 
-    def action_turn(self, entity_object, direction=None, **action_dictionary):
+    def action_turn(self, entity_object, direction=None, **details):
         match direction:
             case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
-                self.turn_action(entity_object, direction)
+                self.turn(entity_object, direction)
             case _:
                 self._add_message(f'unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST')
 
@@ -111,17 +111,17 @@ class World:
         else:
             self._add_bot_message(bot, 'drop location was not open')
 
-    def step_action(self, bot):
+    def step(self, bot):
         self.map.attempt_move(bot.id, bot.forward_location())  # changes world version
         self.set_bot_vision(bot)
         self.set_bot_scent(bot)
 
-    def take_forward_action(self, bot):
+    def take_forward(self, bot):
         is_block = lambda e: e.name == 'B'
         if block := self.map.take_conditionally_at(bot.forward_location(), is_block):
             bot.receive(block)
 
-    def turn_action(self, world_bot, direction_name):
+    def turn(self, world_bot, direction_name):
         # no change on unrecognized name
         if direction_name in ['NORTH', 'EAST', 'SOUTH', 'WEST']:
             world_bot.direction = Direction.from_name(direction_name)

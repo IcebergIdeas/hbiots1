@@ -48,7 +48,7 @@ class TestBot:
         world.add_block(4, 6)
         world.add_block(6, 6)
         # world.add_block(6, 5)  # uncomment to see test fail
-        world.take_forward_action(world_bot)
+        world.take_forward(world_bot)
         assert not world_bot.has_block()
 
     def test_bot_drops_and_world_receives(self):

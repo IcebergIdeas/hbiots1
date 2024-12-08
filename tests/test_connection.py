@@ -56,7 +56,7 @@ class TestConnection:
         bot_id = world.add_bot(5, 5)
         world_bot = world.map.at_id(bot_id)
         world.add_block(6, 5)
-        world.take_forward_action(world_bot)
+        world.take_forward(world_bot)
         assert world_bot.holding
         info = world.fetch(bot_id)
         assert not isinstance(info['held_entity'], WorldEntity)
