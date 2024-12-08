@@ -37,6 +37,15 @@ class TestWorldRequests:
         world.execute_requests(rq)
         assert bot.direction == Direction.NORTH
 
+    def test_turn_with_excess_parameters(self):
+        world = World(10, 10)
+        bot_id = world.add_bot(5, 5)
+        bot = world.entity_from_id(bot_id)
+        assert bot.direction == Direction.EAST
+        rq = [ { 'entity': bot_id, 'verb': 'turn', 'direction': 'NORTH', 'spurious': 'extra'}]
+        world.execute_requests(rq)
+        assert bot.direction == Direction.NORTH
+
     def test_bot_direction_verbs(self):
         world = World(10, 10)
         bot_id = world.add_bot(5, 5)
@@ -58,6 +67,22 @@ class TestWorldRequests:
                    'x': 5,
                    'y': 6,
                    'direction': 'EAST'}
+        rq = [ command ]
+        result = world.execute_requests(rq)['updates']
+        assert len(result) == 1
+        bot_info = result[0]
+        assert bot_info['eid'] == WorldEntity.next_id
+        assert bot_info['location'] == Location(5, 6)
+
+    def test_add_bot_with_spurious_parameter(self):
+        WorldEntity.next_id = 100
+        world = World(10, 10)
+        command = {'entity': 0,
+                   'verb': 'add_bot',
+                   'x': 5,
+                   'y': 6,
+                   'direction': 'EAST',
+                   'spurious': 'extra'}
         rq = [ command ]
         result = world.execute_requests(rq)['updates']
         assert len(result) == 1

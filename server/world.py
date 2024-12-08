@@ -74,7 +74,7 @@ class World:
         else:
             self._add_message(f'verb {verb} requires entity parameter {details}')
 
-    def action_add_bot(self, x=None, y=None, direction=None):
+    def action_add_bot(self, x=None, y=None, direction=None, **ignored):
         if self.check_add_parameters(x, y, direction):
             self.add_bot_action(x, y, direction)
 
@@ -88,14 +88,14 @@ class World:
         return True
 
 
-    def action_turn(self, entity_object, direction=None, **details):
+    def action_turn(self, entity_object, direction=None, **ignored):
         match direction:
             case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
                 self.turn(entity_object, direction)
             case _:
                 self._add_message(f'unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST')
 
-    def action_drop(self, entity_object, holding=None, **action_dictionary):
+    def action_drop(self, entity_object, holding=None, **ignored):
         self.drop_forward_action(entity_object, holding)
 
     def add_bot_action(self, x, y, direction):
