@@ -62,11 +62,11 @@ class World:
     def execute_action(self, verb=None, entity_object=None, **details):
         if entity_object or verb == 'add_bot':
             match verb:
-                case 'add_bot': self.action_add_bot(**details)
+                case 'add_bot': self.add_bot_using(**details)
                 case 'step': self.step(entity_object)
-                case 'drop': self.action_drop(entity_object, **details)
+                case 'drop': self.drop_using(entity_object, **details)
                 case 'take': self.take_forward(entity_object)
-                case 'turn': self.action_turn(entity_object, **details)
+                case 'turn': self.turn_using(entity_object, **details)
                 case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
                     self.turn(entity_object, direction)
                 case _:
@@ -74,7 +74,7 @@ class World:
         else:
             self._add_message(f'verb {verb} requires entity parameter {details}')
 
-    def action_add_bot(self, x=None, y=None, direction=None, **ignored):
+    def add_bot_using(self, x=None, y=None, direction=None, **ignored):
         if self.check_add_parameters(x, y, direction):
             self.add_bot_action(x, y, direction)
 
@@ -88,14 +88,14 @@ class World:
         return True
 
 
-    def action_turn(self, entity_object, direction=None, **ignored):
+    def turn_using(self, entity_object, direction=None, **ignored):
         match direction:
             case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
                 self.turn(entity_object, direction)
             case _:
                 self._add_message(f'unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST')
 
-    def action_drop(self, entity_object, holding=None, **ignored):
+    def drop_using(self, entity_object, holding=None, **ignored):
         self.drop_forward_action(entity_object, holding)
 
     def add_bot_action(self, x, y, direction):
