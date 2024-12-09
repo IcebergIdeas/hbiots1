@@ -35,14 +35,14 @@ class TestMap:
         map = Map(10, 10)
         bot = WorldEntity.bot(5, 5, Direction.EAST)
         map.place(bot)
-        map.attempt_move(bot.id, Location(6, 6))
+        map.attempt_move(bot.key, Location(6, 6))
         assert bot.location == Location(6, 6)
 
     def test_map_unsuccessful_move(self):
         map = Map(10, 10)
         bot = WorldEntity.bot(5, 5, Direction.EAST)
         map.place(bot)
-        map.attempt_move(bot.id, Location(10, 11))
+        map.attempt_move(bot.key, Location(10, 11))
         assert bot.location == Location(5, 5)
 
     def test_map_recognizes_open_location(self):

@@ -22,10 +22,10 @@ class TestBot:
         assert bot.location == Location(10, 10)
 
     def test_bot_in_world_gets_next_id(self):
-        WorldEntity.next_id = 100
+        WorldEntity.next_key = 100
         world = World(10, 10)
         bot = DirectConnection(world).add_bot(5, 5)
-        assert bot.id == 101
+        assert bot.key == 101
 
     def test_wandering_better(self):
         bot = Bot(5, 5)
@@ -42,7 +42,7 @@ class TestBot:
     def test_bot_cant_take_diagonally(self):
         world = World(10, 10)
         client_bot = DirectConnection(world).add_bot(5, 5)
-        world_bot = world.map.at_id(client_bot.id)
+        world_bot = world.map.at_id(client_bot.key)
         world.add_block(4, 4)
         world.add_block(6, 4)
         world.add_block(4, 6)
@@ -61,7 +61,7 @@ class TestBot:
         assert (block := world.map.at_xy(6, 5)) is not None
 
         self.do_take(cohort, connection, client_bot)
-        world_bot = world.map.at_id(client_bot.id)
+        world_bot = world.map.at_id(client_bot.key)
         assert world_bot.has_block()
         assert world.map.at_xy(6, 5) is None
 
@@ -69,11 +69,11 @@ class TestBot:
         assert world.map.at_xy(6, 5) is block
 
     def do_drop(self, cohort, connection, client_bot, block_id):
-        rq = [{'bot_key': client_bot.id, 'verb': 'drop', 'holding': block_id}]
+        rq = [{'bot_key': client_bot.key, 'verb': 'drop', 'holding': block_id}]
         connection.run_request(cohort, rq)
 
     def do_take(self, cohort, connection, client_bot):
-        rq1 = [{'bot_key': client_bot.id, 'verb': 'take'}]
+        rq1 = [{'bot_key': client_bot.key, 'verb': 'take'}]
         connection.run_request(cohort, rq1)
 
     def test_bot_sets_old_location(self):
@@ -86,8 +86,8 @@ class TestBot:
     def test_cannot_set_into_knowledge(self):
         bot = Bot(10, 10)
         with pytest.raises(AttributeError) as error:
-            bot.id = 101
-        assert str(error.value) == "cannot set 'id'"
+            bot.key = 101
+        assert str(error.value) == "cannot set 'key'"
 
     def test_json(self):
         s = json.dumps('3')

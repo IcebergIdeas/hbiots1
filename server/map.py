@@ -33,7 +33,7 @@ class Map:
 
     def place(self, entity):
         assert isinstance(entity, WorldEntity)
-        self.contents[entity.id] = entity
+        self.contents[entity.key] = entity
 
     def map_is_OK(self, other: [MapTestEntity]):
         other_entities = other.get_entities()
@@ -96,7 +96,7 @@ class Map:
     def take_conditionally_at(self, take_location, condition):
         item = self.at_xy(take_location.x, take_location.y)
         if item and condition(item):
-            self.remove(item.id)
+            self.remove(item.key)
             return item
         else:
             return None

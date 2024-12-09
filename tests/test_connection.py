@@ -16,10 +16,10 @@ class TestConnection:
         connection = DirectConnection(world)
         bot = connection.add_bot(10, 10)
         cohort = Cohort(bot)
-        rq = [{'bot_key': bot.id, 'verb': 'step'}]
+        rq = [{'bot_key': bot.key, 'verb': 'step'}]
         connection.run_request(cohort, rq)
         assert bot.location == Location(11, 10)
-        assert world.map.at_xy(11, 10).id == bot.id
+        assert world.map.at_xy(11, 10).key == bot.key
 
     def test_step_north(self):
         world = World(10, 10)
@@ -27,7 +27,7 @@ class TestConnection:
         client_bot = connection.add_bot(5, 5, Direction.NORTH)
         location = client_bot.location
         cohort = Cohort(client_bot)
-        rq = [{'bot_key': client_bot.id, 'verb': 'step'}]
+        rq = [{'bot_key': client_bot.key, 'verb': 'step'}]
         connection.run_request(cohort, rq)
         assert client_bot.location == location + Direction.NORTH
 
@@ -35,11 +35,11 @@ class TestConnection:
         world = World(10, 10)
         connection = DirectConnection(world)
         client_bot = connection.add_bot(5, 5)
-        bot_id = client_bot.id
+        bot_id = client_bot.key
         world.add_block(6, 5)
         assert not world.is_empty(Location(6, 5))
         cohort = Cohort(client_bot)
-        rq = [{'bot_key': client_bot.id, 'verb': 'take'}]
+        rq = [{'bot_key': client_bot.key, 'verb': 'take'}]
         connection.run_request(cohort, rq)
         world_bot = world.map.at_id(bot_id)
         assert world_bot.has_block()

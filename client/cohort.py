@@ -5,7 +5,7 @@ class Cohort:
     def __init__(self, bot=None):
         self.bots = {}
         if bot:
-            self.bots[bot.id] = bot
+            self.bots[bot.key] = bot
         self.clear_bot_creation()
 
     # noinspection PyAttributeOutsideInit
@@ -45,13 +45,13 @@ class Cohort:
     def create_action(self, bot, verb):
         match verb:
             case 'drop':
-                return {'bot_key': bot.id, 'verb': verb, 'holding': bot.holding}
+                return {'bot_key': bot.key, 'verb': verb, 'holding': bot.holding}
             case _:
-                return {'bot_key': bot.id, 'verb': verb}
+                return {'bot_key': bot.key, 'verb': verb}
 
     def update(self, results):
         for result_dict in results['updates']:
-            bot_id = result_dict['eid']
+            bot_id = result_dict['key']
             bot = self.by_id(bot_id)
             bot.update(result_dict)
 

@@ -6,12 +6,12 @@ from shared.location import Location
 
 
 class WorldEntity:
-    next_id = 100
+    next_key = 100
 
     def __init__(self, kind: EntityKind, x: int, y: int, direction: Direction):
         self._dict = dict()
-        WorldEntity.next_id += 1
-        self._dict['eid'] = self.next_id
+        WorldEntity.next_key += 1
+        self._dict['key'] = self.next_key
         self._dict['kind'] = kind
         self.aroma = 0
         self.location = Location(x, y)
@@ -42,8 +42,8 @@ class WorldEntity:
         self._dict['aroma'] = aroma
 
     @property
-    def id(self):
-        return self._dict['eid']
+    def key(self):
+        return self._dict['key']
 
     @property
     def direction(self):
@@ -105,10 +105,10 @@ class WorldEntity:
         self._dict['held_entity'] = value
 
     def as_dictionary(self):
-        held = 0 if not self.holding else self.holding.id
+        held = 0 if not self.holding else self.holding.key
         return {'direction': self.direction,
                 'held_entity': held,
-                'eid': self.id,
+                'key': self.key,
                 'location': self.location,
                 'scent': self.scent,
                 'vision': self.vision}

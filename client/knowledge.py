@@ -12,7 +12,7 @@ class Knowledge:
     def __init__(self, location, direction):
         # world write / client read only
         self.direction = direction
-        self.id = None
+        self.key = None
         self.location = location
         self._held_entity = None
         self._scent = 0
@@ -22,7 +22,7 @@ class Knowledge:
 
     def update(self, update_dictionary):
         self.direction = update_dictionary['direction']
-        self.id = update_dictionary['eid']
+        self.key = update_dictionary['key']
         self.location = update_dictionary['location']
         self.receive(update_dictionary['held_entity'])
         self._scent = update_dictionary['scent']

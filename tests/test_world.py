@@ -71,7 +71,7 @@ class TestWorld:
         block = world.entity_from_id(block_id)
         bot.receive(block)
         assert bot.has(block)
-        world.drop_forward_action(bot, block.id)
+        world.drop_forward_action(bot, block.key)
         assert not bot.has(block)
         assert world.map.at_xy(5, 4) is block
 

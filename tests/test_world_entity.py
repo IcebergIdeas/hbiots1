@@ -6,7 +6,7 @@ from shared.location import Location
 
 class TestWorldEntity:
     def is_valid(self, entity):
-        assert entity._dict['eid'] == entity.id
+        assert entity._dict['key'] == entity.key
         assert entity._dict['direction'] == entity.direction
         assert entity._dict['held_entity'] == entity.holding
         assert entity._dict['location'] == entity.location
@@ -33,9 +33,9 @@ class TestWorldEntity:
         assert entity.vision == []
         assert self.is_valid(entity)
         fetched = entity.as_dictionary()
-        assert fetched['eid'] == entity.id
+        assert fetched['key'] == entity.key
         assert fetched['direction'] == Direction.EAST
-        assert fetched['held_entity'] == block.id
+        assert fetched['held_entity'] == block.key
         assert fetched['location'] == Location(6, 4)
         assert fetched['scent'] == 37
         assert fetched['vision'] == []

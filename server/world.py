@@ -17,14 +17,14 @@ class World:
 
     def _add_entity(self, entity):
         self.map.place(entity)
-        return entity.id
+        return entity.key
 
     def _add_message(self, msg):
         message_dict = { 'message': msg}
         self.messages.append(message_dict)
 
     def _add_bot_message(self, bot, msg):
-        message_dict = { 'bot_id': bot.id, 'message': msg}
+        message_dict = { 'bot_id': bot.key, 'message': msg}
         self.messages.append(message_dict)
 
     def entity_from_id(self, bot_id):
@@ -111,7 +111,7 @@ class World:
             self._add_bot_message(bot, 'drop location was not open')
 
     def step(self, bot):
-        self.map.attempt_move(bot.id, bot.forward_location())  # changes world version
+        self.map.attempt_move(bot.key, bot.forward_location())  # changes world version
         self.set_bot_vision(bot)
         self.set_bot_scent(bot)
 

@@ -9,7 +9,7 @@ from shared.location import Location
 
 class Bot:
     holding = Forwarder('_knowledge')
-    id = Forwarder('_knowledge')
+    key = Forwarder('_knowledge')
     location = Forwarder('_knowledge')
     new_direction_name = Forwarder('_knowledge')
     update = Forwarder('_knowledge')

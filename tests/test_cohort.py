@@ -8,8 +8,8 @@ from shared.location import Location
 
 
 class FakeBot:
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, key):
+        self.key = key
         self.actions = []
 
     def do(self, actions):
@@ -34,7 +34,7 @@ class TestCohort:
         message = cohort.create_message()
         assert len(message) == 1
         assert message[0]['verb'] == 'step'
-        assert message[0]['bot_key'] == bot.id
+        assert message[0]['bot_key'] == bot.key
 
     def test_really_tricky_bot(self):
         bot = FakeBot(101)
@@ -59,14 +59,14 @@ class TestCohort:
 
     def test_adding_via_surprise_knowledge(self):
         cohort = Cohort()
-        WorldEntity.next_id = 100
+        WorldEntity.next_key = 100
         new_bot = WorldEntity.bot(5, 6, Direction.EAST)
         dict = new_bot.as_dictionary()
         updates = [ dict ]
         messages = []
         results = { 'messages': messages, 'updates': updates }
         cohort.update(results)
-        client_bot = cohort.bots[new_bot.id]
+        client_bot = cohort.bots[new_bot.key]
         assert client_bot.location == Location(5, 6)
 
     def test_adding_bots(self):
@@ -102,11 +102,11 @@ class TestCohort:
         # invasive to cover missing forwarder
         cohort = Cohort()
         test_bot = Bot(5, 5, Direction.EAST)
-        test_bot._knowledge.id = 101
+        test_bot._knowledge.key = 101
         test_bot._knowledge._held_entity = 666
         action = cohort.create_action(test_bot, 'drop')
         assert action['verb'] == 'drop'
-        assert action['bot_key'] == test_bot.id
+        assert action['bot_key'] == test_bot.key
         assert action['holding'] == 666
 
 

@@ -21,7 +21,7 @@ class TestWorldRequests:
         rq = [ {'bot_key': bot_id, 'verb': 'take'}]
         world.execute_requests(rq)
         world_bot = world.entity_from_id(bot_id)
-        assert world_bot.holding.id == block_id
+        assert world_bot.holding.key == block_id
         assert world.map.at_xy(6, 5) is None
         block = world.entity_from_id(block_id)
         rq = [ { 'bot_key': bot_id, 'verb': 'drop', 'holding': block_id } ]
@@ -60,7 +60,7 @@ class TestWorldRequests:
             assert bot.direction == result
 
     def test_add_bot(self):
-        WorldEntity.next_id = 100
+        WorldEntity.next_key = 100
         world = World(10, 10)
         command = {'bot_key': 0,
                    'verb': 'add_bot',
@@ -71,11 +71,11 @@ class TestWorldRequests:
         result = world.execute_requests(rq)['updates']
         assert len(result) == 1
         bot_info = result[0]
-        assert bot_info['eid'] == WorldEntity.next_id
+        assert bot_info['key'] == WorldEntity.next_key
         assert bot_info['location'] == Location(5, 6)
 
     def test_add_bot_with_spurious_parameter(self):
-        WorldEntity.next_id = 100
+        WorldEntity.next_key = 100
         world = World(10, 10)
         command = {'bot_key': 0,
                    'verb': 'add_bot',
@@ -87,11 +87,11 @@ class TestWorldRequests:
         result = world.execute_requests(rq)['updates']
         assert len(result) == 1
         bot_info = result[0]
-        assert bot_info['eid'] == WorldEntity.next_id
+        assert bot_info['key'] == WorldEntity.next_key
         assert bot_info['location'] == Location(5, 6)
 
     def test_zero_id(self):
-        WorldEntity.next_id = 100
+        WorldEntity.next_key = 100
         world = World(10, 10)
         command = {'bot_key': 0,
                    'verb': 'step'}
@@ -100,7 +100,7 @@ class TestWorldRequests:
         assert 'requires bot_key parameter' in messages[0]['message']
 
     def test_returns_results(self):
-        WorldEntity.next_id = 100
+        WorldEntity.next_key = 100
         world = World(10, 10)
         bot_1_id = world.add_bot(5, 5)
         bot_2_id = world.add_bot(7, 7, Direction.NORTH)
@@ -114,7 +114,7 @@ class TestWorldRequests:
         assert len(result) == 2
         for d in result:
             # print(d)
-            match d['eid']:
+            match d['key']:
                 case 101:
                     assert d['location'] == Location(5, 4)
                 case 102:
