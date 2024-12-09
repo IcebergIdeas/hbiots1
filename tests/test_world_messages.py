@@ -17,13 +17,13 @@ class TestWorldMessages:
 
     def test_no_verb(self):
         world = World(10, 10)
-        requests = [{'entity_object': "fake", 'vorb': 'add_bot'}]
+        requests = [{'bot': "fake", 'vorb': 'add_bot'}]
         messages = world.execute_requests(requests)['messages']
         assert 'Unknown action' in messages[0]['message']
 
     def test_bad_verb(self):
         world = World(10, 10)
-        requests = [{'entity_object': "fake", 'verb': 'whatever'}]
+        requests = [{'bot': "fake", 'verb': 'whatever'}]
         messages = world.execute_requests(requests)['messages']
         assert "Unknown action verb='whatever'" in messages[0]['message']
 
@@ -31,7 +31,7 @@ class TestWorldMessages:
         world = World(10, 10)
         requests = [ {'verb': 'step'}]
         messages = world.execute_requests(requests)['messages']
-        assert 'requires entity parameter' in messages[0]['message']
+        assert 'requires bot_key parameter' in messages[0]['message']
 
     def test_action_must_be_dict(self):
         world = World(10, 10)

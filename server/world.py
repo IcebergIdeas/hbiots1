@@ -56,23 +56,23 @@ class World:
     def assign_parameters(self, bot_key=None, **parameters):
         if bot_key:
             self.ids_used.add(bot_key)
-            parameters['entity_object'] = self.entity_from_id(bot_key)
+            parameters['bot'] = self.entity_from_id(bot_key)
         return parameters
 
-    def execute_action(self, verb=None, entity_object=None, **details):
-        if entity_object or verb == 'add_bot':
+    def execute_action(self, verb=None, bot=None, **details):
+        if bot or verb == 'add_bot':
             match verb:
                 case 'add_bot': self.add_bot_using(**details)
-                case 'step': self.step(entity_object)
-                case 'drop': self.drop_using(entity_object, **details)
-                case 'take': self.take_forward(entity_object)
-                case 'turn': self.turn_using(entity_object, **details)
+                case 'step': self.step(bot)
+                case 'drop': self.drop_using(bot, **details)
+                case 'take': self.take_forward(bot)
+                case 'turn': self.turn_using(bot, **details)
                 case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
-                    self.turn(entity_object, direction)
+                    self.turn(bot, direction)
                 case _:
                     self._add_message(f'Unknown action {verb=} {details=}')
         else:
-            self._add_message(f'verb {verb} requires entity parameter {details}')
+            self._add_message(f'verb {verb} requires bot_key parameter {details}')
 
     def add_bot_using(self, x=None, y=None, direction=None, **ignored):
         if self.check_add_parameters(x, y, direction):
