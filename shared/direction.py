@@ -12,6 +12,22 @@ class Direction:
         self.x = x
         self.y = y
 
+        if Direction.NORTH is None:
+            Direction.NORTH = True # avoid recursion forever
+            Direction.NORTH = Direction(0, -1)
+            Direction.EAST = Direction(1, 0)
+            Direction.SOUTH = Direction(0, 1)
+            Direction.WEST = Direction(-1, 0)
+            Direction.CENTER = Direction(0, 0)
+            Direction.NORTH_WEST = Direction(-1, -1)
+            Direction.NORTH_EAST = Direction(1, -1)
+            Direction.SOUTH_WEST = Direction(-1, 1)
+            Direction.SOUTH_EAST = Direction(1, 1)
+            Direction.ALL = (Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST)
+            Direction.EVERY = (Direction.NORTH_WEST, Direction.NORTH, Direction.NORTH_EAST,
+                               Direction.WEST, Direction.CENTER, Direction.EAST,
+                               Direction.SOUTH_WEST, Direction.SOUTH, Direction.SOUTH_EAST)
+
     @classmethod
     def from_name(cls, string):
         match string:
@@ -61,18 +77,4 @@ class Direction:
             case _:
                 raise ValueError
 
-
-
-Direction.NORTH = Direction(0, -1)
-Direction.EAST = Direction(1, 0)
-Direction.SOUTH = Direction(0, 1)
-Direction.WEST = Direction(-1, 0)
-Direction.CENTER = Direction(0, 0)
-Direction.NORTH_WEST = Direction(-1, -1)
-Direction.NORTH_EAST = Direction(1, -1)
-Direction.SOUTH_WEST = Direction(-1, 1)
-Direction.SOUTH_EAST = Direction(1, 1)
-Direction.ALL = (Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST)
-Direction.EVERY = (Direction.NORTH_WEST, Direction.NORTH, Direction.NORTH_EAST,
-                   Direction.WEST, Direction.CENTER, Direction.EAST,
-                   Direction.SOUTH_WEST, Direction.SOUTH, Direction.SOUTH_EAST)
+init = Direction(0,1)
