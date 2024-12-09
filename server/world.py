@@ -87,15 +87,15 @@ class World:
             return False
         return True
 
-    def turn_using(self, entity_object, direction=None, **ignored):
+    def turn_using(self, bot, direction=None, **ignored):
         match direction:
             case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
-                self.turn(entity_object, direction)
+                self.turn(bot, direction)
             case _:
                 self._add_message(f'unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST')
 
-    def drop_using(self, entity_object, holding=None, **ignored):
-        self.drop_forward_action(entity_object, holding)
+    def drop_using(self, bot, holding=None, **ignored):
+        self.drop_forward_action(bot, holding)
 
     def add_bot_action(self, x, y, direction):
         bot_id = self.add_bot(x, y, Direction.from_name(direction))
@@ -125,8 +125,8 @@ class World:
         if direction_name in ['NORTH', 'EAST', 'SOUTH', 'WEST']:
             world_bot.direction = Direction.from_name(direction_name)
 
-    def fetch(self, entity_id):
-        return self.entity_from_id(entity_id).as_dictionary()
+    def fetch(self, bot_key):
+        return self.entity_from_id(bot_key).as_dictionary()
 
     def set_bot_vision(self, bot):
         bot.vision = self.map.vision_at(bot.location)
