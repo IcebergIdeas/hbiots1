@@ -53,10 +53,10 @@ class World:
             else:
                 self._add_message(f'action must be dictionary {action}')
 
-    def assign_parameters(self, entity=None, **parameters):
-        if entity:
-            self.ids_used.add(entity)
-            parameters['entity_object'] = self.entity_from_id(entity)
+    def assign_parameters(self, bot_key=None, **parameters):
+        if bot_key:
+            self.ids_used.add(bot_key)
+            parameters['entity_object'] = self.entity_from_id(bot_key)
         return parameters
 
     def execute_action(self, verb=None, entity_object=None, **details):
@@ -86,7 +86,6 @@ class World:
             self._add_message(f'add_bot has unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST')
             return False
         return True
-
 
     def turn_using(self, entity_object, direction=None, **ignored):
         match direction:

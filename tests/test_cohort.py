@@ -34,7 +34,7 @@ class TestCohort:
         message = cohort.create_message()
         assert len(message) == 1
         assert message[0]['verb'] == 'step'
-        assert message[0]['entity'] == bot.id
+        assert message[0]['bot_key'] == bot.id
 
     def test_really_tricky_bot(self):
         bot = FakeBot(101)
@@ -42,9 +42,9 @@ class TestCohort:
         cohort = Cohort(bot)
         message = cohort.create_message()
         assert len(message) == 3
-        assert message[0] == {'verb': 'step', 'entity': 101}
-        assert message[1] == {'verb': 'take', 'entity': 101}
-        assert message[2] == {'verb': 'drop', 'entity': 101, 'holding': 666}
+        assert message[0] == {'verb': 'step', 'bot_key': 101}
+        assert message[1] == {'verb': 'take', 'bot_key': 101}
+        assert message[2] == {'verb': 'drop', 'bot_key': 101, 'holding': 666}
 
     def test_bot_turning(self):
         bot = FakeBot(101)
@@ -52,10 +52,10 @@ class TestCohort:
         cohort = Cohort(bot)
         message = cohort.create_message()
         assert len(message) == 4
-        assert message[0] == {'verb': 'NORTH', 'entity': 101}
-        assert message[1] == {'verb': 'EAST', 'entity': 101}
-        assert message[2] == {'verb': 'SOUTH', 'entity': 101}
-        assert message[3] == {'verb': 'WEST', 'entity': 101}
+        assert message[0] == {'verb': 'NORTH', 'bot_key': 101}
+        assert message[1] == {'verb': 'EAST', 'bot_key': 101}
+        assert message[2] == {'verb': 'SOUTH', 'bot_key': 101}
+        assert message[3] == {'verb': 'WEST', 'bot_key': 101}
 
     def test_adding_via_surprise_knowledge(self):
         cohort = Cohort()
@@ -106,7 +106,7 @@ class TestCohort:
         test_bot._knowledge._held_entity = 666
         action = cohort.create_action(test_bot, 'drop')
         assert action['verb'] == 'drop'
-        assert action['entity'] == test_bot.id
+        assert action['bot_key'] == test_bot.id
         assert action['holding'] == 666
 
 

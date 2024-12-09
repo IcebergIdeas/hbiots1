@@ -69,11 +69,11 @@ class TestBot:
         assert world.map.at_xy(6, 5) is block
 
     def do_drop(self, cohort, connection, client_bot, block_id):
-        rq = [{'entity': client_bot.id, 'verb': 'drop', 'holding': block_id}]
+        rq = [{'bot_key': client_bot.id, 'verb': 'drop', 'holding': block_id}]
         connection.run_request(cohort, rq)
 
     def do_take(self, cohort, connection, client_bot):
-        rq1 = [{'entity': client_bot.id, 'verb': 'take'}]
+        rq1 = [{'bot_key': client_bot.id, 'verb': 'take'}]
         connection.run_request(cohort, rq1)
 
     def test_bot_sets_old_location(self):

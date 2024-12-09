@@ -26,7 +26,7 @@ class Cohort:
     def add_desired_bots(self, message):
         for i in range(self._bots_to_add):
             x, y, d = self._callback(i, self._callback)
-            action = {'entity': 0,
+            action = {'bot_key': 0,
                       'verb': 'add_bot',
                       'x': x,
                       'y': y,
@@ -45,9 +45,9 @@ class Cohort:
     def create_action(self, bot, verb):
         match verb:
             case 'drop':
-                return {'entity': bot.id, 'verb': verb, 'holding': bot.holding}
+                return {'bot_key': bot.id, 'verb': verb, 'holding': bot.holding}
             case _:
-                return {'entity': bot.id, 'verb': verb}
+                return {'bot_key': bot.id, 'verb': verb}
 
     def update(self, results):
         for result_dict in results['updates']:

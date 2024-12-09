@@ -11,7 +11,7 @@ class TestWorldMessages:
 
     def test_requests_must_be_list(self):
         world = World(10, 10)
-        requests = { 'entity': 0, 'verb': 'add_bot'}
+        requests = { 'bot_key': 0, 'verb': 'add_bot'}
         messages = world.execute_requests(requests)['messages']
         assert any('must be a list' in message['message'] for message in messages)
 
@@ -42,7 +42,7 @@ class TestWorldMessages:
     def test_invalid_turn_message(self):
         world = World(10, 10)
         bot_id = world.add_bot(5, 5)
-        requests = [{'entity': bot_id, 'verb': 'turn', 'direction': 'LEFT'}]
+        requests = [{'bot_key': bot_id, 'verb': 'turn', 'direction': 'LEFT'}]
         messages = world.execute_requests(requests)['messages']
         expected = 'unknown direction LEFT, should be NORTH, EAST, SOUTH, or WEST'
         assert expected in messages[0]['message']
@@ -50,7 +50,7 @@ class TestWorldMessages:
     def test_add_bot_bad_direction(self):
         world = World(10, 10)
         requests = [ {'verb': 'add_bot',
-                      'entity': 0,
+                      'bot_key': 0,
                       'x': 5, 'y': 5,
                       'direction': 'WRONG'}]
         messages = world.execute_requests(requests)['messages']
