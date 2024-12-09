@@ -1,4 +1,5 @@
 import random
+from typing import Self
 
 from server.entity_kind import EntityKind
 from shared.direction import Direction
@@ -94,14 +95,14 @@ class WorldEntity:
         return self.location.y
 
     @property
-    def holding(self):
+    def holding(self) -> Self:
         try:
             return self._dict['held_entity']
         except KeyError:
             return None
 
     @holding.setter
-    def holding(self, value):
+    def holding(self, value: Self):
         self._dict['held_entity'] = value
 
     def as_dictionary(self):
@@ -122,9 +123,9 @@ class WorldEntity:
     def has_block(self):
         return self.holding and self.holding.kind is EntityKind.BLOCK
 
-    def receive(self, entity):
+    def receive(self, entity: Self):
         self.holding = entity
 
-    def remove(self, entity):
+    def remove(self, entity: Self):
         if self.holding is entity:
             self.holding = None

@@ -12,8 +12,8 @@ class TestPython:
     def test_match_case_dict(self):
         d = {'bot_key': 101, 'verb': 'take'}
         match d:
-            case {'bot_key': entity_id, 'verb': verb}:
-                assert entity_id == 101
+            case {'bot_key': bot_key, 'verb': verb}:
+                assert bot_key == 101
                 assert verb == 'take'
             case _:
                 assert False  # should never get here
@@ -31,32 +31,33 @@ class TestPython:
         match d:
             case {'bot_key': 0, 'verb': 'add_bot'}:
                 assert False  # should not match
-            case { 'bot_key': entity_id, 'verb': 'take'}:
+            case { 'bot_key': bot_key, 'verb': 'take'}:
                 assert False  # not here
-            case { 'bot_key': entity_id, 'verb': verb}:
-                assert entity_id == 101
+            case { 'bot_key': bot_key, 'verb': verb}:
+                assert bot_key == 101
                 assert verb == 'add_bot'
             case _:
                 assert False  # should match above
 
     def test_plug_in_entity_object(self):
-        def entity_from_id(entity_id):
-            return f'entity_object_{entity_id}'
+        # just a test of how we might do things
+        def entity_from_key(key):
+            return f'entity_object_{key}'
         d = {'bot_key': 0, 'verb': 'add_bot'}
-        self.check_cases(d, entity_from_id)
+        self.check_cases(d, entity_from_key)
         d = {'bot_key': 101, 'verb': 'take'}
-        self.check_cases(d, entity_from_id)
+        self.check_cases(d, entity_from_key)
 
-    def check_cases(self, d, entity_from_id):
+    def check_cases(self, d, lookup):
         match d:
             case {'bot_key': 0}:
-                d['entity_object'] = None
-            case {'bot_key': entity_id}:
-                d['entity_object'] = entity_from_id(entity_id)
+                d['entity'] = None
+            case {'bot_key': bot_key}:
+                d['entity'] = lookup(bot_key)
         match d:
-            case {'entity_object': None, 'verb': 'add_bot'}:
+            case {'entity': None, 'verb': 'add_bot'}:
                 pass
-            case {'entity_object': obj, 'verb': verb}:
+            case {'entity': obj, 'verb': verb}:
                 assert verb == 'take'
                 assert obj == 'entity_object_101'
             case _:

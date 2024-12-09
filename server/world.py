@@ -12,9 +12,6 @@ class World:
     def add_block(self, x, y, aroma=0):
         return self._add_entity(WorldEntity.block(x, y, aroma))
 
-    def add_bot(self, x, y, direction = Direction.EAST):
-        return self._add_entity(WorldEntity.bot(x, y, direction))
-
     def _add_entity(self, entity):
         self.map.place(entity)
         return entity.key
@@ -75,31 +72,28 @@ class World:
             self._add_message(f'verb {verb} requires bot_key parameter {details}')
 
     def add_bot_using(self, x=None, y=None, direction=None, **ignored):
-        if self.check_add_parameters(x, y, direction):
+        if self.add_bot_check_parameters(x, y, direction):
             self.add_bot_action(x, y, direction)
 
-    def check_add_parameters(self, x, y, direction):
+    def add_bot_check_parameters(self, x, y, direction):
         if not x or not y:
             self._add_message('add_bot command requires x and y parameters')
             return False
         if direction not in ['NORTH' , 'EAST' , 'SOUTH' , 'WEST']:
-            self._add_message(f'add_bot has unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST')
+            self._add_message(f'add_bot has unknown direction {direction}, '
+                              f'should be NORTH, EAST, SOUTH, or WEST')
             return False
         return True
-
-    def turn_using(self, bot, direction=None, **ignored):
-        match direction:
-            case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
-                self.turn(bot, direction)
-            case _:
-                self._add_message(f'unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST')
-
-    def drop_using(self, bot, holding=None, **ignored):
-        self.drop_forward_action(bot, holding)
 
     def add_bot_action(self, x, y, direction):
         bot_id = self.add_bot(x, y, Direction.from_name(direction))
         self.ids_used.add(bot_id)
+
+    def add_bot(self, x, y, direction = Direction.EAST):
+        return self._add_entity(WorldEntity.bot(x, y, direction))
+
+    def drop_using(self, bot, holding=None, **ignored):
+        self.drop_forward_action(bot, holding)
 
     def drop_forward_action(self, bot, holding):
         self.drop_forward(bot, self.entity_from_id(holding))
@@ -119,6 +113,14 @@ class World:
         is_block = lambda e: e.name == 'B'
         if block := self.map.take_conditionally_at(bot.forward_location(), is_block):
             bot.receive(block)
+
+    def turn_using(self, bot, direction=None, **ignored):
+        match direction:
+            case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
+                self.turn(bot, direction)
+            case _:
+                self._add_message(f'unknown direction {direction}, '
+                                  f'should be NORTH, EAST, SOUTH, or WEST')
 
     def turn(self, world_bot, direction_name):
         # no change on unrecognized name
