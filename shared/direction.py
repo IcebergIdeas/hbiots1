@@ -6,6 +6,7 @@ class Direction:
     WEST = None
     ALL = None
     EVERY = None
+    ALL_NAMES = ['NORTH', 'EAST', 'SOUTH', 'WEST']
 
     def __init__(self, x, y):
         self.x = x

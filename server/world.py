@@ -79,7 +79,7 @@ class World:
         if not x or not y:
             self._add_message('add_bot command requires x and y parameters')
             return False
-        if direction not in ['NORTH' , 'EAST' , 'SOUTH' , 'WEST']:
+        if direction not in Direction.ALL_NAMES:
             self._add_message(f'add_bot has unknown direction {direction},'
                               f' should be NORTH, EAST, SOUTH, or WEST')
             return False
@@ -119,12 +119,12 @@ class World:
             case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
                 self.turn(bot, direction)
             case _:
-                self._add_message(f'unknown direction {direction}, '
+                self._add_message(f'turn has unknown direction {direction}, '
                                   f'should be NORTH, EAST, SOUTH, or WEST')
 
     def turn(self, world_bot, direction_name):
         # no change on unrecognized name
-        if direction_name in ['NORTH', 'EAST', 'SOUTH', 'WEST']:
+        if direction_name in Direction.ALL_NAMES:
             world_bot.direction = Direction.from_name(direction_name)
 
     def fetch(self, bot_key):
