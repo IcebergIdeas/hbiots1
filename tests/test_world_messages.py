@@ -31,7 +31,7 @@ class TestWorldMessages:
         world = World(10, 10)
         requests = [ {'verb': 'step'}]
         messages = world.execute_requests(requests)['messages']
-        assert 'requires bot_key parameter' in messages[0]['message']
+        assert 'VERB_NEEDS_BOT_KEY' in messages[0]['message']
 
     def test_action_must_be_dict(self):
         world = World(10, 10)

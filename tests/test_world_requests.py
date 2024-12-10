@@ -97,7 +97,7 @@ class TestWorldRequests:
                    'verb': 'step'}
         rq = [ command ]
         messages = world.execute_requests(rq)['messages']
-        assert 'requires bot_key parameter' in messages[0]['message']
+        assert 'VERB_NEEDS_BOT_KEY' in messages[0]['message']
 
     def test_returns_results(self):
         WorldEntity.next_key = 100

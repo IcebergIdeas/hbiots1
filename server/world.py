@@ -5,7 +5,10 @@ from shared.direction import Direction
 
 class World:
     error_messages = {
-        'TURN_DIRECTION': 'unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST'
+        'TURN_DIRECTION':
+            'unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST',
+        'VERB_NEEDS_BOT_KEY':
+            'verb {verb} requires bot_key parameter {details}'
     }
 
     def __init__(self, max_x, max_y):
@@ -20,7 +23,7 @@ class World:
         self.map.place(entity)
         return entity.key
 
-    def _add_message(self, msg):
+    def _add_completed_message(self, msg):
         message_dict = { 'message': msg}
         self.messages.append(message_dict)
 
@@ -43,7 +46,7 @@ class World:
         if isinstance(actions_list, list):
             return actions_list
         else:
-            self._add_message('requests must be a list of actions')
+            self._add_completed_message('requests must be a list of actions')
             return []
 
     def execute_actions(self, actions_list):
@@ -52,7 +55,7 @@ class World:
                 action_with_parameters = self.assign_parameters(**action)
                 self.execute_action(**action_with_parameters)
             else:
-                self._add_message(f'action must be dictionary {action}')
+                self._add_completed_message(f'action must be dictionary {action}')
 
     def assign_parameters(self, bot_key=None, **parameters):
         if bot_key:
@@ -62,7 +65,9 @@ class World:
 
     def execute_action(self, verb=None, bot=None, **details):
         if not bot and verb != 'add_bot':
-            self._add_message(f'verb {verb} requires bot_key parameter {details}')
+            self._add_keyed_message(
+                'VERB_NEEDS_BOT_KEY',
+                verb=verb, details=details)
         else:
             self.execute_verb(verb, bot, details)
 
@@ -81,7 +86,7 @@ class World:
             case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
                 self.turn(bot, direction)
             case _:
-                self._add_message(f'Unknown action {verb=} {details=}')
+                self._add_completed_message(f'Unknown action {verb=} {details=}')
 
     def add_bot_using(self, x=None, y=None, direction=None, **ignored):
         if self.add_bot_check_parameters(x, y, direction):
@@ -89,10 +94,10 @@ class World:
 
     def add_bot_check_parameters(self, x, y, direction):
         if not x or not y:
-            self._add_message('add_bot command requires x and y parameters')
+            self._add_completed_message('add_bot command requires x and y parameters')
             return False
         if direction not in Direction.ALL_NAMES:
-            self._add_message(f'add_bot has unknown direction {direction},'
+            self._add_completed_message(f'add_bot has unknown direction {direction},'
                               f' should be NORTH, EAST, SOUTH, or WEST')
             return False
         return True
@@ -136,10 +141,10 @@ class World:
     def _add_keyed_message(self, key, **kwargs):
         msg = self._get_message(key)
         formatted = msg.format(**kwargs)
-        self._add_message(formatted)
+        self._add_completed_message(formatted)
 
     def _get_message(self, key):
-        return key + ": " + self.error_messages.get(key, 'unknown message')
+        return key + ": " + self.error_messages.get(key, key)
 
     def turn(self, world_bot, direction_name):
         # no change on unrecognized name
