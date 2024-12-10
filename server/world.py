@@ -60,16 +60,24 @@ class World:
         if not bot and verb != 'add_bot':
             self._add_message(f'verb {verb} requires bot_key parameter {details}')
         else:
-            match verb:
-                case 'add_bot': self.add_bot_using(**details)
-                case 'step': self.step(bot)
-                case 'drop': self.drop_using(bot, **details)
-                case 'take': self.take_forward(bot)
-                case 'turn': self.turn_using(bot, **details)
-                case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
-                    self.turn(bot, direction)
-                case _:
-                    self._add_message(f'Unknown action {verb=} {details=}')
+            self.execute_verb(verb, bot, details)
+
+    def execute_verb(self, verb, bot, details):
+        match verb:
+            case 'add_bot':
+                self.add_bot_using(**details)
+            case 'step':
+                self.step(bot)
+            case 'drop':
+                self.drop_using(bot, **details)
+            case 'take':
+                self.take_forward(bot)
+            case 'turn':
+                self.turn_using(bot, **details)
+            case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
+                self.turn(bot, direction)
+            case _:
+                self._add_message(f'Unknown action {verb=} {details=}')
 
     def add_bot_using(self, x=None, y=None, direction=None, **ignored):
         if self.add_bot_check_parameters(x, y, direction):
