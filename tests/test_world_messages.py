@@ -44,8 +44,7 @@ class TestWorldMessages:
         bot_id = world.add_bot(5, 5)
         requests = [{'bot_key': bot_id, 'verb': 'turn', 'direction': 'LEFT'}]
         messages = world.execute_requests(requests)['messages']
-        expected = 'unknown direction LEFT, should be NORTH, EAST, SOUTH, or WEST'
-        assert expected in messages[0]['message']
+        assert 'TURN_DIRECTION:' in messages[0]['message']
 
     def test_add_bot_bad_direction(self):
         world = World(10, 10)

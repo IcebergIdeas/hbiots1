@@ -4,6 +4,10 @@ from shared.direction import Direction
 
 
 class World:
+    error_messages = {
+        'TURN_DIRECTION': 'unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST'
+    }
+
     def __init__(self, max_x, max_y):
         self.map = Map(max_x, max_y)
         self.ids_used = set()
@@ -127,8 +131,15 @@ class World:
             case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST':
                 self.turn(bot, direction)
             case _:
-                self._add_message(f'turn has unknown direction {direction}, '
-                                  f'should be NORTH, EAST, SOUTH, or WEST')
+                self._add_keyed_message("TURN_DIRECTION", direction=direction)
+
+    def _add_keyed_message(self, key, **kwargs):
+        msg = self._get_message(key)
+        formatted = msg.format(**kwargs)
+        self._add_message(formatted)
+
+    def _get_message(self, key):
+        return key + ": " + self.error_messages.get(key, 'unknown message')
 
     def turn(self, world_bot, direction_name):
         # no change on unrecognized name
