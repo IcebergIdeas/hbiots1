@@ -64,7 +64,10 @@ class TestPython:
                 assert False
 
     def test_interpolation(self):
+        d = { 'x': 10, 'direction': 'EAST'}
         s = 'message {verb} does not like {direction}'
-        s_i = s.format(verb = 'turn', direction = 'RIGHT')
-        assert s_i == 'message turn does not like RIGHT'
+        s1 = s.format(verb = 'turn', direction = 'RIGHT')
+        assert s1 == 'message turn does not like RIGHT'
+        s2 = s.format(verb = 'turn', direction = d)
+        assert s2 == "message turn does not like {'x': 10, 'direction': 'EAST'}"
 
