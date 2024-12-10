@@ -71,3 +71,12 @@ class TestPython:
         s2 = s.format(verb = 'turn', direction = d)
         assert s2 == "message turn does not like {'x': 10, 'direction': 'EAST'}"
 
+    def test_varargs(self):
+        s = 'message {verb} does not like {direction}'
+        def message(msg_name, **kwargs):
+            prototype = s if msg_name == 's' else None
+            return prototype.format(**kwargs)
+
+        d = { 'x': 10, 'direction': 'EAST'}
+        m = message('s', verb = 'turn', direction = d, unexpected = "boo!")
+        assert m == "message turn does not like {'x': 10, 'direction': 'EAST'}"
