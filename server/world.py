@@ -6,15 +6,21 @@ from shared.direction import Direction
 class World:
     error_messages = {
         'TURN_DIRECTION':
-            'unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST',
+            'turn has unknown direction "{direction}", '
+            'should be "NORTH", "EAST", "SOUTH", or "WEST"',
         'VERB_NEEDS_BOT_KEY':
-            'verb {verb} requires bot_key parameter {details}',
+            'verb "{verb}" requires bot_key parameter {details}',
         'MUST_BE_DICT':
             'action must be dictionary {action}',
         'UNKNOWN_ACTION':
-            'Unknown action {verb} {details}',
+            'Unknown action "{verb}" {details}',
         'MUST_BE_LIST':
             'Request must be list of actions',
+        'NEEDS_XY':
+            'add_bot command needs x, y, direction, received {received}',
+        'BAD_DIRECTION':
+            'add_bot has unknown direction "{direction}",'
+            ' should be "NORTH", "EAST", "SOUTH", or "WEST"'
     }
 
     def __init__(self, max_x, max_y):
@@ -99,12 +105,11 @@ class World:
             self.add_bot_action(x, y, direction)
 
     def add_bot_check_parameters(self, x, y, direction):
-        if not x or not y:
-            self._add_completed_message('add_bot command requires x and y parameters')
+        if not x or not y or not direction:
+            self._add_keyed_message('NEEDS_XY', received = [x, y, direction])
             return False
         if direction not in Direction.ALL_NAMES:
-            self._add_completed_message(f'add_bot has unknown direction {direction},'
-                              f' should be NORTH, EAST, SOUTH, or WEST')
+            self._add_keyed_message('BAD_DIRECTION', direction=direction)
             return False
         return True
 

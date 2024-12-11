@@ -46,6 +46,15 @@ class TestWorldMessages:
         messages = world.execute_requests(requests)['messages']
         assert 'TURN_DIRECTION:' in messages[0]['message']
 
+    def test_add_bot_no_xy(self):
+        world = World(10, 10)
+        requests = [ {'verb': 'add_bot',
+                      'bot_key': 0,
+                      'direction': 'WRONG'}]
+        messages = world.execute_requests(requests)['messages']
+        print(messages)
+        assert 'NEEDS_XY' in messages[0]['message']
+
     def test_add_bot_bad_direction(self):
         world = World(10, 10)
         requests = [ {'verb': 'add_bot',
@@ -53,7 +62,6 @@ class TestWorldMessages:
                       'x': 5, 'y': 5,
                       'direction': 'WRONG'}]
         messages = world.execute_requests(requests)['messages']
-        expected = 'add_bot has unknown direction WRONG, should be NORTH, EAST, SOUTH, or WEST'
-        assert messages[0]['message'] == expected
+        assert 'BAD_DIRECTION' in messages[0]['message']
 
 
