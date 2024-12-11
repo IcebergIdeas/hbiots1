@@ -12,7 +12,9 @@ class World:
         'MUST_BE_DICT':
             'action must be dictionary {action}',
         'UNKNOWN_ACTION':
-            'Unknown action {verb} {details}'
+            'Unknown action {verb} {details}',
+        'MUST_BE_LIST':
+            'Request must be list of actions',
     }
 
     def __init__(self, max_x, max_y):
@@ -50,7 +52,7 @@ class World:
         if isinstance(actions_list, list):
             return actions_list
         else:
-            self._add_completed_message('requests must be a list of actions')
+            self._add_keyed_message('MUST_BE_LIST')
             return []
 
     def execute_actions(self, actions_list):

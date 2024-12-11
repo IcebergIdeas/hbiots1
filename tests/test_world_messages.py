@@ -13,13 +13,13 @@ class TestWorldMessages:
         world = World(10, 10)
         requests = { 'bot_key': 0, 'verb': 'add_bot'}
         messages = world.execute_requests(requests)['messages']
-        assert any('must be a list' in message['message'] for message in messages)
+        assert any('MUST_BE_LIST' in message['message'] for message in messages)
 
     def test_no_verb(self):
         world = World(10, 10)
         requests = [{'bot': "fake", 'vorb': 'add_bot'}]
         messages = world.execute_requests(requests)['messages']
-        assert 'Unknown action' in messages[0]['message']
+        assert 'UNKNOWN_ACTION' in messages[0]['message']
 
     def test_bad_verb(self):
         world = World(10, 10)
