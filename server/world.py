@@ -10,7 +10,9 @@ class World:
         'VERB_NEEDS_BOT_KEY':
             'verb {verb} requires bot_key parameter {details}',
         'MUST_BE_DICT':
-            'action must be dictionary {action}'
+            'action must be dictionary {action}',
+        'UNKNOWN_ACTION':
+            'Unknown action {verb} {details}'
     }
 
     def __init__(self, max_x, max_y):
@@ -88,7 +90,7 @@ class World:
             case 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' as direction:
                 self.turn(bot, direction)
             case _:
-                self._add_completed_message(f'Unknown action {verb=} {details=}')
+                self._add_keyed_message('UNKNOWN_ACTION',verb=verb, details=details)
 
     def add_bot_using(self, x=None, y=None, direction=None, **ignored):
         if self.add_bot_check_parameters(x, y, direction):

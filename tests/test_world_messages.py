@@ -25,7 +25,7 @@ class TestWorldMessages:
         world = World(10, 10)
         requests = [{'bot': "fake", 'verb': 'whatever'}]
         messages = world.execute_requests(requests)['messages']
-        assert "Unknown action verb='whatever'" in messages[0]['message']
+        assert "UNKNOWN_ACTION" in messages[0]['message']
 
     def test_no_entity(self):
         world = World(10, 10)
