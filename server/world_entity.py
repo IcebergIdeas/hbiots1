@@ -6,7 +6,7 @@ from shared.direction import Direction
 from shared.location import Location
 
 
-class WorldEntity:
+class   WorldEntity:
     next_key = 100
 
     def __init__(self, kind: EntityKind, x: int, y: int, direction: Direction):

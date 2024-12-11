@@ -8,7 +8,9 @@ class World:
         'TURN_DIRECTION':
             'unknown direction {direction}, should be NORTH, EAST, SOUTH, or WEST',
         'VERB_NEEDS_BOT_KEY':
-            'verb {verb} requires bot_key parameter {details}'
+            'verb {verb} requires bot_key parameter {details}',
+        'MUST_BE_DICT':
+            'action must be dictionary {action}'
     }
 
     def __init__(self, max_x, max_y):
@@ -55,7 +57,7 @@ class World:
                 action_with_parameters = self.assign_parameters(**action)
                 self.execute_action(**action_with_parameters)
             else:
-                self._add_completed_message(f'action must be dictionary {action}')
+                self._add_keyed_message('MUST_BE_DICT', action=action)
 
     def assign_parameters(self, bot_key=None, **parameters):
         if bot_key:

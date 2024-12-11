@@ -37,7 +37,7 @@ class TestWorldMessages:
         world = World(10, 10)
         requests = [ {'verb', 'step'}]
         messages = world.execute_requests(requests)['messages']
-        assert 'must be dictionary' in messages[0]['message']
+        assert 'MUST_BE_DICT' in messages[0]['message']
 
     def test_invalid_turn_message(self):
         world = World(10, 10)
