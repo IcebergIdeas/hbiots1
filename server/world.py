@@ -138,6 +138,11 @@ class World:
             case _:
                 self._add_keyed_message("TURN_DIRECTION", direction=direction)
 
+    def turn(self, world_bot, direction_name):
+        # no change on unrecognized name
+        if direction_name in Direction.ALL_NAMES:
+            world_bot.direction = Direction.from_name(direction_name)
+
     def _add_keyed_message(self, key, **kwargs):
         msg = self._get_message(key)
         formatted = msg.format(**kwargs)
@@ -145,11 +150,6 @@ class World:
 
     def _get_message(self, key):
         return key + ": " + self.error_messages.get(key, key)
-
-    def turn(self, world_bot, direction_name):
-        # no change on unrecognized name
-        if direction_name in Direction.ALL_NAMES:
-            world_bot.direction = Direction.from_name(direction_name)
 
     def fetch(self, bot_key):
         return self.entity_from_id(bot_key).as_dictionary()
